@@ -27,6 +27,9 @@ In retrospect I do not regret the choices made. All components are documented ve
 When I started the project I did not have any practical experience with any of the components. So I had to setup the circuitry step by step adding components and did a lot of time consuming but instructive testing first.
 My advice is to setup the electronic components first in a similar way as shown on the photo with the cardboard base. Use double sided adhesive tape but only attach it on sections that have no pcb-wiring or soldering, to avoid possible electrical interference. Install the Arduino IDE and all the libraries on a PC/Mac. You will find in this Github repository all the code that controls the Simcline and the Arduino test programs (modified for this project) that focus on components seperately and in conjunction. Download all the code from Github and install.<br clear="left"/>
 
+# ANT+, FE-C protocol and BLE</br>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Devices_Interacting_FEC_ANT.jpg" ALIGN="left" width="800" height="400" alt="FE-C">
+
 # Physical Construction of SIMCLINE </br>
 
 some text....</br>
