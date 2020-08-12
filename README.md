@@ -1,7 +1,7 @@
 # SIMCLINE 
 
 <img src="https://github.com/Berg0162/simcline/blob/master/images/SC_logo.png" width="64" height="64" alt="SIMCLINE Icon"> <b>Simulation of Changing Road Inclination for Indoor Cycling</b></br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_And_Wheel.jpg" width="400" height="500" alt="SIMCLINE"></br>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_And_Wheel.jpg" width="400" height="500" alt="SIMCLINE" ALIGN=”left”></br>
 The SIMCLINE physically adjusts the bike position to mimic hilly roads, climbing and descending. This allows the rider to naturally change position on the bike, engage climbing muscles, and improve pedaling technique to become a more efficient and powerful climber.</br>
 Without user intervention the SIMCLINE will replicate inclines and declines depicted in (online & offline) training programs (like Zwift, Rouvy, VeloReality and many others) that adjust accordingly the resistance of the indoor trainer.</br>
 The SIMCLINE auto connects at power up with a smart TACX trainer and let's relive the ascents and descents from favorite rides or routes while training indoors.</br>
@@ -23,7 +23,7 @@ The sensor contains a very tiny laser source, and a matching sensor. The VL6180X
 In retrospect I do not regret the choices made. All components are documented very well. There are lots of examples for use in an Arduino enviroment. They have turned out to be very reliable.</br>
 
 # How to start?</br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry_02.jpg" width="250" height="250" alt="Cardboard">
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry_02.jpg" width="250" height="250" alt="Cardboard" ALIGN=”left”>
 When I started the project I did not have any practical experience with any of the components. So I had to setup the circuitry step by step adding components and did a lot of time consuming but instructive testing first.
 My advice is to setup the electronic components first in a similar way as shown on the photo with the cardboard base. Use double sided adhesive tape but only attach it on sections that have no pcb-wiring or soldering, to avoid possible electrical interference. Install the Arduino IDE and all the libraries on a PC/Mac. You will find in this Github repository all the code that controls the Simcline and the Arduino test programs (modified for this project) that focus on components seperately and in conjunction. Download all the code from Github and install.</br>
 
