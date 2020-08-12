@@ -1,7 +1,8 @@
 # SIMCLINE 
 
 <img src="https://github.com/Berg0162/simcline/blob/master/images/SC_logo.png" width="64" height="64" alt="SIMCLINE Icon"> <b>Simulation of Changing Road Inclination for Indoor Cycling</b></br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_And_Wheel.jpg" width="400" height="500" alt="SIMCLINE" ALIGN=”left”></br>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_And_Wheel.jpg"  ALIGN="left" width="400" height="500" alt="SIMCLINE">
+<BR CLEAR="left"/>
 The SIMCLINE physically adjusts the bike position to mimic hilly roads, climbing and descending. This allows the rider to naturally change position on the bike, engage climbing muscles, and improve pedaling technique to become a more efficient and powerful climber.</br>
 Without user intervention the SIMCLINE will replicate inclines and declines depicted in (online & offline) training programs (like Zwift, Rouvy, VeloReality and many others) that adjust accordingly the resistance of the indoor trainer.</br>
 The SIMCLINE auto connects at power up with a smart TACX trainer and let's relive the ascents and descents from favorite rides or routes while training indoors.</br>
@@ -11,7 +12,7 @@ During operation an OLED display shows the road grade in digits and in graphics 
 The SIMCLINE Companion App (for Android smartphones) can be paired simultaneously for adjusting operational settings, like Ascent Grade Limit (between 0-20%) and Descent Grade Limit (between 0-10%), Road Grade Change Factor (between 0-100%) and the type of OLED display format.</br>
 
 # Electronic Components and Circuitry</br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry.jpg" width="800" height="400" alt="Circuitry">
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry.jpg" width="1000" height="400" alt="Circuitry">
 This project could have been elaborated with many different electronic parts that would lead to more or less the same succesfull end product. I have choosen for the following 4 active components: </br>
 <b>Cytron Motor Driver MDD3A.</b> Two channel motor driver for 12 V and 3 Amperes with buttons to test manually the working of the attached DC motor. This board enables the processor to set the Actuator motor in up or down movement. It transforms logical digital levels (Go Up, Go Down and Stop) from the Feather nRF52 to switching of 12 Volt at 3 Amperes max., the levels at which the Actuator works.</br>
 <b>Adafruit Feather nRF52 Bluefruit</b></br>
