@@ -47,8 +47,64 @@ The communication between the trainer (<b>controllable</b>) and the PC/MAC/Table
 
 <b>How to detect the grade of the simulated track?</b></br>
 The SIMCLINE is paired with the trainer over a different channel: Bluetooth! In that configuration it is complying to the ANT+ FE-C protocol as well but over Bluetooth LE. The trainer is not only broadcasting FE-C messages with cycling data (speed, cadence, power, etcetera) over ANT+ to the <b>controller</b>-application (like Zwift), but also over the BLE connection to the paired Feather nRF52. The Feather nRF52 is dealing with these data in its own way, independent of the <b>ANT+ controller</b>-application.
-At regular intervals the Feather nRF52 is programmed to send a socalled Common Page 70 (0x46) (Request Data Page) with the request data page field set to Data Page <b>51</b>. Sending Common Page 70 allows a connected device to request specific data pages from the trainer. The trainer replies with Common Page 71 (0x47) (Command Status) to the requester: the Feather nRF52. The purpose of the command status page is to confirm the status of commands (and settings) sent from a controller to the controllable trainer. The last <b>settings</b> of the Data Page 51 (0x33) (Track Resistance) are included in the data of Common Page 71. The Track Resistance Page itself is sent by the controller (like Zwift) to command the trainer to use simulation mode, and to set the desired track resistance factors. It provides the simulation parameters for the trainer, the rolling resistance and gravitational resistance applied to the rider. </br>
-By requesting regularly for Data Page 51 (0x33) (Track Resistance) the SIMCLINE is always up to date informed about the settings of the current grade of the simulated track and the coefficient of rolling resistance. These values are both set by the <b>ANT+ controller</b>. For proper functioning of the SIMCLINE only the current road grade is critical.
+At regular intervals the Feather nRF52 is programmed to send a socalled Common Page 70 (0x46) (Request Data Page) with the request data page field set to Data Page <b>51</b>.
+```Arduino
+//Define the FE-C ANT+ Common Page 70 with Request for Page #51
+const unsigned char Page51Bytes[13] = {
+    0xA4, //Sync
+    0x09, //Length
+    0x4F, //Acknowledge message type
+    0x05, //Channel 
+          //Data
+    0x46, //Common Page 70
+    0xFF,
+    0xFF,
+    0xFF, //Descriptor byte 1 (0xFF for no value)
+    0xFF, //Descriptor byte 2 (0xFF for no value)
+    0x80, //Requested transmission response
+    0x33, //Requested Page number 51 
+    0x01, //Command type (0x01 for request data page, 0x02 for request ANT-FS session)
+    0x47}; //Checksum;
+```
+Sending Common Page 70 allows a connected device to request specific data pages from the trainer. The trainer replies with Common Page 71 (0x47) (Command Status) to the requester: the Feather nRF52. The purpose of the command status page is to confirm the status of commands (and settings) sent from a controller to the controllable trainer. The last <b>settings</b> of the Data Page 51 (0x33) (Track Resistance) are included in the data of Common Page 71. The Track Resistance Page itself is sent by the controller (like Zwift) to command the trainer to use simulation mode, and to set the desired track resistance factors. It provides the simulation parameters for the trainer, the rolling resistance and gravitational resistance applied to the rider. </br>
+```Arduino
+#endif
+  // Standard FE-C Data Message Format
+  // buffer[0]  ->  Sync
+  // buffer[1]  ->  Msg Length
+  // buffer[2]  ->  Msg ID
+  // buffer[3]  ->  Channel Number
+  // buffer[4]-buffer[12] Payload of 8 bytes --> buffer[4] is byte(0) of Payload bytes 
+  // buffer[13] ->  Checksum
+  // --------------------------------
+  uint8_t DataPageNumber = buffer[4]; // Get Data Page Number from ANT FE-C packet
+  // process only the data pages we are interested in, ignore others !
+  switch(DataPageNumber) {
+    ///////////////////////////////////////////////////////////////
+    //////////////////// Handle PAGE 71 ///////////////////////////
+    ////////////// Requested PAGE 51 for grade info ///////////////
+    //At a regular rate Page 51 is requested for, so process here//
+    ///////////////////////////////////////////////////////////////
+    case 0x47 :
+    // buffer[4] -> Contains 71 (0x47) -> Common Page 71 -> Command status
+    // buffer[5] -> Last Received Command ID
+    // buffer[6] -> Sequence #
+    // buffer[7] -> Command Status
+    // buffer[8]-buffer[12] -> Response data 5 bytes
+    // buffer[13] -> Checksum
+    if ( buffer[5] == 0x33 ) { // check for Requested Page 51
+      // We are interested in the Requested Page 51 (0x33) --> Track Resistance
+      // in that case the packet contains:
+      // buffer[5] -> Last Received Command ID --> Data Page Number 51 (0x33)
+      // buffer[6] -> Reserved and set to 0xFF
+      // buffer[7] -> Reserved and set to 0xFF
+      // buffer[8] -> Reserved and set to 0xFF
+      // buffer[9]-buffer[12] -> Response data 4 bytes
+      // buffer[13] -> Checksum
+      uint8_t lsb_GradeValue = buffer[9]; // Grade (Slope) LSB
+      uint8_t msb_GradeValue = buffer[10];// Grade (Slope) MSB
+```
+By sending regularly a request for Data Page 51 (0x33) (Track Resistance) the SIMCLINE is always up to date informed about the settings of the current grade of the simulated track and the coefficient of rolling resistance. These values are both set by the <b>ANT+ controller</b>. For proper functioning of the SIMCLINE only the current road grade is critical.
 
 # Physical Construction of SIMCLINE </br>
 
