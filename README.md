@@ -34,17 +34,14 @@ The ANT+ FE-C protocol details the bi-directional communication of trainer data 
 The majority of FE-C trainers on the market is dual ANT+ & Bluetooth Smart in some capacity. The Tacx Neo generation has full capacity: ANT+ Trainer Control (FE-C) and Bluetooth Smart.</br>
 Tacx published in 2015 a document [TACX, FE-C and Bluetooth](https://github.com/Berg0162/simcline/blob/master/docs/How_to_FE_C_over_BLE_v1_0_0.pdf) that explains how to use the FE-C ANT+ protocol over BLE feature implemented on all Tacx Smart Trainers. Tacx designed this feature because at that time an open standard (on BLE) for trainers was lacking. Now there is (<b>FTMS</b>) FiTness Machine Service protocol to control fitness equipment over Bluetooth. According to the smart trainer recommendations guide winter 2019-2020 of [DCRainmaker](https://www.dcrainmaker.com/2019/10/the-smart-trainer-recommendations-guide-winter-2019-2020.html) the situation evolved:
 > Meanwhile, for Bluetooth Smart, there’s FTMS, which is basically the same thing as FE-C when it comes to trainers. It’s not quite as widely adopted yet by trainer companies, but is by app companies. On the trainer company side only Elite, Saris, and Kinetic support it across the board. With Tacx having it on some but not all units, and Wahoo having it on no units (but all Wahoo and Tacx trainers support private Bluetooth Smart with all major apps anyway).</br>
-
 <b>FE-C over Bluetooth</b></br>
 In the document Tacx described how Tacx Smart trainers use an ANT+ FE-C definition for the data content, but transports this data over a BLE serial port service. The prerequisite that remains for this technique is thourough knowledge of ANT+ <b>AND</b> the ANT+ FE-C protocol. A complete description of FE-C can be found here at [Github](https://github.com/Berg0162/simcline/blob/master/docs/ANT+_Device_Profile_Fitness_Equipment_Rev_5.0.pdf)</br>
-
 <b>NORDIC Serial Port Service</b></br>
 The transport method that is used is derived from the NORDIC Uart Service. This serial port service can basically send and receive arrays of data ranging from 1..20 bytes. The only difference is the service UUID and the two characteristics UUID’s. These are renamed conforming the internal Tacx standard UUID with the specific part for the FE-C service starting with 0xFEC.</br>
-
+<b>ANT+ and BLE Roles</b>
 The Adafruit Feather is equiped with a native-Bluetooth chip, the nRF52832 of NORDIC Semiconductor. This chip can be loaded with "SoftDevices" for different applications. The adafruit version is standard loaded with SoftDevice S132: a high-performance Bluetooth Low Energy protocol stack for the nRF52810 and nRF52832 System-on-Chips (SoCs). It supports up to 20 concurrent links in all roles (Broadcaster, <b>Central</b>, Observer, <b>Peripheral</b>). It is Bluetooth 5.1 qualified and supports the following Bluetooth features: high-throughput 2 Mbps, Advertising Extensions and channel selection algorithms. 
 In our design the SIMCLINE has a <b>Central</b> and as well as a <b>Peripheral</b> role simultaneously. The communication SIMCLINE to Trainer is Central to Peripheral respectively and the communication SIMCLINE to Smartphone is Peripheral to Central. The peripheral BLE Device is advertising its name, services and characteristics and the central device is deciding to connect and control the communication. </br>
 The communication between the trainer (<b>controllable</b>) and the PC/MAC/Tablet-application (<b>controller</b>, like Zwift) is full blown ANT+ and complies the FE-C protocol. The SIMCLINE is not interfering with this setup in any way! The application on PC/MAC/Tablet is <b>controller</b> and remains in full and only charge of setting the trainers resistance.</br>
-
 <b>How to detect the grade of the simulated track?</b></br>
 The SIMCLINE is paired with the trainer over a different channel: Bluetooth! In that configuration it is complying to the ANT+ FE-C protocol as well but over Bluetooth LE. The trainer is not only broadcasting FE-C messages with cycling data (speed, cadence, power, etcetera) over ANT+ to the <b>controller</b>-application (like Zwift), but also over the BLE connection to the paired Feather nRF52. The Feather nRF52 is dealing with these data in its own way, independent of the <b>ANT+ controller</b>-application.
 At regular intervals the Feather nRF52 is programmed to send a socalled Common Page 70 (0x46) (Request Data Page) with the request data page field set to Data Page <b>51</b>.
@@ -68,6 +65,8 @@ const unsigned char Page51Bytes[13] = {
 ```
 Sending Common Page 70 allows a connected device to request specific data pages from the trainer. The trainer replies with Common Page 71 (0x47) (Command Status) to the requester: the Feather nRF52. The purpose of the command status page is to confirm the status of commands (and settings) sent from a controller to the controllable trainer. The last <b>settings</b> of the Data Page 51 (0x33) (Track Resistance) are included in the data of Common Page 71. The Track Resistance Page itself is sent by the controller (like Zwift) to command the trainer to use simulation mode, and to set the desired track resistance factors. It provides the simulation parameters for the trainer, the rolling resistance and gravitational resistance applied to the rider. </br>
 ```Arduino
+.
+.
 #endif
   // Standard FE-C Data Message Format
   // buffer[0]  ->  Sync
@@ -103,6 +102,10 @@ Sending Common Page 70 allows a connected device to request specific data pages 
       // buffer[13] -> Checksum
       uint8_t lsb_GradeValue = buffer[9]; // Grade (Slope) LSB
       uint8_t msb_GradeValue = buffer[10];// Grade (Slope) MSB
+      RawgradeValue = lsb_GradeValue + msb_GradeValue*256;
+      // buffer[11] -> Coefficient of Rolling Resistance
+.
+.
 ```
 By sending regularly a request for Data Page 51 (0x33) (Track Resistance) the SIMCLINE is always up to date informed about the settings of the current grade of the simulated track and the coefficient of rolling resistance. These values are both set by the <b>ANT+ controller</b>. For proper functioning of the SIMCLINE only the current road grade is critical.
 
