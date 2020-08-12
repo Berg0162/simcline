@@ -24,11 +24,21 @@ In retrospect I do not regret the choices made. All components are documented ve
 
 # How to start?</br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry_02.jpg" ALIGN="left" width="250" height="250" alt="Cardboard">
-When I started the project I did not have any practical experience with any of the components. So I had to setup the circuitry step by step adding components and did a lot of time consuming but instructive testing first.
+When I started the project I did not have any practical experience with any of the components. So I had to setup the circuitry step by step adding components and did a lot of time consuming but instructive testing first.<br>
 My advice is to setup the electronic components first in a similar way as shown on the photo with the cardboard base. Use double sided adhesive tape but only attach it on sections that have no pcb-wiring or soldering, to avoid possible electrical interference. Install the Arduino IDE and all the libraries on a PC/Mac. You will find in this Github repository all the code that controls the Simcline and the Arduino test programs (modified for this project) that focus on components seperately and in conjunction. Download all the code from Github and install.<br clear="left"/>
 
 # ANT+, FE-C protocol and BLE</br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/Devices_Interacting_FEC_ANT.jpg" ALIGN="left" width="800" height="400" alt="FE-C">
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Devices_Interacting_FEC_ANT.jpg" ALIGN="left" width="800" height="300" alt="FE-C"><br clear="left"/>
+<b>ANT+ Trainer Control (FE-C)<b/>
+The ANT+ FE-C protocol details the bi-directional communication of trainer data (speed, power, etcetera) from trainer to the controller and from the controller to the trainer commands or settings of targeted power, trainer resistance (grade) and calibration controls.
+The majority of FE-C trainers on the market are also dual ANT+ / Bluetooth Smart in some capacity. The Tacx Neo generation has full capacity: ANT+ Trainer Control (FE-C)  and Bluetooth Smart. <br>
+Tacx published in 2015 a document (see: ####) that explains how to use the FE-C over BLE feature implemented onTacx Smart Trainers. Tacx designed this feature because at that time an open standard for trainers was lacking. Now there is (FTMS) FiTness Machine Service protocol to control fitness equipment over Bluetooth. According to the-smart-trainer-recommendations-guide-winter-2019-2020 of [DCRainmaker] (https://www.dcrainmaker.com/2019/10/the-smart-trainer-recommendations-guide-winter-2019-2020.html)
+> Meanwhile, for Bluetooth Smart, there’s FTMS, which is basically the same thing as FE-C when it comes to trainers. It’s not quite as widely adopted yet by trainer companies, but is by app companies. On the trainer company side only Elite, Saris, and Kinetic support it across the board. With Tacx having it on some but not all units, and Wahoo having it on no units (but all Wahoo and Tacx trainers support private Bluetooth Smart with all major apps anyway).<br>
+<b>FE-C over Bluetooth<b/>
+In the document Tacx described how Tacx Smart trainers use an ANT+ FE-C definition for the data content, but transports this data over a BLE serial port service. The prerequisite that remains for this technique is thourough knowledge of the ANT+ FE-C protocol. A complete description of FE-C can be found at the This-is-ANT site [ThisisAnt]( http://www.thisisant.com/resources/fitness-equipment-device/) Only restricted access, but see at Github [This-is-Ant]()
+
+<b>Nordic Serial Port Service<b/>
+The transport method that is used is derived from the Nordic Uart Service. This serial port service can basically send and receive arrays of data ranging from 1..20 bytes. The only difference is the service UUID and the two characteristics UUID’s. These are renamed conforming the internal Tacx standard UUID with the specific part for the FE-C service starting 0xFEC…<br>
 
 # Physical Construction of SIMCLINE </br>
 
