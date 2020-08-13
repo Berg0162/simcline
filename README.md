@@ -140,7 +140,31 @@ File file(InternalFS);
 #include <Lifter.h>
 ```
 Define variables, set to default values and initialize classes
-Setup()
+```C++
+// Function prototypes
+bool getPRSdata(void);
+void setPRSdata(void);
+void prph_connect_callback(uint16_t conn_handle);
+void prph_disconnect_callback(uint16_t conn_handle, uint8_t reason);
+void prph_bleuart_rx_callback(uint16_t conn_handle);
+void prph_bleuart_TX_Grade(void);
+void prph_bleuart_TX_PWR_CAD(void);
+void prph_bleuart_TX_ADT_SPD_AET(void);
+void SetNeutralValues(void);
+bool ControlUpDownMovement(void);
+void scan_stop_callback(void);
+void adv_stop_callback(void);
+void scan_callback(ble_gap_evt_adv_report_t* report);
+void connect_callback(uint16_t conn_handle);
+void ShowOnOledLarge(char *Line1, char *Line2, char *Line3, uint16_t Pause);
+void BuildBasicOledScreen(void);
+void ShowValuesOnOled(void);
+void ShowSlopeTriangleOnOled(void);
+void disconnect_callback(uint16_t conn_handle, uint8_t reason);
+void SendRequestPage51(void);
+void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len);
+```
+Setup(){
 Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!
 Start the show for the SSD1306 Oled display 
 Initialize Lifter Class data, variables, test and set to work !
@@ -192,6 +216,8 @@ Setup Central Scanning for an advertising TACX trainer...
 // Start advertising: to be picked up by a Smartphone with the Companion App!
     Bluefruit.Advertising.start(60); // 0 = Don't stop advertising or after n (!) seconds -> 1 minuut
 ```
+End of Setup()</br>
+
 The callback functions are dominating completely the processing and loop() would never have been called, since there is a constant stream of FE-C packets that are coming in! <b>fecrd_notify_callback</b> does the bulk of the work!
 ```C++
 void loop()
@@ -228,8 +254,8 @@ All ANT+ pages are handled, parsed and relevant variables set
     }
   }
 ```
-Send a request for Page 51 about every 4 seconds and await notification
-END of Program
+Send a request for Page 51 about every 4 seconds and await notification</br>
+<b>END of Program</b>
 
 # Machanical Construction of SIMCLINE </br>
 <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" alt="Instructables"> [See Instructables](https://www.instructables.com)
