@@ -46,7 +46,7 @@ The communication between the trainer (<b>controllable</b>) and the PC/MAC/Table
 <b>How to detect the grade of the simulated track?</b></br>
 The SIMCLINE is paired with the trainer over a different channel: Bluetooth! In that configuration it is complying to the ANT+ FE-C protocol as well but over Bluetooth LE. The trainer is not only broadcasting FE-C messages with cycling data (speed, cadence, power, etcetera) over ANT+ to the <b>controller</b>-application (like Zwift), but also over the BLE connection to the paired Feather nRF52. The Feather nRF52 is dealing with these data in its own way, independent of the <b>ANT+ controller</b>-application.
 At regular intervals the Feather nRF52 is programmed to send a socalled Common Page 70 (0x46) (Request Data Page) with the request data page field set to Data Page <b>51</b>.
-```Arduino
+```C++
 //Define the FE-C ANT+ Common Page 70 with Request for Page #51
 const unsigned char Page51Bytes[13] = {
     0xA4, //Sync
