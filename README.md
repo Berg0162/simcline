@@ -29,9 +29,7 @@ My advice is to setup the electronic components first in a similar way as shown 
 
 # ANT+, FE-C protocol and BLE</br>
 It took me a lot of time studying the relevant techniques, protocols and software tools involved with ANT+, BLE and FE-C to acquire the approriate knowledge. Many projects at Github address ANT+ and/or BLE with a different point of departure, however I have learnt a lot of looking closely at the many program codes, explanations and descriptions. Finally, I tracked down how a smart up/down lift of my front wheel axle is optimally benefitting from the (ANT+) FE-C protocol when I am indoor riding with the TACX Neo in the hilly Zwift game world or with any other virtual cycling program that simulates road grade. After a succesfull proof of concept with ANT+ and BLE tools (see [ThisisANT Tools](https://www.thisisant.com/developer/resources/software-tools/) and [Nordic NRF Connect](https://www.nordicsemi.com/Software-and-tools/Development-Tools/nRF-Connect-for-mobile)) I was convinced to bring the project to a successful conclusion!
-<center>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/Devices_Interacting_FEC_ANT.jpg" width="600" height="300" alt="FE-C">
-</center>
+<center><img src="https://github.com/Berg0162/simcline/blob/master/images/Devices_Interacting_FEC_ANT.jpg" width="800" height="300" alt="FE-C"></center>
 <b>ANT+ Trainer Control (FE-C)</b></br>
 The ANT+ FE-C protocol details the bi-directional message communication of trainer data (speed, power, etcetera) from trainer to the controller and from the controller to the trainer commands or settings of targeted power, trainer resistance (grade) and calibration controls. See [ThisisAnt]( http://www.thisisant.com/) for all conceivable documentation, tools, implementations, ANT+ based products, etcetera! See at Github for a detailed description of the [ANT Message Protocol and Usage](https://github.com/Berg0162/simcline/blob/master/docs/ANT_Message_Protocol_and_Usage_Rev_5.1.pdf).
 The majority of FE-C trainers on the market is dual ANT+ & Bluetooth Smart in some capacity. The Tacx Neo generation has full capacity: ANT+ Trainer Control (FE-C) and Bluetooth Smart.</br>
@@ -111,7 +109,7 @@ Sending Common Page 70 allows a connected device to request specific data pages 
 .
 .
 ```
-By sending regularly a request for Data Page 51 (0x33) (Track Resistance) the SIMCLINE is always up to date informed about the settings of the current grade of the simulated track and the coefficient of rolling resistance. These values are both set by the <b>ANT+ controller</b>. For proper functioning of the SIMCLINE only the current road grade is critical.
+By sending regularly a request for Data Page 51 (0x33) (Track Resistance) the SIMCLINE is always informed about the settings of the current grade of the simulated track and the coefficient of rolling resistance. These values are both set by the <b>ANT+ controller</b>. For proper functioning of the SIMCLINE only the current road grade is critical.
 
 # Physical Construction of SIMCLINE </br>
 
