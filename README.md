@@ -140,19 +140,19 @@ File file(InternalFS);
 ```
 Define variables, set to default values and initialize classes
 Setup()
-    Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!
-    Start the show for the SSD1306 Oled display 
-    Initialize Lifter Class data, variables, test and set to work !
+Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!
+Start the show for the SSD1306 Oled display 
+Initialize Lifter Class data, variables, test and set to work !
 ```C++
-    lift.Init(actuatorOutPin1, actuatorOutPin2, MINPOSITION, MAXPOSITION, BANDWIDTH);
+lift.Init(actuatorOutPin1, actuatorOutPin2, MINPOSITION, MAXPOSITION, BANDWIDTH);
 
-    // Test Actuator and VL8106X for proper functioning
-    ShowOnOledLarge("Testing", "Up & Down", "Functions", 100);
-    if (!lift.TestBasicMotorFunctions()) {
-        ShowOnOledLarge("Testing", "Functions", "Failed!", 500);
-        IsBasicMotorFunctions = false; // Not working properly
+// Test Actuator and VL8106X for proper functioning
+ShowOnOledLarge("Testing", "Up & Down", "Functions", 100);
+if (!lift.TestBasicMotorFunctions()) {
+    ShowOnOledLarge("Testing", "Functions", "Failed!", 500);
+    IsBasicMotorFunctions = false; // Not working properly
     }
-    else {
+else {
     ShowOnOledLarge("Testing", "Functions", "Succes!", 500);
     // Is working properly
     IsBasicMotorFunctions = true;
@@ -162,32 +162,34 @@ Setup()
     }
     }
 ```
-    Initialize Bluefruit with maximum connections as Peripheral = 1, Central = 1
-    Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Central (trainer connection)
-    Setup Central Scanning for an advertising TACX trainer...
+Initialize Bluefruit with maximum connections as Peripheral = 1, Central = 1
+Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Central (trainer connection)
+Setup Central Scanning for an advertising TACX trainer...
 ```C++
-    Bluefruit.Scanner.filterUuid(TACX_FEC_PRIMARY_SERVICE_Uuid);
-    // Initialize TACX FE-C trainer services and characteristics
-    // set up callback for receiving ANT+ FE-C packets; this is the main work horse!
-    fecrd.setNotifyCallback(fecrd_notify_callback);
-    // Initialize some characteristics of the Device Information Service.
-    // ---------------  All initialized --> Start the actual scanning   -------------
-    // Show Scanning message on the Oled
-    ShowOnOledLarge("Scanning", "for", "Trainer", 500);
-    Bluefruit.Scanner.start(300); // 0 = Don't stop scanning or after n, in units of hundredth of a second (n/100)
-    while (Bluefruit.Scanner.isRunning()) { // do nothing else but scanning....
-        }
-    // Initialize and setup BLE Uart functionality for connecting to smartphone
-    bleuart.begin();
-    bleuart.setRxCallback(prph_bleuart_rx_callback);
-    // Advertising packet construction
-    Bluefruit.Advertising.addFlags(BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE);
-    Bluefruit.Advertising.addTxPower();
-    // Include the BLE UART (AKA 'NUS') 128-bit UUID
-    Bluefruit.Advertising.addService(bleuart);
-    Bluefruit.Advertising.setStopCallback(adv_stop_callback);
-    // Start advertising: to be picked up by a Smartphone with the Companion App!
-    Bluefruit.Advertising.start(60); // 0 = Don't stop advertising or after n (!) seconds -> 1 minuut
+.
+Bluefruit.Scanner.filterUuid(TACX_FEC_PRIMARY_SERVICE_Uuid);
+.
+// Initialize TACX FE-C trainer services and characteristics
+// set up callback for receiving ANT+ FE-C packets; this is the main work horse!
+fecrd.setNotifyCallback(fecrd_notify_callback);
+// Initialize some characteristics of the Device Information Service.
+// ---------------  All initialized --> Start the actual scanning   -------------
+// Show Scanning message on the Oled
+ShowOnOledLarge("Scanning", "for", "Trainer", 500);
+Bluefruit.Scanner.start(300); // 0 = Don't stop scanning or after n, in units of hundredth of a second (n/100)
+while (Bluefruit.Scanner.isRunning()) { // do nothing else but scanning....
+}
+// Initialize and setup BLE Uart functionality for connecting to smartphone
+bleuart.begin();
+bleuart.setRxCallback(prph_bleuart_rx_callback);
+// Advertising packet construction
+Bluefruit.Advertising.addFlags(BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE);
+Bluefruit.Advertising.addTxPower();
+// Include the BLE UART (AKA 'NUS') 128-bit UUID
+Bluefruit.Advertising.addService(bleuart);
+Bluefruit.Advertising.setStopCallback(adv_stop_callback);
+// Start advertising: to be picked up by a Smartphone with the Companion App!
+Bluefruit.Advertising.start(60); // 0 = Don't stop advertising or after n (!) seconds -> 1 minuut
 ```
 The callback functions are dominating completely the processing and loop() would never have been called, since there is a constant stream of FE-C packets that are coming in! <b>fecrd_notify_callback</b> does the bulk of the work!
 ```C++
