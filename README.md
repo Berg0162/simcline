@@ -170,7 +170,8 @@ Start the show for the SSD1306 Oled display
 Initialize Lifter Class data, variables, test and set to work !
 ```C++
 lift.Init(actuatorOutPin1, actuatorOutPin2, MINPOSITION, MAXPOSITION, BANDWIDTH);
-
+```
+```C++
 // Test Actuator and VL8106X for proper functioning
 ShowOnOledLarge("Testing", "Up & Down", "Functions", 100);
 if (!lift.TestBasicMotorFunctions()) {
@@ -191,14 +192,16 @@ Initialize Bluefruit with maximum connections as Peripheral = 1, Central = 1
 Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Central (trainer connection)
 Setup Central Scanning for an advertising TACX trainer...
 ```C++
-.
     Bluefruit.Scanner.filterUuid(TACX_FEC_PRIMARY_SERVICE_Uuid);
-.
-// Initialize TACX FE-C trainer services and characteristics
+```
+Initialize TACX FE-C trainer services and characteristics
+```C++
 // set up callback for receiving ANT+ FE-C packets; this is the main work horse!
     fecrd.setNotifyCallback(fecrd_notify_callback);
-// Initialize some characteristics of the Device Information Service.
-// ---------------  All initialized --> Start the actual scanning   -------------
+```
+Initialize some characteristics of the Device Information Service.
+All initialized --> Start the actual scanning
+```C++
 // Show Scanning message on the Oled
     ShowOnOledLarge("Scanning", "for", "Trainer", 500);
     Bluefruit.Scanner.start(300); // 0 = Don't stop scanning or after n, in units of hundredth of a second (n/100)
