@@ -141,6 +141,20 @@ File file(InternalFS);
 ```
 Define variables, set to default values and initialize classes
 ```C++
+// Declare in Reversed order !!!
+uint8_t TACX_FEC_PRIMARY_SERVICE_Uuid[16]=     {0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0xC1, 0xFE, 0x40, 0x6E,};
+uint8_t TACX_FEC_READ_CHARACTERISTIC_Uuid[16]= {0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0xC2, 0xFE, 0x40, 0x6E,};
+uint8_t TACX_FEC_WRITE_CHARACTERISTIC_Uuid[16]={0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0xC3, 0xFE, 0x40, 0x6E,};
+
+```
+```C++
+//Declare crucial services and charateristics for TACX FE-C trainer
+BLEClientService        fecps(TACX_FEC_PRIMARY_SERVICE_Uuid);
+BLEClientCharacteristic fecrd(TACX_FEC_READ_CHARACTERISTIC_Uuid);
+BLEClientCharacteristic fecwr(TACX_FEC_WRITE_CHARACTERISTIC_Uuid);
+
+```
+```C++
 // Function prototypes
 bool getPRSdata(void);
 void setPRSdata(void);
@@ -170,6 +184,7 @@ Start the show for the SSD1306 Oled display
 Initialize Lifter Class data, variables, test and set to work !
 ```C++
 lift.Init(actuatorOutPin1, actuatorOutPin2, MINPOSITION, MAXPOSITION, BANDWIDTH);
+
 ```
 ```C++
 // Test Actuator and VL8106X for proper functioning
@@ -187,19 +202,32 @@ else {
     while (ControlUpDownMovement()) { // wait until flat road position is reached
     }
     }
+    
 ```
 Initialize Bluefruit with maximum connections as Peripheral = 1, Central = 1
 Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Central (trainer connection)
 Setup Central Scanning for an advertising TACX trainer...
 ```C++
     Bluefruit.Scanner.filterUuid(TACX_FEC_PRIMARY_SERVICE_Uuid);
+    
 ```
 Initialize TACX FE-C trainer services and characteristics
 ```C++
+// Declare Callbacks for Peripheral (smartphone connection)
+  Bluefruit.Periph.setConnectCallback(prph_connect_callback);
+  Bluefruit.Periph.setDisconnectCallback(prph_disconnect_callback);
+
+// Callbacks for Central (trainer connection)
+  Bluefruit.Central.setDisconnectCallback(disconnect_callback);
+  Bluefruit.Central.setConnectCallback(connect_callback);
+  Bluefruit.Scanner.setRxCallback(scan_callback);
+  Bluefruit.Scanner.setStopCallback(scan_stop_callback);
+
 // set up callback for receiving ANT+ FE-C packets; this is the main work horse!
     fecrd.setNotifyCallback(fecrd_notify_callback);
+    
 ```
-Initialize some characteristics of the Device Information Service.
+Initialize some characteristics of the Device Information Service</br>
 All initialized --> Start the actual scanning
 ```C++
 // Show Scanning message on the Oled
@@ -207,7 +235,10 @@ All initialized --> Start the actual scanning
     Bluefruit.Scanner.start(300); // 0 = Don't stop scanning or after n, in units of hundredth of a second (n/100)
     while (Bluefruit.Scanner.isRunning()) { // do nothing else but scanning....
     }
-// Initialize and setup BLE Uart functionality for connecting to smartphone
+    
+```
+Initialize and setup BLE Uart functionality for connecting to smartphone
+```C++
     bleuart.begin();
     bleuart.setRxCallback(prph_bleuart_rx_callback);
 // Advertising packet construction
@@ -218,6 +249,7 @@ All initialized --> Start the actual scanning
     Bluefruit.Advertising.setStopCallback(adv_stop_callback);
 // Start advertising: to be picked up by a Smartphone with the Companion App!
     Bluefruit.Advertising.start(60); // 0 = Don't stop advertising or after n (!) seconds -> 1 minuut
+    
 ```
 <b>End of the Arduino Setup() Function</b></br>
 
@@ -242,8 +274,9 @@ void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t
       buffer[i] = *data++;
     }
    }
+   
 ```
-All ANT+ pages are handled, parsed and relevant variables set
+All ANT+ FE-C message pages are handled, parsed and relevant variables set to new values
 ```C++
   // Show the actual values of the trainer on the Oled
   if (OledDisplaySelection == 1) {
@@ -256,6 +289,7 @@ All ANT+ pages are handled, parsed and relevant variables set
     while (ControlUpDownMovement()) {
     }
   }
+  
 ```
 Send a request for Page 51 about every 4 seconds and await notification</br>
 <b>END of Program</b>
