@@ -164,7 +164,7 @@ void disconnect_callback(uint16_t conn_handle, uint8_t reason);
 void SendRequestPage51(void);
 void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len);
 ```
-Setup(){
+<b>Begin of the Arduino Setup() Function</b></br>
 Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!
 Start the show for the SSD1306 Oled display 
 Initialize Lifter Class data, variables, test and set to work !
@@ -216,7 +216,7 @@ Setup Central Scanning for an advertising TACX trainer...
 // Start advertising: to be picked up by a Smartphone with the Companion App!
     Bluefruit.Advertising.start(60); // 0 = Don't stop advertising or after n (!) seconds -> 1 minuut
 ```
-End of Setup()</br>
+<b>End of the Arduino Setup() Function</b></br>
 
 The callback functions are dominating completely the processing and loop() would never have been called, since there is a constant stream of FE-C packets that are coming in! <b>fecrd_notify_callback</b> does the bulk of the work!
 ```C++
