@@ -138,6 +138,7 @@ File file(InternalFS);
 // LittleFS--------------------------------------------------------------
 // Library code for low level measuring (VL6180X) and controlling UP and down movement
 #include <Lifter.h>
+.
 ```
 Define variables, set to default values and initialize classes
 ```C++
@@ -145,14 +146,14 @@ Define variables, set to default values and initialize classes
 uint8_t TACX_FEC_PRIMARY_SERVICE_Uuid[16]=     {0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0xC1, 0xFE, 0x40, 0x6E,};
 uint8_t TACX_FEC_READ_CHARACTERISTIC_Uuid[16]= {0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0xC2, 0xFE, 0x40, 0x6E,};
 uint8_t TACX_FEC_WRITE_CHARACTERISTIC_Uuid[16]={0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0xC3, 0xFE, 0x40, 0x6E,};
-
+.
 ```
 ```C++
 //Declare crucial services and charateristics for TACX FE-C trainer
 BLEClientService        fecps(TACX_FEC_PRIMARY_SERVICE_Uuid);
 BLEClientCharacteristic fecrd(TACX_FEC_READ_CHARACTERISTIC_Uuid);
 BLEClientCharacteristic fecwr(TACX_FEC_WRITE_CHARACTERISTIC_Uuid);
-
+.
 ```
 ```C++
 // Function prototypes
@@ -184,7 +185,7 @@ Start the show for the SSD1306 Oled display</br>
 Initialize Lifter Class data, variables, test and set to work!
 ```C++
 lift.Init(actuatorOutPin1, actuatorOutPin2, MINPOSITION, MAXPOSITION, BANDWIDTH);
-
+.
 ```
 ```C++
 // Test Actuator and VL8106X for proper functioning
@@ -202,7 +203,7 @@ else {
     while (ControlUpDownMovement()) { // wait until flat road position is reached
     }
     }
-    
+.    
 ```
 Initialize Bluefruit with maximum connections as Peripheral = 1, Central = 1
 ```C++
@@ -212,8 +213,13 @@ Initialize Bluefruit with maximum connections as Peripheral = 1, Central = 1
 ```
 Setup Central Scanning for an advertising TACX trainer...
 ```C++
-    Bluefruit.Scanner.filterUuid(TACX_FEC_PRIMARY_SERVICE_Uuid);
-    
+  Bluefruit.Scanner.restartOnDisconnect(true);
+  Bluefruit.Scanner.filterRssi(-70);      // original value of -80 , we want to scan only nearby peripherals, so get close to your TACX trainer !!
+  Bluefruit.Scanner.setInterval(160, 80); // in units of 0.625 ms
+// We are only interested in the services of the TACX Trainer
+  Bluefruit.Scanner.filterUuid(TACX_FEC_PRIMARY_SERVICE_Uuid);
+  Bluefruit.Scanner.useActiveScan(true);
+.    
 ```
 Initialize TACX FE-C trainer services and characteristics</br>
 Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Central (trainer connection)
@@ -229,72 +235,72 @@ Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Centr
   Bluefruit.Scanner.setStopCallback(scan_stop_callback);
 
 // set up callback for receiving ANT+ FE-C packets; this is the main work horse!
-    fecrd.setNotifyCallback(fecrd_notify_callback);
-    
+  fecrd.setNotifyCallback(fecrd_notify_callback);
+.    
 ```
 Initialize some characteristics of the Device Information Service</br>
 All initialized --> Start the actual scanning
 ```C++
 // Show Scanning message on the Oled
-    ShowOnOledLarge("Scanning", "for", "Trainer", 500);
-    Bluefruit.Scanner.start(300); // 0 = Don't stop scanning or after n, in units of hundredth of a second (n/100)
-    while (Bluefruit.Scanner.isRunning()) { // do nothing else but scanning....
-    }
-    
+  ShowOnOledLarge("Scanning", "for", "Trainer", 500);
+  Bluefruit.Scanner.start(300); // 0 = Don't stop scanning or after n, in units of hundredth of a second (n/100)
+  while (Bluefruit.Scanner.isRunning()) { // do nothing else but scanning....
+  }
+.    
 ```
 Initialize and setup BLE Uart functionality for connecting to smartphone
 ```C++
-    bleuart.begin();
-    bleuart.setRxCallback(prph_bleuart_rx_callback);
+   bleuart.begin();
+   bleuart.setRxCallback(prph_bleuart_rx_callback);
 // Advertising packet construction
-    Bluefruit.Advertising.addFlags(BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE);
-    Bluefruit.Advertising.addTxPower();
+   Bluefruit.Advertising.addFlags(BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE);
+   Bluefruit.Advertising.addTxPower();
 // Include the BLE UART (AKA 'NUS') 128-bit UUID
-    Bluefruit.Advertising.addService(bleuart);
-    Bluefruit.Advertising.setStopCallback(adv_stop_callback);
+   Bluefruit.Advertising.addService(bleuart);
+   Bluefruit.Advertising.setStopCallback(adv_stop_callback);
 // Start advertising: to be picked up by a Smartphone with the Companion App!
-    Bluefruit.Advertising.start(60); // 0 = Don't stop advertising or after n (!) seconds -> 1 minuut
-    
+   Bluefruit.Advertising.start(60); // 0 = Don't stop advertising or after n (!) seconds -> 1 minuut
+.    
 ```
 <b>End of the Arduino Setup() Function</b></br>
 
 The callback functions are dominating completely the processing and loop() would never have been called, since there is a constant stream of FE-C packets that are coming in! <b>fecrd_notify_callback</b> does the bulk of the work!
 ```C++
-void loop()
-{ // Do not use ... !!!
-}
+    void loop()
+    { // Do not use ... !!!
+    }
 ```
 fecrd_notify_callback is hooked callback that is triggered when a ANT+ message is sent from TACX Trainer
 ```C++
-void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len) {
-  // The FE-C Read charateristic of ANT+ packets
-  // In TACX context receive or send arrays of data ranging from 1--20 bytes so FE-C
-  // will not exceed the 20 byte maximum...
-  // Data pages are broadcast (by the trainer) at 4Hz message rate
-  uint8_t buffer[20 + 1];
-  memset(buffer, 0, sizeof(buffer)); // fill with zero
-  // Transfer first the contents of data to buffer (array of chars)
-  for (int i = 0; i < len; i++) {
+    void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len) {
+// The FE-C Read charateristic of ANT+ packets
+// In TACX context receive or send arrays of data ranging from 1--20 bytes so FE-C
+// will not exceed the 20 byte maximum...
+// Data pages are broadcast (by the trainer) at 4Hz message rate
+    uint8_t buffer[20 + 1];
+    memset(buffer, 0, sizeof(buffer)); // fill with zero
+// Transfer first the contents of data to buffer (array of chars)
+    for (int i = 0; i < len; i++) {
     if ( i <= sizeof(buffer)) {
       buffer[i] = *data++;
     }
    }
-   
+.   
 ```
 All ANT+ FE-C message pages are handled, parsed and relevant variables set to new values
 ```C++
-  // Show the actual values of the trainer on the Oled
+// Show the actual values of the trainer on the Oled
   if (OledDisplaySelection == 1) {
     ShowValuesOnOled();
   } else {
     ShowSlopeTriangleOnOled();
   }
-  // Check and control motor up/down movement within settings!
+// Check and control motor up/down movement within settings!
   if (IsBasicMotorFunctions) {
     while (ControlUpDownMovement()) {
     }
   }
-  
+.  
 ```
 Send a request for Page 51 about every 4 seconds and await notification</br>
 <b>END of Program</b>
