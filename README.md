@@ -179,9 +179,9 @@ void SendRequestPage51(void);
 void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len);
 ```
 <b>Begin of the Arduino Setup() Function</b></br>
-Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!
-Start the show for the SSD1306 Oled display 
-Initialize Lifter Class data, variables, test and set to work !
+Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!</br>
+Start the show for the SSD1306 Oled display</br>
+Initialize Lifter Class data, variables, test and set to work!
 ```C++
 lift.Init(actuatorOutPin1, actuatorOutPin2, MINPOSITION, MAXPOSITION, BANDWIDTH);
 
@@ -205,13 +205,18 @@ else {
     
 ```
 Initialize Bluefruit with maximum connections as Peripheral = 1, Central = 1
-Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Central (trainer connection)
+```C++
+  Bluefruit.begin(1, 1);
+  Bluefruit.setTxPower(4); // Check bluefruit.h for supported values
+  Bluefruit.setName("Bluefruit-nRF52");
+```
 Setup Central Scanning for an advertising TACX trainer...
 ```C++
     Bluefruit.Scanner.filterUuid(TACX_FEC_PRIMARY_SERVICE_Uuid);
     
 ```
-Initialize TACX FE-C trainer services and characteristics
+Initialize TACX FE-C trainer services and characteristics</br>
+Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Central (trainer connection)
 ```C++
 // Declare Callbacks for Peripheral (smartphone connection)
   Bluefruit.Periph.setConnectCallback(prph_connect_callback);
