@@ -167,29 +167,29 @@ Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Centr
 Setup Central Scanning for an advertising TACX trainer...
 ```C++
 .
-Bluefruit.Scanner.filterUuid(TACX_FEC_PRIMARY_SERVICE_Uuid);
+    Bluefruit.Scanner.filterUuid(TACX_FEC_PRIMARY_SERVICE_Uuid);
 .
 // Initialize TACX FE-C trainer services and characteristics
 // set up callback for receiving ANT+ FE-C packets; this is the main work horse!
-fecrd.setNotifyCallback(fecrd_notify_callback);
+    fecrd.setNotifyCallback(fecrd_notify_callback);
 // Initialize some characteristics of the Device Information Service.
 // ---------------  All initialized --> Start the actual scanning   -------------
 // Show Scanning message on the Oled
-ShowOnOledLarge("Scanning", "for", "Trainer", 500);
-Bluefruit.Scanner.start(300); // 0 = Don't stop scanning or after n, in units of hundredth of a second (n/100)
-while (Bluefruit.Scanner.isRunning()) { // do nothing else but scanning....
-}
+    ShowOnOledLarge("Scanning", "for", "Trainer", 500);
+    Bluefruit.Scanner.start(300); // 0 = Don't stop scanning or after n, in units of hundredth of a second (n/100)
+    while (Bluefruit.Scanner.isRunning()) { // do nothing else but scanning....
+    }
 // Initialize and setup BLE Uart functionality for connecting to smartphone
-bleuart.begin();
-bleuart.setRxCallback(prph_bleuart_rx_callback);
+    bleuart.begin();
+    bleuart.setRxCallback(prph_bleuart_rx_callback);
 // Advertising packet construction
-Bluefruit.Advertising.addFlags(BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE);
-Bluefruit.Advertising.addTxPower();
+    Bluefruit.Advertising.addFlags(BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE);
+    Bluefruit.Advertising.addTxPower();
 // Include the BLE UART (AKA 'NUS') 128-bit UUID
-Bluefruit.Advertising.addService(bleuart);
-Bluefruit.Advertising.setStopCallback(adv_stop_callback);
+    Bluefruit.Advertising.addService(bleuart);
+    Bluefruit.Advertising.setStopCallback(adv_stop_callback);
 // Start advertising: to be picked up by a Smartphone with the Companion App!
-Bluefruit.Advertising.start(60); // 0 = Don't stop advertising or after n (!) seconds -> 1 minuut
+    Bluefruit.Advertising.start(60); // 0 = Don't stop advertising or after n (!) seconds -> 1 minuut
 ```
 The callback functions are dominating completely the processing and loop() would never have been called, since there is a constant stream of FE-C packets that are coming in! <b>fecrd_notify_callback</b> does the bulk of the work!
 ```C++
