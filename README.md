@@ -113,6 +113,7 @@ By sending regularly a request for Data Page 51 (0x33) (Track Resistance) the SI
 # Overview of Arduino Program Code Flow and Snippets</br>
 Include headers of libraries and declare classes
 ```C++
+// Library Adafruit Feather nRF52 Bluefruit (Bluetooth Low Energy)
 #include <bluefruit.h>
 // Libraries for use of I2C devices (Oled and VL6180X distance sensor)
 #include <SPI.h>
@@ -227,14 +228,8 @@ All ANT+ pages are handled, parsed and relevant variables set
     }
   }
 ```
-Send a request for Page 51 about every 4 seconds
-done------------------------------------------
+Send a request for Page 51 about every 4 seconds and await notification
+END of Program
 
-
-
-# Physical Construction of SIMCLINE </br>
-
-some text....</br>
-
-# Construction of SIMCLINE </br>
+# Machanical Construction of SIMCLINE </br>
 <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" alt="Instructables"> [See Instructables](https://www.instructables.com)
