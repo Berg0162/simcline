@@ -269,17 +269,17 @@ The callback functions are dominating completely the processing and loop() would
     { // Do not use ... !!!
     }
 ```
-fecrd_notify_callback is hooked callback that is triggered when a ANT+ message is sent from TACX Trainer
+fecrd_notify_callback is a callback that is triggered when a ANT+ message is sent from TACX Trainer
 ```C++
-    void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len) {
+  void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len) {
 // The FE-C Read charateristic of ANT+ packets
 // In TACX context receive or send arrays of data ranging from 1--20 bytes so FE-C
 // will not exceed the 20 byte maximum...
 // Data pages are broadcast (by the trainer) at 4Hz message rate
-    uint8_t buffer[20 + 1];
-    memset(buffer, 0, sizeof(buffer)); // fill with zero
+  uint8_t buffer[20 + 1];
+  memset(buffer, 0, sizeof(buffer)); // fill with zero
 // Transfer first the contents of data to buffer (array of chars)
-    for (int i = 0; i < len; i++) {
+  for (int i = 0; i < len; i++) {
     if ( i <= sizeof(buffer)) {
       buffer[i] = *data++;
     }
