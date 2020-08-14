@@ -1,4 +1,4 @@
-# <img src="https://github.com/Berg0162/simcline/blob/master/images/SC_logo.png" width="64" height="64" alt="SIMCLINE Icon"> &nbsp; SIMCLINE</br>
+pl# <img src="https://github.com/Berg0162/simcline/blob/master/images/SC_logo.png" width="64" height="64" alt="SIMCLINE Icon"> &nbsp; SIMCLINE</br>
 <b>Simulation of Changing Road Inclination for Indoor Cycling</b></br>
 <br clear="left"/>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_And_Wheel.jpg" ALIGN="left" width="300" height="410" alt="SIMCLINE">
@@ -28,7 +28,7 @@ When I started the project I did not have any practical experience with any of t
 My advice is to setup the electronic components first in a similar way as shown on the photo with the cardboard base. Use double sided adhesive tape but only attach it on sections that have no pcb-wiring or soldering, to avoid possible electrical interference. Install the Arduino IDE and all the libraries on a PC/Mac. You will find in this Github repository all the code that controls the Simcline and the Arduino test programs (modified for this project) that focus on components seperately and in conjunction. Download all the code from Github and install.<br clear="left"/>
 
 # ANT+, FE-C protocol and BLE</br>
-It took me a lot of time studying the relevant techniques, protocols and software tools involved with ANT+, BLE and FE-C to acquire the approriate knowledge. Many projects at Github address ANT+ and/or BLE with a different point of departure, however I have learnt a lot of looking closely at the many program codes, explanations and descriptions. Finally, I tracked down how a smart up/down lift of my front wheel axle is optimally benefitting from the (ANT+) FE-C protocol when I am indoor riding with the TACX Neo in the hilly Zwift game world or with any other virtual cycling program that simulates road grade. After a succesfull proof of concept with ANT+ and BLE tools (see [ThisisANT Tools](https://www.thisisant.com/developer/resources/software-tools/) and [Nordic NRF Connect](https://www.nordicsemi.com/Software-and-tools/Development-Tools/nRF-Connect-for-mobile). I was convinced to bring the project to a successful conclusion!
+It took me a lot of time exploring the relevant techniques, protocols and software tools involved with ANT+, BLE and FE-C to acquire the approriate knowledge. Many projects at Github address ANT+ and/or BLE with a different point of departure, however I have learnt a lot of looking closely at the many program codes, explanations and descriptions. Finally, I tracked down how a smart up/down lift of my front wheel axle is optimally benefitting from the (ANT+) FE-C protocol when I am indoor riding with the TACX Neo in the hilly Zwift game world or with any other virtual cycling program that simulates road grade. After a succesfull proof of concept with ANT+ and BLE tools (see [ThisisANT Tools](https://www.thisisant.com/developer/resources/software-tools/) and [Nordic NRF Connect](https://www.nordicsemi.com/Software-and-tools/Development-Tools/nRF-Connect-for-mobile). I was convinced to bring the project to a successful conclusion!
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Devices_Interacting_FEC_ANT.jpg" width="800" height="300" alt="FE-C"><br clear="left"/>
 <b>ANT+ Trainer Control (FE-C)</b></br>
 The ANT+ FE-C protocol details the bi-directional message communication of trainer data (speed, power, etcetera) from trainer to the controller and from the controller to the trainer commands or settings of targeted power, trainer resistance (grade) and calibration controls. See [ThisisAnt](http://www.thisisant.com/) for all conceivable documentation, tools, implementations, ANT+ based products, etcetera! See at Github for a detailed description of the [ANT Message Protocol and Usage](https://github.com/Berg0162/simcline/blob/master/docs/ANT_Message_Protocol_and_Usage_Rev_5.1.pdf).
@@ -305,5 +305,6 @@ All ANT+ FE-C message pages are handled, parsed and relevant variables set to ne
 Send a request for Page 51 about every 4 seconds and await notification</br>
 <b>END of Program</b>
 
-# Machanical Construction of SIMCLINE </br>
-<img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" alt="Instructables"> [See Instructables](https://www.instructables.com)
+# Mechanical Construction of SIMCLINE </br>
+There is an elaborated <b>Instructable</b> available with all the nitty gritty of how to construct and compose the material components of the SIMCLINE. 
+See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" alt="Instructables"> [SIMCLINE Instructables](https://www.instructables.com)
