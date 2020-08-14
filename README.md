@@ -304,14 +304,15 @@ All ANT+ FE-C message pages are handled, parsed and relevant variables set to ne
 Send a request for Page 51 about every 4 seconds<br>
 
 # SIMCLINE Companion App<br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/App_screens.jpg" alt="Companion App">
-After the project was more or less accomplished and running, a lot of experience was gathered during many months of practise. It became clear to me that a Companion App with some basic features would be very welcome.<br> You need some easy possibility to change settings that in the beginning were supposed to be set at compile time only. However, insights change with time! Reprogramming the Arduino code on the Feather becomes cumbersome when the SIMCLINE has to be unmounted every time! Therefore it was decided to develop a Companion App that would allow at minimal for changing settings.<br>
-After some exploring of the field (I had no experience whatsoever), the outcome was to build one (for Android) in the accesible environment of [MIT App Inventor 2](http://appinventor.mit.edu).<br>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/App_screens.jpg" alt="Companion App"><br clear="left">
+After the project was more or less accomplished and running, practical experience was gathered during many months. It became clear to me that a Companion App with some basic features would be very welcome.<br> You need some easy possibility to change settings that in the beginning were supposed to be set at compile time only. Insights change with time! Reprogramming the Arduino code on the Feather over USB becomes cumbersome when the SIMCLINE has to be dismantled every time! Therefore it was decided to develop a Companion App that would allow at minimal a feature for changing settings.<br clear="left">
+After some exploring of the field (I had no experience with App development), the outcome was to build one (for Android) in the accesible environment of [MIT App Inventor 2](http://appinventor.mit.edu).<br>
+
 # Program Flow and some Code Snippets<br>
 SIMCLINE and Companion App establish a connection over BLE and use Nordic UART service for exchange of information. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings containing diagnostic messages or cyling variables. <br>
 The SIMCLINE sends cycling data (like Speed, Power, Cadence, Grade etcetera) that was received from the trainer (in ANT+ FE-C packets) to the Companion App.<br>
 Whenever the user changes the settings or control data the Companion App sends the settings and data the SIMCLINE for processing.<br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/ButtonSendCache.jpg" alt="Companion App"><br>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/ButtonSendCache.jpg" alt="Companion App"><br clear="left">
 The SIMCLINE receives the settings and the appriate variables are set in accordance. The settings are persistently stored for future use.
 ```C++
 void prph_bleuart_rx_callback(uint16_t conn_handle) {
