@@ -304,8 +304,9 @@ All ANT+ FE-C message pages are handled, parsed and relevant variables set to ne
 Send a request for Page 51 about every 4 seconds and await notification</br>
 <b>This concludes the Arduino code</b>
 # SIMCLINE Companion App</br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/App_screens.jpg" width="700" height="700" alt="Companion App">
-After the project was more or less accomplished and running, a lot of experience was gathered during many months of practise. It became clear to me that a Companion App with some basic features would be very welcome. You need some easy possibility to change settings that in the beginning were supposed to be set at compile time only. However, insights change with time! Reprogramming the Arduino code on the Feather becomes cumbersome when the SIMCLINE has to be demounted every time! Therefore it was decided to develop a Companion App that would allow at minimal for changing settings. After some exploring (I have no experience whatsoever), it was decided to build one in the environment of [MIT App Inventor 2](http://appinventor.mit.edu/).<br clear="left"/>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/App_screens.jpg" width="700" height="700" alt="Companion App"><br clear="left"/>
+After the project was more or less accomplished and running, a lot of experience was gathered during many months of practise. It became clear to me that a Companion App with some basic features would be very welcome. You need some easy possibility to change settings that in the beginning were supposed to be set at compile time only. However, insights change with time! Reprogramming the Arduino code on the Feather becomes cumbersome when the SIMCLINE has to be demounted every time! Therefore it was decided to develop a Companion App that would allow at minimal for changing settings. After some exploring (I have no experience whatsoever), it was decided to build one in the environment of [MIT App Inventor 2](http://appinventor.mit.edu/).</br>
+A simple protocol was designed that allows for exchange of short strings with data
 
 
 # Mechanical Construction of SIMCLINE </br>
