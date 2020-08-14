@@ -305,5 +305,5 @@ Send a request for Page 51 about every 4 seconds and await notification</br>
 <b>END of Program</b>
 
 # Mechanical Construction of SIMCLINE </br>
-There is an elaborated <b>Instructable</b> available with all the nitty gritty of how to construct and compose the material components of the SIMCLINE. 
+There is an elaborated <b>Instructable</b> available with all the nitty gritty of how to construct and compose the material components of the SIMCLINE.</br> 
 See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" alt="Instructables"> [SIMCLINE Instructables](https://www.instructables.com)
