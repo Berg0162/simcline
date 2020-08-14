@@ -301,17 +301,15 @@ All ANT+ FE-C message pages are handled, parsed and relevant variables set to ne
   }
 .  
 ```
-Send a request for Page 51 about every 4 seconds and 
+Send a request for Page 51 about every 4 seconds</br>
 Await a notification</br>
 
 # SIMCLINE Companion App</br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/App_screens.jpg" width="700" height="700" alt="Companion App">
-After the project was more or less accomplished and running, a lot of experience was gathered during many months of practise. It became clear to me that a Companion App with some basic features would be very welcome. You need some easy possibility to change settings that in the beginning were supposed to be set at compile time only. However, insights change with time! Reprogramming the Arduino code on the Feather becomes cumbersome when the SIMCLINE has to be demounted every time! Therefore it was decided to develop a Companion App that would allow at minimal for changing settings. After some exploring (I have no experience whatsoever), it was decided to build one (for Android) in the environment of [MIT App Inventor 2](http://appinventor.mit.edu/).<br clear="left"/>
+After the project was more or less accomplished and running, a lot of experience was gathered during many months of practise. It became clear to me that a Companion App with some basic features would be very welcome. You need some easy possibility to change settings that in the beginning were supposed to be set at compile time only. However, insights change with time! Reprogramming the Arduino code on the Feather becomes cumbersome when the SIMCLINE has to be demounted every time! Therefore it was decided to develop a Companion App that would allow at minimal for changing settings. After some exploring (I have no experience whatsoever), it was decided to build one (for Android) in the environment of [MIT App Inventor 2](http://appinventor.mit.edu/).</br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/ButtonSendCache.jpg" width="500" height="500" alt="Code block Inventor 2">
 SIMCLINE and Smartphone establish a connection over BLE and use Nordic UART service for exchange of information. A simple dedicated protocol was designed that allows for bidirectional exchange of short strings containing diagnostic messages or cyling data. The programmed Feather sends some cycling data that was received from the trainer (in ANT+ FE-C packets) to the App on the smartphone. The smartphone sends settings or control data to the SIMCLINE for application and persistent storage on the Feather.
-The Companion App can serve as a permanent display for the grade and cycling data.<br clear="left"/>
-
-
+The Companion App can serve as a permanent display for the grade and cycling data.</br>
 # Mechanical Construction of SIMCLINE </br>
 There is an elaborated <b>Instructable</b> available with all the nitty gritty of how to construct and compose the material components of the SIMCLINE.</br> 
 See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" alt="Instructables"> [SIMCLINE Instructables](https://www.instructables.com)
