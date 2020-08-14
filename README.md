@@ -1,6 +1,6 @@
 # <img src="https://github.com/Berg0162/simcline/blob/master/images/SC_logo.png" width="64" height="64" alt="SIMCLINE Icon"> &nbsp; SIMCLINE</br>
 <b>Simulation of Changing Road Inclination for Indoor Cycling</b></br>
-&nbsp;
+<br clear="left"/>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_And_Wheel.jpg" ALIGN="left" width="300" height="400" alt="SIMCLINE"></br>
 The SIMCLINE physically adjusts the bike position to mimic hilly roads, climbing and descending. This allows the rider to naturally change position on the bike, engage climbing muscles, and improve pedaling technique to become a more efficient and powerful climber.</br>
 Without user intervention the SIMCLINE will replicate inclines and declines depicted in (online & offline) training programs (like Zwift, Rouvy, VeloReality and many others) that adjust accordingly the resistance of the indoor trainer.</br>
