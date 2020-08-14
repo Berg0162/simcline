@@ -156,7 +156,7 @@ BLEClientCharacteristic fecwr(TACX_FEC_WRITE_CHARACTERISTIC_Uuid);
 .
 ```
 ```C++
-// Function prototypes
+// Declaration of Function prototypes
 bool getPRSdata(void);
 void setPRSdata(void);
 void prph_connect_callback(uint16_t conn_handle);
@@ -165,19 +165,19 @@ void prph_bleuart_rx_callback(uint16_t conn_handle);
 void prph_bleuart_TX_Grade(void);
 void prph_bleuart_TX_PWR_CAD(void);
 void prph_bleuart_TX_ADT_SPD_AET(void);
-void SetNeutralValues(void);
-bool ControlUpDownMovement(void);
 void scan_stop_callback(void);
 void adv_stop_callback(void);
 void scan_callback(ble_gap_evt_adv_report_t* report);
 void connect_callback(uint16_t conn_handle);
+void disconnect_callback(uint16_t conn_handle, uint8_t reason);
+void SendRequestPage51(void);
+void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len);
+void SetNeutralValues(void);
+bool ControlUpDownMovement(void);
 void ShowOnOledLarge(char *Line1, char *Line2, char *Line3, uint16_t Pause);
 void BuildBasicOledScreen(void);
 void ShowValuesOnOled(void);
 void ShowSlopeTriangleOnOled(void);
-void disconnect_callback(uint16_t conn_handle, uint8_t reason);
-void SendRequestPage51(void);
-void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len);
 ```
 <b>Begin of the Arduino Setup() Function</b></br>
 Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!</br>
