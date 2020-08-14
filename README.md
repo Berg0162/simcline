@@ -306,12 +306,25 @@ Send a request for Page 51 about every 4 seconds<br>
 # SIMCLINE Companion App<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/App_screens.jpg" alt="Companion App">
 After the project was more or less accomplished and running, a lot of experience was gathered during many months of practise. It became clear to me that a Companion App with some basic features would be very welcome.<br> You need some easy possibility to change settings that in the beginning were supposed to be set at compile time only. However, insights change with time! Reprogramming the Arduino code on the Feather becomes cumbersome when the SIMCLINE has to be unmounted every time! Therefore it was decided to develop a Companion App that would allow at minimal for changing settings.<br>
-After some exploring of the field (I had no experience whatsoever), the outcome was to build one (for Android) in the environment of [MIT App Inventor 2](http://appinventor.mit.edu).<br>
+After some exploring of the field (I had no experience whatsoever), the outcome was to build one (for Android) in the accesible environment of [MIT App Inventor 2](http://appinventor.mit.edu).<br>
 
-SIMCLINE and Smartphone establish a connection over BLE and use Nordic UART service for exchange of information. A simple dedicated protocol was designed that allows for bidirectional exchange of short strings containing diagnostic messages or cyling data. <br>
+SIMCLINE and Smartphone establish a connection over BLE and use Nordic UART service for exchange of information. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings containing diagnostic messages or cyling variables. <br>
 The programmed Feather sends cycling data (Speed, Power, Cadence, Grade etcetera) that was received from the trainer (in ANT+ FE-C packets) to the App on the smartphone.<br>
 The smartphone sends (user changed) settings or control data to the SIMCLINE for application and persistent storage on the Feather.
 <img src="https://github.com/Berg0162/simcline/blob/master/images/ButtonSendCache.jpg" alt="Companion App"><br>
+```C++
+void prph_bleuart_rx_callback(uint16_t conn_handle) {
+  (void) conn_handle;
+// Read data received over BLE Uart from Mobile Phone
+  char RXpacketBuffer[20+1] = { 0 };
+  bleuart.read(RXpacketBuffer, 20);
+// The following routines parse and process the incoming commands
+// Every RXpacket starts with a '!' otherwise corrupt/invalid
+  if (RXpacketBuffer[0] != '!'){
+    return; // invalid RXpacket: do not further parse and process
+  }
+  .
+```
 The Companion App can serve as a permanent display for the grade and cycling data<br>
 
 # Mechanical Construction of SIMCLINE<br>
