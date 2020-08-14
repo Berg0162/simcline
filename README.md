@@ -305,7 +305,7 @@ Send a request for Page 51 about every 4 seconds and await notification</br>
 <b>This concludes the Arduino code</b>
 # SIMCLINE Companion App</br>
 After the project was more or less accomplished and running, a lot of experience was gathered during many months of practise. It became clear to me that a Companion App with some basic features would be very welcome. You need some easy possibility to change settings that in the beginning were supposed to be set at compile time only. However, insights chage with time! Therefore it was decided to develop a Companion App that would allow at minimal for changing settings. After some exploring (I have no experience whatsoever), it was decided to build one in the environment of [MIT App Inventor 2](http://appinventor.mit.edu/).</br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/____.jpg" width="1100" height="500" alt="Companion App">
+<img src="https://github.com/Berg0162/simcline/blob/master/images/app_screens.jpg" width="1100" height="500" alt="Companion App">
 
 # Mechanical Construction of SIMCLINE </br>
 There is an elaborated <b>Instructable</b> available with all the nitty gritty of how to construct and compose the material components of the SIMCLINE.</br> 
