@@ -308,13 +308,15 @@ Send a request for Page 51 about every 4 seconds<br>
 After the project was more or less accomplished and running, practical experience was gathered during many months. It became clear to me that a Companion App with some basic features would be very welcome.<br> You need some easy possibility to change settings that in the beginning were supposed to be set at compile time only. Insights change with time! Reprogramming the Arduino code on the Feather over USB becomes cumbersome when the SIMCLINE has to be dismantled every time! Therefore it was decided to develop a Companion App that would allow at minimal a feature for changing settings.<br clear="left">
 After some exploring of the field (I had no experience with App development), the outcome was to build one (for Android) in the accesible environment of [MIT App Inventor 2](http://appinventor.mit.edu).<br>
 
-# Program Flow and some Code Snippets<br>
-SIMCLINE and Companion App establish a connection over BLE and use Nordic UART service for exchange of information. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings containing diagnostic messages or cyling variables. <br>
-The SIMCLINE sends cycling data (like Speed, Power, Cadence, Grade etcetera) that was received from the trainer (in ANT+ FE-C packets) to the Companion App.<br>
-Whenever the user changes the settings or control data the Companion App sends the settings and data the SIMCLINE for processing.<br>
+# Flow and Some Code Snippets<br>
+At startup SIMCLINE starts (BLE) advertising, independent of whether a trainer connection is realized before or not! The Companion App establishes a connection over BLE and the Nordic UART service (BLEUART) for exchange of information is applied. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings (<= 20 bytes) containing diagnostic messages or cyling variables.<br>
+At first the SIMCLINE sends the latest (persistent) settings data to allow the App user to have the current information.<br>
+The SIMCLINE sends regularly cyling data (like Speed, Power, Cadence, Grade etcetera) that was received from the trainer (in ANT+ FE-C packets) and processed.<br>
+Any time the App user changes the current settings or control data the Companion App sends these to the SIMCLINE.<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/ButtonSendCache.jpg" alt="Companion App"><br clear="left">
-The SIMCLINE receives the settings and the appriate variables are set in accordance. The settings are persistently stored for future use.
+The SIMCLINE receives asynchronously settings and sets the appriate variables in accordance. This determines instantly the working of the equipment. The settings are persistently stored for future use.<br>
 ```C++
+.
 void prph_bleuart_rx_callback(uint16_t conn_handle) {
   (void) conn_handle;
 // Read data received over BLE Uart from Mobile Phone
@@ -325,9 +327,26 @@ void prph_bleuart_rx_callback(uint16_t conn_handle) {
   if (RXpacketBuffer[0] != '!'){
     return; // invalid RXpacket: do not further parse and process
   }
-  .
+.
+.
+ // New Settings values have arrived --> parse, set values and store persistently
+   uint8_t iMax = 0, iMin = 0, iPerc = 0, iDispl = 0;
+   sscanf(RXpacketBuffer, "!S%d;%d;%d;%d;", &iMax, &iMin, &iPerc, &iDispl);
+ // set aRGVmax
+   aRGVmax = map(iMax, 0, 20, 20000, 22000);
+ // set aRGVmin
+   aRGVmin = map(iMin, 10, 0, 19000, 20000);
+ // set PercIncreaseInclination
+   PercentageIncreaseValue = iPerc;
+ // set OledDisplaySelection
+   OledDisplaySelection = iDispl;
+ // LittleFS for persistent storage of these values
+ setPRSdata();
+.
+.
 ```
-In addition to the OLED display the Companion App can serve as a permanent display for the grade and cycling data<br>
+In addition to the OLED display the Companion App can serve as an extra screen for road grade and cycling data.<br>
+Until the BLE connection is disconnected, manually or by quitting the App, both devices remain connected.<br>
 
 # Mechanical Construction of SIMCLINE<br>
 There is an elaborated <b>Instructable</b> available with all the nitty gritty of how to construct and compose the material components of the SIMCLINE.<br> 
