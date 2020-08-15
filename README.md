@@ -109,7 +109,6 @@ Sending Common Page 70 allows a connected device to request specific data pages 
       RawgradeValue = lsb_GradeValue + msb_GradeValue*256;
       // buffer[11] -> Coefficient of Rolling Resistance
 .
-.
 ```
 By sending regularly a request for Data Page 51 (0x33) (Track Resistance) the SIMCLINE is always informed about the settings of the current grade of the simulated track and the coefficient of rolling resistance. These values are both set by the <b>ANT+ controller</b>. For proper functioning of the SIMCLINE only the current road grade is critical.</br>
 # Overview of Arduino Program Code Flow and Snippets<br>
@@ -143,7 +142,7 @@ File file(InternalFS);
 #include <Lifter.h>
 .
 ```
-+ Define variables, set to default values and initialize classes
++ Define variables, set to default values and initialize classes.
 ```C++
 .
 // Declare in Reversed order !!!
@@ -186,7 +185,7 @@ void ShowSlopeTriangleOnOled(void);
 ```
 <b>Begin of the Arduino Setup() Function</b><br>
 + Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!
-+ Start the show for the SSD1306 Oled display
++ Start the show for the SSD1306 Oled display.
 + Initialize Lifter Class data, variables, test and set to work!
 ```C++
 .
@@ -212,7 +211,7 @@ else {
     }
 .    
 ```
-+ Initialize Bluefruit with maximum connections as Peripheral = 1, Central = 1
++ Initialize Bluefruit with maximum connections as Peripheral = 1, Central = 1.
 ```C++
 .
   Bluefruit.begin(1, 1);
@@ -231,8 +230,8 @@ else {
   Bluefruit.Scanner.useActiveScan(true);
 .    
 ```
-+ Initialize TACX FE-C trainer services and characteristics
-+ Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Central (trainer connection)
++ Initialize TACX FE-C trainer services and characteristics.
++ Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Central (trainer connection).
 ```C++
 .
 // Declare Callbacks for Peripheral (smartphone connection)
@@ -249,8 +248,8 @@ else {
   fecrd.setNotifyCallback(fecrd_notify_callback);
 .    
 ```
-+ Initialize some characteristics of the Device Information Service
-+ All initialized --> Start the actual scanning
++ Initialize some characteristics of the Device Information Service.
++ All initialized --> Start the actual scanning!
 ```C++
 .
 // Show Scanning message on the Oled
@@ -260,7 +259,7 @@ else {
   }
 .    
 ```
-+ Initialize and setup BLE Uart functionality for connecting to smartphone
++ Initialize and setup BLE Uart functionality for connecting to smartphone --> Start the advertising!
 ```C++
    bleuart.begin();
    bleuart.setRxCallback(prph_bleuart_rx_callback);
@@ -276,7 +275,8 @@ else {
 ```
 <b>End of the Arduino Setup() Function</b><br>
 
-+ The callback functions are dominating completely the processing and loop() would never have been called, since there is a constant stream of FE-C packets that are coming in! + + The function <b>fecrd_notify_callback</b> does the bulk of the work!
++ The callback functions are dominating completely the processing and <b>loop()</b> would never have been called, since there is a constant stream of FE-C packets that are coming in!
++ The function <b>fecrd_notify_callback</b> does the bulk of the work!
 ```C++
 .
     void loop()
@@ -284,7 +284,7 @@ else {
     }
 .
 ```
-+ <b>fecrd_notify_callback</b> is a callback that is triggered when a ANT+ message is sent from TACX Trainer
++ <b>fecrd_notify_callback</b> is a callback that is triggered when a ANT+ message is sent from TACX Trainer.
 ```C++
 .
   void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len) {
@@ -302,7 +302,7 @@ else {
    }
 .   
 ```
-+ All ANT+ FE-C message pages are handled, parsed and relevant variables set to new values
++ All ANT+ FE-C message pages are handled, parsed and relevant variables set to new values.
 ```C++
 // Show the actual values of the trainer on the Oled
   if (OledDisplaySelection == 1) {
@@ -317,7 +317,7 @@ else {
   }
 .  
 ```
-+ Send a request for Page 51 about every 4 seconds<br>
++ Send a request for Page 51 about every 4 seconds.
 
 # SIMCLINE Companion App<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/App_screens.jpg" width="600" height="600" alt="Companion App"><br clear="left">
