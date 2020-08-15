@@ -10,7 +10,7 @@ During operation an OLED display shows the road grade in digits and in graphics 
 The SIMCLINE Companion App (for Android smartphones) can be paired simultaneously for adjusting operational settings, like Ascent Grade Limit (between 0-20%) and Descent Grade Limit (between 0-10%), Road Grade Change Factor (between 0-100%) and the type of OLED display format.<br clear="left">
 
 # Electronic Components and Circuitry<br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry.jpg"  alt="Circuitry">
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry.jpg"  alt="Circuitry"><br clear="left">
 This project could have been elaborated with many different electronic parts that would lead to more or less the same succesfull end product. I have choosen for the following 4 active components: <br>
 <b>Cytron Motor Driver MDD3A.</b> Two channel motor driver for 12 V and 3 Amperes with buttons to test manually the working of the attached DC motor. This board enables the processor to set the Actuator motor in up or down movement. It transforms logical digital levels (Go Up, Go Down and Stop) from the Feather nRF52 to switching of 12 Volt at 3 Amperes max., the levels at which the Actuator works.<br>
 <b>Adafruit Feather nRF52 Bluefruit</b><br>
@@ -22,7 +22,7 @@ The sensor contains a very tiny laser source, and a matching sensor. The VL6180X
 In retrospect I do not regret the component choices made. All components are documented very well. There are lots of examples for use in an Arduino enviroment. They have turned out to be very reliable.
 
 # How to start?<br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry_02.jpg" ALIGN="left" width="250" height="250" alt="Cardboard"><br clear="left">
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry_02.jpg" ALIGN="left" width="250" height="250" alt="Cardboard">
 When I started the project I did not have any practical experience with any of the components. So I had to setup the circuitry step by step adding components and did a lot of time consuming but instructive testing first.
 My advice is to setup the electronic components first in a similar way as shown on the photo with the cardboard base. Use double sided adhesive tape but only attach it on sections that have no pcb-wiring or soldering, to avoid possible electrical interference. Install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) and all the libraries on a PC/Mac. You will find in this Github repository all the code that controls the Simcline and the Arduino test programs (modified for this project) that focus on components seperately and in conjunction. Download all the code from Github and install.
 
