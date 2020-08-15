@@ -320,7 +320,7 @@ else {
 + Send a request for Page 51 about every 4 seconds<br>
 
 # SIMCLINE Companion App<br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/App_screens.jpg" alt="Companion App"><br clear="left">
+<img src="https://github.com/Berg0162/simcline/blob/master/images/App_screens.jpg" width="600" height="600" alt="Companion App"><br clear="left">
 After the project was more or less accomplished and running, practical experience was gathered during many months. It became clear to me that a Companion App with some basic features would be very welcome.<br> You need some easy possibility to change settings that in the beginning were supposed to be set at compile time only. Insights change with time! Reprogramming the Arduino code on the Feather over USB becomes cumbersome when the SIMCLINE has to be dismantled every time! Therefore it was decided to develop a Companion App that would allow at minimal a feature for changing settings.<br clear="left">
 After some exploring of the field (I had no experience with App development), the outcome was to build one (for Android) in the accesible environment of [MIT App Inventor 2](http://appinventor.mit.edu).<br>
 
