@@ -112,7 +112,7 @@ Sending Common Page 70 allows a connected device to request specific data pages 
 ```
 By sending regularly a request for Data Page 51 (0x33) (Track Resistance) the SIMCLINE is always informed about the settings of the current grade of the simulated track and the coefficient of rolling resistance. These values are both set by the <b>ANT+ controller</b>. For proper functioning of the SIMCLINE only the current road grade is critical.</br>
 # Overview of Arduino Program Code Flow and Snippets<br>
-Include headers of libraries and declare classes
++ Include headers of libraries and declare classes
 ```C++
 // Library Adafruit Feather nRF52 Bluefruit (Bluetooth Low Energy)
 #include <bluefruit.h>
@@ -141,7 +141,7 @@ File file(InternalFS);
 #include <Lifter.h>
 .
 ```
-Define variables, set to default values and initialize classes
++ Define variables, set to default values and initialize classes
 ```C++
 // Declare in Reversed order !!!
 uint8_t TACX_FEC_PRIMARY_SERVICE_Uuid[16]=     {0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0xC1, 0xFE, 0x40, 0x6E,};
@@ -181,9 +181,9 @@ void ShowValuesOnOled(void);
 void ShowSlopeTriangleOnOled(void);
 ```
 <b>Begin of the Arduino Setup() Function</b><br>
-Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!<br>
-Start the show for the SSD1306 Oled display<br>
-Initialize Lifter Class data, variables, test and set to work!
++ Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!<br>
++ Start the show for the SSD1306 Oled display<br>
++ Initialize Lifter Class data, variables, test and set to work!
 ```C++
 lift.Init(actuatorOutPin1, actuatorOutPin2, MINPOSITION, MAXPOSITION, BANDWIDTH);
 .
