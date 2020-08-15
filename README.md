@@ -326,7 +326,7 @@ After some exploring of the field (I had no experience with App development), th
 + Download the <b>MIT App Inventor</b> SIMCLINE Companion App code with extension *file*<b>.aia</b>
 + [Visit at AppInventor](https://appinventor.mit.edu), You can get started by clicking the orange "Create Apps!" button from any page on the website.
 + Get started and upload the SIMCLINE Companion App code.
-+ Or upload the SIMCLINE Companion App <b>APK</b> to your Android device directly. Android will call this a security vulnerability!
++ Or upload the SIMCLINE Companion App <b>APK</b> to your Android device directly and install the APK. Android will call this a security vulnerability!
 
 # Flow and Some Code Snippets<br>
 + At startup SIMCLINE starts (BLE) advertising, independent of whether a trainer connection is realized before or not! The Companion App establishes a connection over BLE and the Nordic UART service (a.k.a. BLEUART) for exchange of information is applied. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings (<= 20 bytes) containing diagnostic messages or cyling variables.<br>
