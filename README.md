@@ -49,6 +49,7 @@ The communication between the trainer (<b>controllable</b>) and the PC/MAC/Table
 The SIMCLINE is paired with the trainer over a different channel: Bluetooth! In that configuration it is complying to the ANT+ FE-C protocol as well but over Bluetooth LE. The trainer is not only broadcasting FE-C messages with cycling data (speed, cadence, power, etcetera) over ANT+ to the <b>controller</b>-application (like Zwift), but also over the BLE connection to the paired Feather nRF52. The program of the Feather nRF52 is dealing with these data in its own way, independent of the <b>ANT+ controller</b>-application.
 At regular intervals the Feather nRF52 is programmed to send a socalled Common Page 70 (0x46) (Request Data Page) with the request data page field set to Data Page <b>51</b>.
 ```C++
+.
 //Define the FE-C ANT+ Common Page 70 with Request for Page #51
 const unsigned char Page51Bytes[13] = {
     0xA4, //Sync
@@ -65,10 +66,10 @@ const unsigned char Page51Bytes[13] = {
     0x33, //Requested Page number 51 
     0x01, //Command type (0x01 for request data page, 0x02 for request ANT-FS session)
     0x47}; //Checksum;
+.
 ```
 Sending Common Page 70 allows a connected device to request specific data pages from the trainer. The trainer replies with Common Page 71 (0x47) (Command Status) to the requester, the Feather nRF52. The purpose of the command status page is to confirm the status of commands (and settings) sent from a controller to the controllable trainer. The last <b>settings</b> of the Data Page 51 (0x33) (Track Resistance) are included in the data of Common Page 71. The Track Resistance Page itself is sent by the controller (like Zwift) to command the trainer to use simulation mode, and to set the desired track resistance factors. It provides the simulation parameters for the trainer, the rolling resistance and gravitational resistance applied to the rider. <br>
 ```C++
-.
 .
 #endif
   // Standard FE-C Data Message Format
@@ -114,6 +115,7 @@ By sending regularly a request for Data Page 51 (0x33) (Track Resistance) the SI
 # Overview of Arduino Program Code Flow and Snippets<br>
 + Include headers of libraries and declare classes
 ```C++
+.
 // Library Adafruit Feather nRF52 Bluefruit (Bluetooth Low Energy)
 #include <bluefruit.h>
 // Libraries for use of I2C devices (Oled and VL6180X distance sensor)
@@ -143,6 +145,7 @@ File file(InternalFS);
 ```
 + Define variables, set to default values and initialize classes
 ```C++
+.
 // Declare in Reversed order !!!
 uint8_t TACX_FEC_PRIMARY_SERVICE_Uuid[16]=     {0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0xC1, 0xFE, 0x40, 0x6E,};
 uint8_t TACX_FEC_READ_CHARACTERISTIC_Uuid[16]= {0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0xC2, 0xFE, 0x40, 0x6E,};
@@ -150,6 +153,7 @@ uint8_t TACX_FEC_WRITE_CHARACTERISTIC_Uuid[16]={0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0x
 .
 ```
 ```C++
+.
 //Declare crucial services and charateristics for TACX FE-C trainer
 BLEClientService        fecps(TACX_FEC_PRIMARY_SERVICE_Uuid);
 BLEClientCharacteristic fecrd(TACX_FEC_READ_CHARACTERISTIC_Uuid);
@@ -181,14 +185,16 @@ void ShowValuesOnOled(void);
 void ShowSlopeTriangleOnOled(void);
 ```
 <b>Begin of the Arduino Setup() Function</b><br>
-+ Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!<br>
-+ Start the show for the SSD1306 Oled display<br>
++ Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!
++ Start the show for the SSD1306 Oled display
 + Initialize Lifter Class data, variables, test and set to work!
 ```C++
+.
 lift.Init(actuatorOutPin1, actuatorOutPin2, MINPOSITION, MAXPOSITION, BANDWIDTH);
 .
 ```
 ```C++
+.
 // Test Actuator and VL8106X for proper functioning
 ShowOnOledLarge("Testing", "Up & Down", "Functions", 100);
 if (!lift.TestBasicMotorFunctions()) {
@@ -206,14 +212,17 @@ else {
     }
 .    
 ```
-Initialize Bluefruit with maximum connections as Peripheral = 1, Central = 1
++ Initialize Bluefruit with maximum connections as Peripheral = 1, Central = 1
 ```C++
+.
   Bluefruit.begin(1, 1);
   Bluefruit.setTxPower(4); // Check bluefruit.h for supported values
   Bluefruit.setName("Bluefruit-nRF52");
+.
 ```
-Setup Central Scanning for an advertising TACX trainer...
++ Setup Central Scanning for an advertising TACX trainer...
 ```C++
+.
   Bluefruit.Scanner.restartOnDisconnect(true);
   Bluefruit.Scanner.filterRssi(-70);      // original value of -80 , we want to scan only nearby peripherals, so get close to your TACX trainer !!
   Bluefruit.Scanner.setInterval(160, 80); // in units of 0.625 ms
@@ -222,9 +231,10 @@ Setup Central Scanning for an advertising TACX trainer...
   Bluefruit.Scanner.useActiveScan(true);
 .    
 ```
-Initialize TACX FE-C trainer services and characteristics<br>
-Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Central (trainer connection)
++ Initialize TACX FE-C trainer services and characteristics
++ Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Central (trainer connection)
 ```C++
+.
 // Declare Callbacks for Peripheral (smartphone connection)
   Bluefruit.Periph.setConnectCallback(prph_connect_callback);
   Bluefruit.Periph.setDisconnectCallback(prph_disconnect_callback);
@@ -239,9 +249,10 @@ Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Centr
   fecrd.setNotifyCallback(fecrd_notify_callback);
 .    
 ```
-Initialize some characteristics of the Device Information Service<br>
-All initialized --> Start the actual scanning
++ Initialize some characteristics of the Device Information Service
++ All initialized --> Start the actual scanning
 ```C++
+.
 // Show Scanning message on the Oled
   ShowOnOledLarge("Scanning", "for", "Trainer", 500);
   Bluefruit.Scanner.start(300); // 0 = Don't stop scanning or after n, in units of hundredth of a second (n/100)
@@ -249,7 +260,7 @@ All initialized --> Start the actual scanning
   }
 .    
 ```
-Initialize and setup BLE Uart functionality for connecting to smartphone
++ Initialize and setup BLE Uart functionality for connecting to smartphone
 ```C++
    bleuart.begin();
    bleuart.setRxCallback(prph_bleuart_rx_callback);
@@ -265,14 +276,17 @@ Initialize and setup BLE Uart functionality for connecting to smartphone
 ```
 <b>End of the Arduino Setup() Function</b><br>
 
-The callback functions are dominating completely the processing and loop() would never have been called, since there is a constant stream of FE-C packets that are coming in! <b>fecrd_notify_callback</b> does the bulk of the work!
++ The callback functions are dominating completely the processing and loop() would never have been called, since there is a constant stream of FE-C packets that are coming in! + + The function <b>fecrd_notify_callback</b> does the bulk of the work!
 ```C++
+.
     void loop()
     { // Do not use ... !!!
     }
+.
 ```
-fecrd_notify_callback is a callback that is triggered when a ANT+ message is sent from TACX Trainer
++ <b>fecrd_notify_callback</b> is a callback that is triggered when a ANT+ message is sent from TACX Trainer
 ```C++
+.
   void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len) {
 // The FE-C Read charateristic of ANT+ packets
 // In TACX context receive or send arrays of data ranging from 1--20 bytes so FE-C
@@ -288,7 +302,7 @@ fecrd_notify_callback is a callback that is triggered when a ANT+ message is sen
    }
 .   
 ```
-All ANT+ FE-C message pages are handled, parsed and relevant variables set to new values
++ All ANT+ FE-C message pages are handled, parsed and relevant variables set to new values
 ```C++
 // Show the actual values of the trainer on the Oled
   if (OledDisplaySelection == 1) {
@@ -303,7 +317,7 @@ All ANT+ FE-C message pages are handled, parsed and relevant variables set to ne
   }
 .  
 ```
-Send a request for Page 51 about every 4 seconds<br>
++ Send a request for Page 51 about every 4 seconds<br>
 
 # SIMCLINE Companion App<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/App_screens.jpg" alt="Companion App"><br clear="left">
@@ -311,13 +325,13 @@ After the project was more or less accomplished and running, practical experienc
 After some exploring of the field (I had no experience with App development), the outcome was to build one (for Android) in the accesible environment of [MIT App Inventor 2](http://appinventor.mit.edu).<br>
 
 # Flow and Some Code Snippets<br>
-At startup SIMCLINE starts (BLE) advertising, independent of whether a trainer connection is realized before or not! The Companion App establishes a connection over BLE and the Nordic UART service (a.k.a. BLEUART) for exchange of information is applied. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings (<= 20 bytes) containing diagnostic messages or cyling variables.<br>
-At first the SIMCLINE sends the latest (persistent) settings data to allow the App user to assess the current values.<br>
-The SIMCLINE sends regularly cyling data (like Speed, Power, Cadence, Grade etcetera) that were received from the trainer (in ANT+ FE-C packets) and processed.<br>
-At any time the App user changes the current settings or control data, the Companion App sends these to the SIMCLINE to make use of.<br>
++ At startup SIMCLINE starts (BLE) advertising, independent of whether a trainer connection is realized before or not! The Companion App establishes a connection over BLE and the Nordic UART service (a.k.a. BLEUART) for exchange of information is applied. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings (<= 20 bytes) containing diagnostic messages or cyling variables.<br>
++ At first the SIMCLINE sends the latest (persistent) settings data to allow the App user to assess the current values.
++ The SIMCLINE sends regularly cyling data (like Speed, Power, Cadence, Grade etcetera) that were received from the trainer (in ANT+ FE-C packets) and processed.
++ At any time the App user changes the current settings or control data, the Companion App sends these to the SIMCLINE to make use of.
 <img src="https://github.com/Berg0162/simcline/blob/master/images/ButtonSendCache.jpg" alt="Companion App"><br clear="left">
-The SIMCLINE receives asynchronously settings and sets the appropriate operational variables in accordance. This determines instantly the working of the equipment.<br>
-The settings are persistently stored for future use.<br>
++ The SIMCLINE receives asynchronously settings and sets the appropriate operational variables in accordance. This determines instantly the working of the equipment.
++ The settings are persistently stored for future use.
 ```C++
 .
 void prph_bleuart_rx_callback(uint16_t conn_handle) {
@@ -348,8 +362,8 @@ void prph_bleuart_rx_callback(uint16_t conn_handle) {
 .
 .
 ```
-In addition to the OLED display the Companion App can serve as an enhanced screen for road grade and cycling data.<br>
-Until the BLE connection is disconnected, manually or by quitting the App, both devices remain connected.<br>
++ In addition to the OLED display the Companion App can serve as an enhanced screen for road grade and cycling data.
++ Until the BLE connection is disconnected, manually or by quitting the App, both devices remain connected.
 
 # Mechanical Construction of SIMCLINE<br>
 There is an elaborated <b>Instructable</b> available with all the nitty gritty of how to buy or create, construct and install the various parts and components of the SIMCLINE.<br> 
