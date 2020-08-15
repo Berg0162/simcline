@@ -309,12 +309,13 @@ After the project was more or less accomplished and running, practical experienc
 After some exploring of the field (I had no experience with App development), the outcome was to build one (for Android) in the accesible environment of [MIT App Inventor 2](http://appinventor.mit.edu).<br>
 
 # Flow and Some Code Snippets<br>
-At startup SIMCLINE starts (BLE) advertising, independent of whether a trainer connection is realized before or not! The Companion App establishes a connection over BLE and the Nordic UART service (BLEUART) for exchange of information is applied. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings (<= 20 bytes) containing diagnostic messages or cyling variables.<br>
-At first the SIMCLINE sends the latest (persistent) settings data to allow the App user to have the current information.<br>
-The SIMCLINE sends regularly cyling data (like Speed, Power, Cadence, Grade etcetera) that was received from the trainer (in ANT+ FE-C packets) and processed.<br>
-Any time the App user changes the current settings or control data the Companion App sends these to the SIMCLINE.<br>
+At startup SIMCLINE starts (BLE) advertising, independent of whether a trainer connection is realized before or not! The Companion App establishes a connection over BLE and the Nordic UART service (a.k.a. BLEUART) for exchange of information is applied. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings (<= 20 bytes) containing diagnostic messages or cyling variables.<br>
+At first the SIMCLINE sends the latest (persistent) settings data to allow the App user to assess the current values.<br>
+The SIMCLINE sends regularly cyling data (like Speed, Power, Cadence, Grade etcetera) that were received from the trainer (in ANT+ FE-C packets) and processed.<br>
+At any time the App user changes the current settings or control data, the Companion App sends these to the SIMCLINE to make use of.<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/ButtonSendCache.jpg" alt="Companion App"><br clear="left">
-The SIMCLINE receives asynchronously settings and sets the appriate variables in accordance. This determines instantly the working of the equipment. The settings are persistently stored for future use.<br>
+The SIMCLINE receives asynchronously settings and sets the appropriate operational variables in accordance. This determines instantly the working of the equipment.<br>
+The settings are persistently stored for future use.<br>
 ```C++
 .
 void prph_bleuart_rx_callback(uint16_t conn_handle) {
@@ -345,9 +346,9 @@ void prph_bleuart_rx_callback(uint16_t conn_handle) {
 .
 .
 ```
-In addition to the OLED display the Companion App can serve as an extra screen for road grade and cycling data.<br>
+In addition to the OLED display the Companion App can serve as an enhanced screen for road grade and cycling data.<br>
 Until the BLE connection is disconnected, manually or by quitting the App, both devices remain connected.<br>
 
 # Mechanical Construction of SIMCLINE<br>
-There is an elaborated <b>Instructable</b> available with all the nitty gritty of how to construct and compose the material components of the SIMCLINE.<br> 
+There is an elaborated <b>Instructable</b> available with all the nitty gritty of how to buy or create, construct and install the various parts and components of the SIMCLINE.<br> 
 See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" align="left" alt="Instructables"> [SIMCLINE Instructables](https://www.instructables.com)
