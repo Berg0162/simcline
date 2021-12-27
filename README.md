@@ -375,7 +375,7 @@ There is an elaborated <b>Instructable</b> available with all the nitty gritty o
 See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" align="left" alt="Instructables"> [SIMCLINE Instructables](https://www.instructables.com/id/SIMCLINE-Simulation-of-Changing-Road-Incline-for-I/)
 <br>
 
-<br>
+
 # Simcline in TTS4 controlled operation<br>
 In the following images is shown how the Simcline is operating when different inclination values are applied by the training software. In the present situation the Simcline is controlled by the TACX Training System (TTS4 is no longer supported by Tacx). The software is still running on my laptop and is operating in Workout modus: Slope-Time. When setting the slope the Tacx trainer is instructed to set resistance with that inclination. The Simcline polls for this value with the Tacx trainer and sets the height of the front wheel axle in accordance. Notice the position and inclination with respect to the measuring tape. The measuring tape starts (zero centimeter position) at the lowest possible position of -10%. 10 Centimeter height is flat road level (0% inclination)....
 <br>
