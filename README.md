@@ -8,7 +8,9 @@ The physical reach is: 20% maximum incline and -10% maximum decline. However, th
 The SIMCLINE pairs directly to the TACX smart trainer for a connection that notifies the SIMCLINE to simulate autonomous the (change in) physical grade of the road during an indoor ride.<br>
 During operation an OLED display shows the road grade in digits and in graphics or cycling data from the trainer (speed, power, cadence, elapsed time and distance).<br>
 The SIMCLINE Companion App (for Android smartphones) can be paired simultaneously for adjusting operational settings, like Ascent Grade Limit (between 0-20%) and Descent Grade Limit (between 0-10%), Road Grade Change Factor (between 0-100%) and the type of OLED display format.<br clear="left"> 
+
 # [Experimental Simcline code support for Wahoo Kickr trainers](https://github.com/Berg0162/simcline/tree/master/Wahoo%20Kickr/)<br>
+
 # Electronic Components and Circuitry<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry.jpg"  alt="Circuitry">
 This project could have been elaborated with many different electronic parts that would lead to more or less the same succesfull end product. I have choosen for the following 4 active components: <br>
