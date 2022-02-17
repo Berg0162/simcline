@@ -13,7 +13,7 @@ The SIMCLINE Companion App (for Android smartphones) can be paired, only when th
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Man_in_the_Middle.png" align="left" width="1000" height="500" alt="Man in the Middle"><br>
 TACX published in 2015 a document [TACX, FE-C and Bluetooth](https://github.com/Berg0162/simcline/blob/master/docs/How_to_FE_C_over_BLE_v1_0_0.pdf) that explains how to use the FE-C ANT+ protocol over BLE feature implemented on all(?) TACX Smart Trainers. TACX designed this feature because at that time an open standard (on BLE) for trainers was lacking. However Wahoo did not officially publish any document describing their proprietary protocol to control a Wahoo Kickr over BLE. The major training App developers were invited (by Wahoo) to design their Apps for use with Wahoo products. No doubt they had to sign a non-disclosure agreement. While TACX has been transparent, Wahoo was definitely NOT! However, the internet is a great source for information about not so transparent companies. At first the Simcline was designed to successfully work with smart TACX trainers and after publication in the public domain several people applied the design to built their own. However most remarks/questions I received were about the application of a Wahoo Kickr trainer. Early this year 2022 I decided to put an effort in modifying the Simcline code in such a way that it would operate with a Wahoo Kickr and I choose to apply the Man-in-the-middle software pattern.<br>
 
-<b>Man-in-the-middle</b> is a powerfull software engineering pattern that is very broadly applied in many software designs. Unfortunately it is also known for a negative application in communication traffic: MITM is a common type of cybersecurity attack that allows attackers to eavesdrop on the communication between two targets.
+<b>Man-in-the-middle</b> is a powerful software engineering pattern that is applied in many software designs. Unfortunately it is also known for a negative application in communication traffic: MITM is a common type of cybersecurity attack that allows attackers to eavesdrop on the communication between two targets.
 We have applied the very principle: the Simcline is strategicly positioned in between the BLE communication of the Wahoo Kickr Trainer and the training App (like Zwift) running on the PC/Laptop, all communication traffic can be inspected in that MITM position, when it is passed on from one to the other, in both directions. When Zwift sends resistance information (like the road inclination) to the Wahoo Kickr, this information can be intercepted and applied to determine the up/down positioning of the Simcline. <br>
 
 Meanwhile there is well documented (<b>FTMS</b>) FiTness Machine Service protocol to control fitness equipment over Bluetooth. According to the smart trainer recommendations guide winter 2019-2020 of [DCRainmaker](https://www.dcrainmaker.com/2019/10/the-smart-trainer-recommendations-guide-winter-2019-2020.html) the situation evolved:
@@ -26,27 +26,30 @@ A next generation of Simclines will hopefully be based on this FTMS, when all co
 + Download all the code from [Github](https://github.com/Berg0162/simcline) and install.
 <br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry_02.jpg" align="left" width="200" height="200" alt="Cardboard">
-When I started the project in 2020 I did not have any practical experience with any of the components. So I had to setup the circuitry step by step adding components and did a lot of time consuming but instructive testing first. My advice is to setup (<b>some off</b>) the electronic components first in a similar way as shown on the photo with the cardboard base. Use double sided adhesive tape but only attach it on sections that have no pcb-wiring or soldering, to avoid possible electrical interference. You will find in this Github repository all the code that controls the Simcline and the Arduino test programs (modified for this project) that focus on components separately and in conjunction. <br clear="left">
+When I started the project in 2020 I did not have any practical experience with any of the components. So I had to setup the circuitry step by step adding components and did a lot of time consuming but instructive testing first. My advice is to setup (<b>some of</b>) the electronic components first in a similar way as shown on the photo with the cardboard base. Use double sided adhesive tape but only attach it on sections that have no pcb-wiring or soldering, to avoid possible electrical interference. You will find in this Github repository all the code that controls the Simcline and the Arduino test programs (modified for this project) that focus on components separately and in conjunction. <br clear="left">
 
 # To see is to believe<br>
 I can understand and respect that you have some reserve: Is this really working in my situation? Better test if it is working, before buying all components and start building.
 In the Github repository (see above) you will find the appropriate test code named: <b>Test_Wahoo_Zwift_Bridge_v03</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
+
 <b>What it does in short</b><br>
 The <b>Test_Wahoo_Zwift_Bridge</b> code links a PC/Laptop (BLE Server running Zwift) and a bike trainer BLE Client (Wahoo Kickr) with the Feather nRF52840/832 like a bridge in between, being the man-in-the-middle. The bridge can pass on, control, filter and alter the interchanged trafic data! This test code is fully ignorant of the mechanical components that drive the Simcline. It simply estabishes a virtual BLE bridge and allows you to ride the bike on the Wahoo trainer and feel the resistance that comes with it, thanks to Zwift. The experience should not differ from a normal direct one-to-one connection, Zwift - Wahoo Kickr!<br>
 + The client-side scans and connects with the Wahoo relevant Cycling Power Service (<b>CPS</b>) plus the additional Wahoo proprietary CPS characteristic and collects cyling power data like Zwift would do!
 + The Server-side advertises and enables connection with Cycling apps like Zwift and collects relevant resistance data, it simulates as if an active Wahoo trainer is connected to Zwift or alike!<br>
-<b>How to make it work?</b>
-+ To make it work you have to track down the BLE <b>MAC or Device addresses</b> of your Wahoo Kickr trainer and the PC/Laptop with Zwift. The code needs these "hardware" addresses to establish a BLE connection with the right devices. To avoid any possible misconnection these device addresses are critical! 
-+ Hardware requirements: running Zwift app or alike, Feather nRF52840/52832 board <u>plus</u> SSD1306 Oled display or alike and a Wahoo Kickr trainer
 
-1) First set in the Test_Wahoo_Zwift_Bridge code the BLE MAC addresses it has to connect with.
-1) Upload and Run this code on the Feather nRF52840
+<b>How to make it work?</b><br>
+The requirements are simple: running Zwift app or alike, working Feather nRF52840/52832 board <u>plus</u> SSD1306 Oled display and a Wahoo Kickr trainer.<br>
+To make it work you have to track down the BLE <b>MAC or Device addresses</b> of your Wahoo Kickr trainer and the PC/Laptop with Zwift. The <b>Test_Wahoo_Zwift_Bridge</b> code needs these "hardware" addresses to unmistakingly establish a BLE connection with the right device. I know it can differently but this is to 100% avoid any possible misconnection with an additional power meter, another fitness device or a second computer/laptop, etcetera. These device addresses are critical to assure a reliable test!<br> 
+Upload and Run the <b>Scan_for_Devices</b> code after you have powered the Wahoo trainer and your PC/Laptop (with Zwift) in the BLE neighbourhood to garantee these devices are visible for the Feather nRF52840 that is doing the scan. You can also install a BLE scanner on your smartphone and scan the environment for the Device Addresses. [see nRF Connect](https://www.nordicsemi.com/Products/Development-tools/nrf-connect-for-mobile/getstarted) for a free and very reliable and powerful BLE scanner.
+
+1) First set in the <b>Test_Wahoo_Zwift_Bridge</b> code the BLE MAC addresses it has to connect with
+2) Upload and Run this code on the Feather nRF52840
 2) Start the Serial Monitor to catch debugging info
-3) Start/Power On the Wahoo trainer  
+3) Start/Power-On the Wahoo trainer  
 4) Feather and Trainer will pair as reported on the Serial Monitor
 5) Start Zwift on your computer or tablet
-6) Search on Zwift pairing screen for the Feather nRF52 a.k.a. "Wahoo Sim"
-7) Pair: Power and Controllable with "Wahoo Sim"
+6) Search on Zwift pairing screen "<b>Power</b>" for the Feather nRF52 a.k.a. "<b>Wahoo Sim</b>"
+7) Pair <b>Power</b> and <b>Controllable</b> with "<b>Wahoo Sim</b>"
 8) Notice Wahoo does NOT support Speed nor Cadence, optionally pair with alternative
 9) After successful pairing start the default Zwift ride or any ride you wish
 10) Make Serial Monitor visible on top of the Zwift window 
