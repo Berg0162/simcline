@@ -9,6 +9,30 @@ The SIMCLINE pairs directly to the Wahoo Kickr smart trainer and with your PC/La
 During operation an OLED display shows the road grade in digits and in graphics.<br>
 The SIMCLINE Companion App (for Android smartphones) can be paired, only when the training App is disconnected, for adjusting operational settings, like Ascent Grade Limit (between 0-20%), Descent Grade Limit (between 0-10%), Road Grade Change Factor (between 0-100%) and manual Up and Down control. Notice that the Companion App has a slightly different functionality depending of what brand of trainer (TACX or Wahoo) is connected, due to specific connectivity differences. <br clear="left"> 
 
+# Man-in-the-middle (MITM) software pattern<br>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Man_in_the_Middle.png" align="left" width="1000" height="500" alt="Man in the Middle"><br>
+TACX published in 2015 a document [TACX, FE-C and Bluetooth](https://github.com/Berg0162/simcline/blob/master/docs/How_to_FE_C_over_BLE_v1_0_0.pdf) that explains how to use the FE-C ANT+ protocol over BLE feature implemented on all(?) TACX Smart Trainers. TACX designed this feature because at that time an open standard (on BLE) for trainers was lacking. However Wahoo did not officially publish any document describing their proprietary protocol to control a Wahoo Kickr over BLE. The major training App developers were invited (by Wahoo) to design their Apps for use with Wahoo products. No doubt they had to sign a non-disclosure agreement. While TACX has been transparent, Wahoo was definitely NOT! However, the internet is a great source for information about not so transparent companies. At first the Simcline was designed to successfully work with smart TACX trainers and after publication in the public domain several people applied the design to built their own. However most remarks/questions I received were about the application of a Wahoo Kickr trainer. Early this year 2022 I decided to put an effort in modifying the Simcline code in such a way that it would operate with a Wahoo Kickr and I choose to apply the Man-in-the-middle software pattern.<br>
+
+<b>Man-in-the-middle</b> is a powerfull software engineering pattern that is very broadly applied in many software designs. Unfortunately it is also known for a negative application in communication traffic: MITM is a common type of cybersecurity attack that allows attackers to eavesdrop on the communication between two targets.
+We have applied the very principle: the Simcline is strategicly positioned in between the BLE communication of the Wahoo Kickr Trainer and the training App (like Zwift) running on the PC/Laptop, all communication traffic can be inspected in that MITM position, when it is passed on from one to the other, in both directions. When Zwift sends resistance information (like the road inclination) to the Wahoo Kickr, this information can be intercepted and applied to determine the up/down positioning of the Simcline. <br>
+
+Meanwhile there is well documented (<b>FTMS</b>) FiTness Machine Service protocol to control fitness equipment over Bluetooth. According to the smart trainer recommendations guide winter 2019-2020 of [DCRainmaker](https://www.dcrainmaker.com/2019/10/the-smart-trainer-recommendations-guide-winter-2019-2020.html) the situation evolved:
+> Meanwhile, for Bluetooth Smart, there’s FTMS, which is basically the same thing as FE-C when it comes to trainers. It’s not quite as widely adopted yet by trainer companies, but is by app companies. On the trainer company side only Elite, Saris, and Kinetic support it across the board. With Tacx having it on some but not all units, and Wahoo having it on no units (but all Wahoo and Tacx trainers support a <b>proprietary</b> Bluetooth Smart with all major apps anyway).<br>
+
+A next generation of Simclines will hopefully be based on this FTMS, when all companies embrace its open standard, however, today we still have to open our box of tricks! <br>
+
+# How to start?<br>
++ Install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) and all the libraries on a PC/Mac.
++ Download all the code from [Github](https://github.com/Berg0162/simcline) and install.
+<br>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry_02.jpg" align="left" width="200" height="200" alt="Cardboard">
+When I started the project in 2020 I did not have any practical experience with any of the components. So I had to setup the circuitry step by step adding components and did a lot of time consuming but instructive testing first. My advice is to setup (<b>some off</b>) the electronic components first in a similar way as shown on the photo with the cardboard base. Use double sided adhesive tape but only attach it on sections that have no pcb-wiring or soldering, to avoid possible electrical interference. You will find in this Github repository all the code that controls the Simcline and the Arduino test programs (modified for this project) that focus on components separately and in conjunction. <br clear="left">
+
+# To see is to believe<br>
+I can understand and respect that you have some reserve: Is this really working in my situation? Better test if it is working, before buying all components and start building! <br>
+In the Github repository you will find the appropriate test code named: <b>Test_Wahoo_Zwift_Bridge_v03</b> to check if the MITM is delivering in your specific situation.
+<br clear="left">
+
 # Electronic Components and Circuitry<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry.jpg"  alt="Circuitry">
 This project could have been elaborated with many different electronic parts that would lead to more or less the same succesfull end product. I have choosen for the following 4 active components: <br>
@@ -24,21 +48,6 @@ Small display with screen of: 26.6 mm x 19 mm. Shows cycling data and diagnostic
 The sensor contains a very tiny laser source, and a matching sensor. The VL6180X can detect the "time of flight", or how long the laser light has taken to bounce back to the sensor. Since it uses a very narrow light source, it is perfect for determining distance of only the surface directly in front of it. The sensor registers quite accurately the (change in) position of the wheel axle during operation, by measuring the distance between the top of the inner frame and the reflection plate that is mounted on the carriage. The distance feedback of the sensor is crucial for determining how to set the position of the carriage and axle in accordance with the grade information that for example Zwift is using to set the resistance of the trainer. NOTICE: Install Right Angle Through Hole Male PCB Header Pins on the board.<br>
 In retrospect I do not regret the component choices made. All components are documented very well. There are lots of examples for use in an Arduino enviroment. They have turned out to be very reliable.<br clear="left">
 
-# How to start?<br>
-+ Install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) and all the libraries on a PC/Mac.
-+ Download all the code from [Github](https://github.com/Berg0162/simcline) and install.
-<br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry_02.jpg" align="left" width="200" height="200" alt="Cardboard">
-When I started the project I did not have any practical experience with any of the components. So I had to setup the circuitry step by step adding components and did a lot of time consuming but instructive testing first. My advice is to setup the electronic components first in a similar way as shown on the photo with the cardboard base. Use double sided adhesive tape but only attach it on sections that have no pcb-wiring or soldering, to avoid possible electrical interference. You will find in this Github repository all the code that controls the Simcline and the Arduino test programs (modified for this project) that focus on components seperately and in conjunction.<br clear="left">
-
-# Man in the middle<br>
-It took me a lot of time exploring the relevant techniques, protocols and software tools involved with ANT+, BLE and FE-C...
-
-Tacx published in 2015 a document [TACX, FE-C and Bluetooth](https://github.com/Berg0162/simcline/blob/master/docs/How_to_FE_C_over_BLE_v1_0_0.pdf) that explains how to use the FE-C ANT+ protocol over BLE feature implemented on all (?) Tacx Smart Trainers. Tacx designed this feature because at that time an open standard (on BLE) for trainers was lacking. <b>Always check if your TACX trainer has support for the FE-C ANT+ protocol over BLE feature, since NOT all TACX Smart Trainers that are labelled smart are equally smart!</b>
-Wahoo did not officially publish any document describing their proprietary protocol to control a Wahoo Kickr over BLE. However, the internet is again a great source for information about not so transparent companies.
-
-Now there is (<b>FTMS</b>) FiTness Machine Service protocol to control fitness equipment over Bluetooth. According to the smart trainer recommendations guide winter 2019-2020 of [DCRainmaker](https://www.dcrainmaker.com/2019/10/the-smart-trainer-recommendations-guide-winter-2019-2020.html) the situation evolved:
-> Meanwhile, for Bluetooth Smart, there’s FTMS, which is basically the same thing as FE-C when it comes to trainers. It’s not quite as widely adopted yet by trainer companies, but is by app companies. On the trainer company side only Elite, Saris, and Kinetic support it across the board. With Tacx having it on some but not all units, and Wahoo having it on no units (but all Wahoo and Tacx trainers support a <b>proprietary</b> Bluetooth Smart with all major apps anyway).<br>
 
 
 <b>How to detect the grade of the simulated track?</b><br>
