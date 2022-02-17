@@ -29,8 +29,29 @@ A next generation of Simclines will hopefully be based on this FTMS, when all co
 When I started the project in 2020 I did not have any practical experience with any of the components. So I had to setup the circuitry step by step adding components and did a lot of time consuming but instructive testing first. My advice is to setup (<b>some off</b>) the electronic components first in a similar way as shown on the photo with the cardboard base. Use double sided adhesive tape but only attach it on sections that have no pcb-wiring or soldering, to avoid possible electrical interference. You will find in this Github repository all the code that controls the Simcline and the Arduino test programs (modified for this project) that focus on components separately and in conjunction. <br clear="left">
 
 # To see is to believe<br>
-I can understand and respect that you have some reserve: Is this really working in my situation? Better test if it is working, before buying all components and start building! <br>
-In the Github repository you will find the appropriate test code named: <b>Test_Wahoo_Zwift_Bridge_v03</b> to check if the MITM is delivering in your specific situation.
+I can understand and respect that you have some reserve: Is this really working in my situation? Better test if it is working, before buying all components and start building.
+In the Github repository (see above) you will find the appropriate test code named: <b>Test_Wahoo_Zwift_Bridge_v03</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
+<b>What it does in short</b><br>
+The <b>Test_Wahoo_Zwift_Bridge</b> code links a PC/Laptop (BLE Server running Zwift) and a bike trainer BLE Client (Wahoo Kickr) with the Feather nRF52840/832 like a bridge in between, being the man-in-the-middle. The bridge can pass on, control, filter and alter the interchanged trafic data! This test code is fully ignorant of the mechanical components that drive the Simcline. It simply estabishes a virtual BLE bridge and allows you to ride the bike on the Wahoo trainer and feel the resistance that comes with it, thanks to Zwift. The experience should not differ from a normal direct one-to-one connection, Zwift - Wahoo Kickr!<br>
++ The client-side scans and connects with the Wahoo relevant Cycling Power Service (<b>CPS</b>) plus the additional Wahoo proprietary CPS characteristic and collects cyling power data like Zwift would do!
++ The Server-side advertises and enables connection with Cycling apps like Zwift and collects relevant resistance data, it simulates as if an active Wahoo trainer is connected to Zwift or alike!<br>
+<b>How to make it work?</b>
++ To make it work you have to track down the BLE <b>MAC or Device addresses</b> of your Wahoo Kickr trainer and the PC/Laptop with Zwift. The code needs these "hardware" addresses to establish a BLE connection with the right devices. To avoid any possible misconnection these device addresses are critical! 
++ Hardware requirements: running Zwift app or alike, Feather nRF52840/52832 board <u>plus</u> SSD1306 Oled display or alike and a Wahoo Kickr trainer
+
+1) First set in the Test_Wahoo_Zwift_Bridge code the BLE MAC addresses it has to connect with.
+1) Upload and Run this code on the Feather nRF52840
+2) Start the Serial Monitor to catch debugging info
+3) Start/Power On the Wahoo trainer  
+4) Feather and Trainer will pair as reported on the Serial Monitor
+5) Start Zwift on your computer or tablet
+6) Search on Zwift pairing screen for the Feather nRF52 a.k.a. "Wahoo Sim"
+7) Pair: Power and Controllable with "Wahoo Sim"
+8) Notice Wahoo does NOT support Speed nor Cadence, optionally pair with alternative
+9) After successful pairing start the default Zwift ride or any ride you wish
+10) Make Serial Monitor visible on top of the Zwift window 
+11) Hop on the bike and make it happen..
+12) Inspect the info presented by Serial Monitor and check the SSD1306 for the Zwift road inclination values.....
 <br clear="left">
 
 # Electronic Components and Circuitry<br>
