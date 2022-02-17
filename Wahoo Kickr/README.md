@@ -15,7 +15,6 @@ This project could have been elaborated with many different electronic parts tha
 <b>Cytron Motor Driver MDD3A.</b> Two channel motor driver for 12 V and 3 Amperes with buttons to test manually the working of the attached DC motor. This board enables the processor to set the Actuator motor in up or down movement. It transforms logical digital levels (Go Up, Go Down and Stop) from the Feather nRF52 to switching of 12 Volt at 3 Amperes max., the levels at which the Actuator works.<br>
 <b>Adafruit Feather nRF52840 Express</b><br>
 Is another easy-to-use all-in-one Bluetooth Low Energy board with a native-Bluetooth chip, the nRF52840! Notice that the Feather nRF52840 Express is to be prefered and has better value for money!
-
 > This chip has twice the flash, and four times the SRAM of its earlier sibling, the nRF52832 - 1 MB of FLASH and 256KB of SRAM. Compared to the nRF51, this board has 4-8 times more of everything.
 
 It's Adafruits's take on an 'all-in-one' Arduino-compatible + Bluetooth Low Energy with built in USB and battery charging. It is a low power, handsome and fast processor board with lots of memory and I/O pins. Can easily be programmed over the USB connection. The programmed Feather nRF52840 is communicating with (a) the trainer to collect power output  information and (b) with the training App for resistance settings (like grade) or (c) with the Companion App on your mobile phone. The programmed Feather nRF52 is in full control of the Simcline operation.<br>
@@ -35,9 +34,11 @@ When I started the project I did not have any practical experience with any of t
 # Man in the middle<br>
 It took me a lot of time exploring the relevant techniques, protocols and software tools involved with ANT+, BLE and FE-C...
 
-Tacx published in 2015 a document [TACX, FE-C and Bluetooth](https://github.com/Berg0162/simcline/blob/master/docs/How_to_FE_C_over_BLE_v1_0_0.pdf) that explains how to use the FE-C ANT+ protocol over BLE feature implemented on all (?) Tacx Smart Trainers. Tacx designed this feature because at that time an open standard (on BLE) for trainers was lacking. <b>Always check if your trainer has support for the FE-C ANT+ protocol over BLE feature, since NOT all TACX Smart Trainers that are labelled smart are equally smart!</b>
+Tacx published in 2015 a document [TACX, FE-C and Bluetooth](https://github.com/Berg0162/simcline/blob/master/docs/How_to_FE_C_over_BLE_v1_0_0.pdf) that explains how to use the FE-C ANT+ protocol over BLE feature implemented on all (?) Tacx Smart Trainers. Tacx designed this feature because at that time an open standard (on BLE) for trainers was lacking. <b>Always check if your TACX trainer has support for the FE-C ANT+ protocol over BLE feature, since NOT all TACX Smart Trainers that are labelled smart are equally smart!</b>
+Wahoo did not officially publish any document describing their proprietary protocol to control a Wahoo Kickr over BLE. However, the internet is again a great source for information about not so transparent companies.
+
 Now there is (<b>FTMS</b>) FiTness Machine Service protocol to control fitness equipment over Bluetooth. According to the smart trainer recommendations guide winter 2019-2020 of [DCRainmaker](https://www.dcrainmaker.com/2019/10/the-smart-trainer-recommendations-guide-winter-2019-2020.html) the situation evolved:
-> Meanwhile, for Bluetooth Smart, there’s FTMS, which is basically the same thing as FE-C when it comes to trainers. It’s not quite as widely adopted yet by trainer companies, but is by app companies. On the trainer company side only Elite, Saris, and Kinetic support it across the board. With Tacx having it on some but not all units, and Wahoo having it on no units (but all Wahoo and Tacx trainers support private Bluetooth Smart with all major apps anyway).<br>
+> Meanwhile, for Bluetooth Smart, there’s FTMS, which is basically the same thing as FE-C when it comes to trainers. It’s not quite as widely adopted yet by trainer companies, but is by app companies. On the trainer company side only Elite, Saris, and Kinetic support it across the board. With Tacx having it on some but not all units, and Wahoo having it on no units (but all Wahoo and Tacx trainers support a <b>proprietary</b> Bluetooth Smart with all major apps anyway).<br>
 
 
 <b>How to detect the grade of the simulated track?</b><br>
