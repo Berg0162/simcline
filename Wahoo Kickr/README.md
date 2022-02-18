@@ -9,11 +9,11 @@ The SIMCLINE pairs directly to the Wahoo Kickr smart trainer and with your PC/La
 During operation an OLED display shows the road grade in digits and in graphics.<br>
 The SIMCLINE Companion App (for Android smartphones) can be paired, only when the training App is disconnected, for adjusting operational settings, like Ascent Grade Limit (between 0-20%), Descent Grade Limit (between 0-10%), Road Grade Change Factor (between 0-100%) and manual Up and Down control. Notice that the Companion App has a slightly different functionality depending of what brand of trainer (TACX or Wahoo) is connected, due to specific connectivity differences. <br clear="left"> 
 
-# Man-in-the-middle (MITM) software pattern<br>
+# Man-In-The-Middle (MITM) software pattern<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Man_in_the_Middle.png" align="left" width="1000" height="500" alt="Man in the Middle"><br>
-TACX published in 2015 a document [TACX, FE-C and Bluetooth](https://github.com/Berg0162/simcline/blob/master/docs/How_to_FE_C_over_BLE_v1_0_0.pdf) that explains how to use the FE-C ANT+ protocol over BLE feature implemented on all(?) TACX Smart Trainers. TACX designed this feature because at that time an open standard (on BLE) for trainers was lacking. However Wahoo did not officially publish any document describing their proprietary protocol to control a Wahoo Kickr over BLE. The major training App developers were invited (by Wahoo) to design their Apps for use with Wahoo products. No doubt they had to sign a non-disclosure agreement. While TACX has been transparent, Wahoo was definitely NOT! However, the internet is a great source for information about not so transparent companies. At first the Simcline was designed to successfully work with smart TACX trainers and after publication in the public domain several people applied the design to built their own. However most remarks/questions I received were about the application of a Wahoo Kickr trainer. Early in the year 2022, I decided to put an effort in modifying the Simcline code in such a way that it would operate with a Wahoo Kickr and I choose to apply the Man-in-the-middle software pattern, since that will work with all smart Kickr trainers, young and relatively older!<br>
+TACX published in 2015 a document [TACX, FE-C and Bluetooth](https://github.com/Berg0162/simcline/blob/master/docs/How_to_FE_C_over_BLE_v1_0_0.pdf) that explains how to use the FE-C ANT+ protocol over BLE feature implemented on all(?) TACX Smart Trainers. TACX designed this feature because at that time an open standard (on BLE) for trainers was lacking. However Wahoo did not officially publish any document describing their proprietary protocol to control a Wahoo Kickr over BLE. The major training App developers were invited (by Wahoo) to design their Apps for use with Wahoo products. No doubt they had to sign a non-disclosure agreement. While TACX has been transparent, Wahoo was definitely NOT! However, the internet is a great source for information about not so transparent companies. At first the Simcline was designed to successfully work with smart TACX trainers and after publication in the public domain several people applied the design to built their own. However most remarks/questions I received were about the application of a Wahoo Kickr trainer. Early in the year 2022, I decided to put an effort in modifying the Simcline code in such a way that it would operate with a Wahoo Kickr and I have choosen to apply the Man-in-the-middle software pattern, since that will work with all smart Kickr trainers, young and relatively older!<br>
 
-<b>Man-in-the-middle</b> is a powerful software engineering pattern that is applied in many software designs. Unfortunately it is also known for a negative application in communication traffic: MITM is a common type of cybersecurity attack that allows attackers to eavesdrop on the communication between two targets.
+<b>Man-In-The-Middle</b> is a powerful software engineering pattern that is applied in many software designs. Unfortunately it is also known for a negative application in communication traffic: MITM is a common type of cybersecurity attack that allows attackers to eavesdrop on the communication between two targets.
 We have applied the very principle: the Simcline is strategicly positioned in between the BLE communication of the Wahoo Kickr Trainer and the training App (like Zwift) running on the PC/Laptop, all communication traffic can be inspected in that MITM position, when it is passed on from one to the other, in both directions. When Zwift sends resistance information (like the road inclination) to the Wahoo Kickr, this information can be intercepted and applied to determine the up/down positioning of the Simcline. <br>
 
 Meanwhile there is well documented (<b>FTMS</b>) FiTness Machine Service protocol to control fitness equipment over Bluetooth. According to the smart trainer recommendations guide winter 2019-2020 of [DCRainmaker](https://www.dcrainmaker.com/2019/10/the-smart-trainer-recommendations-guide-winter-2019-2020.html) the situation evolved:
@@ -32,17 +32,22 @@ When I started the project in 2020 I did not have any practical experience with 
 I can understand and respect that you have some reserve: Is this really working in my situation? Better test if it is working, before buying all components and start building.
 In the Github repository (see above) you will find the appropriate test code named: <b>Test_Wahoo_Zwift_Bridge_v03</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
 
-<b>What it does in short</b><br>
-The <b>Test_Wahoo_Zwift_Bridge</b> code links a PC/Laptop (BLE Server running Zwift) and a bike trainer BLE Client (Wahoo Kickr) with the Feather nRF52840/832 like a bridge in between, being the man-in-the-middle. The bridge can pass on, control, filter and alter the interchanged trafic data! This test code is fully ignorant of the mechanical components that drive the Simcline. It simply estabishes a virtual BLE bridge and allows you to ride the bike on the Wahoo trainer and feel the resistance that comes with it, thanks to Zwift. The experience should not differ from a normal direct one-to-one connection, Zwift - Wahoo Kickr!<br>
+<b>What it does in short:</b><br>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Wahoo_Feather_Zwift_BLE.png" align="left" width="1000" height="500" alt="Simcline in the Middle"><br>
+The <b>Test_Wahoo_Zwift_Bridge</b> code links a bike trainer (BLE Server Wahoo Kickr) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52840/832, like a bridge in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! This test code is fully ignorant of the mechanical components that drive the Simcline. It simply estabishes a virtual BLE bridge and allows you to ride the bike on the Wahoo trainer and feel the resistance that comes with it, thanks to Zwift. The experience should not differ from a normal direct one-to-one connection, Zwift - Wahoo Kickr!<br>
 + The client-side scans and connects with the Wahoo relevant Cycling Power Service (<b>CPS</b>) plus the additional Wahoo proprietary CPS characteristic and collects cyling power data like Zwift would do!
-+ The Server-side advertises and enables connection with Cycling apps like Zwift and collects relevant resistance data, it simulates as if an active Wahoo trainer is connected to Zwift or alike!<br>
++ The Server-side advertises and enables connection with Cycling apps like Zwift and collects relevant resistance data, it simulates as if an active Wahoo trainer is connected to Zwift or alike!<br clear="left">
 
 <b>How to make it work?</b><br>
-The requirements are simple: running Zwift app or alike, working Feather nRF52840/52832 board <u>plus</u> SSD1306 Oled display and a Wahoo Kickr trainer.<br>
-To make it work you have to track down the BLE <b>MAC or Device addresses</b> of your Wahoo Kickr trainer and the PC/Laptop with Zwift. The <b>Test_Wahoo_Zwift_Bridge</b> code needs these "hardware" addresses to unmistakingly establish a BLE connection with the right device. I know it can differently but this is to 100% avoid any possible misconnection with an additional power meter, another fitness device or a second computer/laptop, etcetera. These device addresses are critical to assure a reliable test!<br> 
-Upload and Run the <b>Scan_for_Devices</b> code after you have powered the Wahoo trainer and your PC/Laptop (with Zwift) in the BLE neighbourhood to garantee these devices are visible for the Feather nRF52840 that is doing the scan. You can also install a BLE scanner on your smartphone and scan the environment for the Device Addresses. [see nRF Connect](https://www.nordicsemi.com/Products/Development-tools/nrf-connect-for-mobile/getstarted) for a free and very reliable and powerful BLE scanner.
+The requirements are simple: 
++ running Zwift app or alike, 
++ working Feather nRF52840/52832 board <u>plus</u> SSD1306 Oled display and 
++ a Wahoo Kickr trainer.<br>
 
-1) First set in the <b>Test_Wahoo_Zwift_Bridge</b> code the BLE MAC addresses it has to connect with
+However, to make it work you have to track down the BLE <b>MAC or Device addresses</b> of your Wahoo Kickr trainer and the PC/Laptop with Zwift. The <b>Test_Wahoo_Zwift_Bridge</b> code needs these "hardware" addresses to unmistakingly establish a BLE connection with the right device. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera. The two precise device addresses are critical to assure a reliable test!<br> 
+Upload and Run the <b>Scan_for_Devices</b> code after you have powered the Wahoo trainer and your PC/Laptop (with Zwift) in the BLE neighbourhood to garantee these devices are visible for the Feather nRF52840 that is doing the BLE scan for devices. You can also install a BLE scanner on your smartphone and scan the environment for the Device Addresses. [See nRF Connect](https://www.nordicsemi.com/Products/Development-tools/nrf-connect-for-mobile/getstarted) for a free and very reliable and powerful BLE scanner.
+
+1) First insert in the <b>Test_Wahoo_Zwift_Bridge</b> code the two precise BLE MAC addresses it has to connect with
 2) Upload and Run this code on the Feather nRF52840
 2) Start the Serial Monitor to catch debugging info
 3) Start/Power-On the Wahoo trainer  
@@ -63,6 +68,7 @@ This project could have been elaborated with many different electronic parts tha
 <b>Cytron Motor Driver MDD3A.</b> Two channel motor driver for 12 V and 3 Amperes with buttons to test manually the working of the attached DC motor. This board enables the processor to set the Actuator motor in up or down movement. It transforms logical digital levels (Go Up, Go Down and Stop) from the Feather nRF52 to switching of 12 Volt at 3 Amperes max., the levels at which the Actuator works.<br>
 <b>Adafruit Feather nRF52840 Express</b><br>
 Is another easy-to-use all-in-one Bluetooth Low Energy board with a native-Bluetooth chip, the nRF52840! Notice that the Feather nRF52840 Express is to be prefered and has better value for money!
+
 > This chip has twice the flash, and four times the SRAM of its earlier sibling, the nRF52832 - 1 MB of FLASH and 256KB of SRAM. Compared to the nRF51, this board has 4-8 times more of everything.
 
 It's Adafruits's take on an 'all-in-one' Arduino-compatible + Bluetooth Low Energy with built in USB and battery charging. It is a low power, handsome and fast processor board with lots of memory and I/O pins. Can easily be programmed over the USB connection. The programmed Feather nRF52840 is communicating with (a) the trainer to collect power output  information and (b) with the training App for resistance settings (like grade) or (c) with the Companion App on your mobile phone. The programmed Feather nRF52 is in full control of the Simcline operation.<br>
@@ -72,8 +78,6 @@ Small display with screen of: 26.6 mm x 19 mm. Shows cycling data and diagnostic
 The sensor contains a very tiny laser source, and a matching sensor. The VL6180X can detect the "time of flight", or how long the laser light has taken to bounce back to the sensor. Since it uses a very narrow light source, it is perfect for determining distance of only the surface directly in front of it. The sensor registers quite accurately the (change in) position of the wheel axle during operation, by measuring the distance between the top of the inner frame and the reflection plate that is mounted on the carriage. The distance feedback of the sensor is crucial for determining how to set the position of the carriage and axle in accordance with the grade information that for example Zwift is using to set the resistance of the trainer. NOTICE: Install Right Angle Through Hole Male PCB Header Pins on the board.<br>
 In retrospect I do not regret the component choices made. All components are documented very well. There are lots of examples for use in an Arduino enviroment. They have turned out to be very reliable.<br clear="left">
 
-
-
 <b>How to detect the grade of the simulated track?</b><br>
 The SIMCLINE is paired with the trainer over a different channel: Bluetooth! In that configuration it is complying to the ANT+ FE-C protocol as well but over Bluetooth LE. The trainer is not only broadcasting FE-C messages with cycling data (speed, cadence, power, etcetera) over ANT+ to the <b>controller</b>-application (like Zwift), but also over the BLE connection to the paired Feather nRF52. The program of the Feather nRF52 is dealing with these data in its own way, independent of the <b>ANT+ controller</b>-application.
 At regular intervals the Feather nRF52 is programmed to send a socalled Common Page 70 (0x46) (Request Data Page) with the request data page field set to Data Page <b>51</b>.
@@ -81,13 +85,12 @@ At regular intervals the Feather nRF52 is programmed to send a socalled Common P
 .
 .
 ```
-<br>
+
 ```C++
 .
- 
 .
 ```
-</br>
+
 # Overview of Arduino Program Code Flow and Snippets<br>
 + Include headers of libraries and declare classes
 ```C++
