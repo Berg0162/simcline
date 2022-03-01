@@ -50,8 +50,8 @@ Please follow the instructions at the first part of the program code!
 + Start your reconnaissance with running <b>Test_Wahoo_Client_v03</b> and experience how the Feather is controlling the resistance of your Wahoo trainer. 
 + Next step is running <b>Test_Wahoo_Server_v03</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the Feather.<br>
 
-<i>The 2 test programs (client and Server) are NOT using a SSD1306 display, only Serial Monitor to show what is happening!</i><br>
-Please make notes of the MAC or Device Addresses of a) your Wahoo trainer and b) your Desktop/Laptop with Zwift. These are presented in the Serial Monitor log file when running the Client and Server test code.<br>
+<i>The 2 test programs (Client and Server) are NOT using a SSD1306 display, only Serial Monitor to show what is happening!</i><br>
+Please write down the MAC or Device Addresses of a) your Wahoo trainer and b) your Desktop/Laptop with Zwift. These are presented in the Serial Monitor log file when running the Client and Server test code.<br>
 
 <b>Now it is time to test the bridge</b><br>
 The <b>Test_Wahoo_Zwift_Bridge_v03</b> code needs these "hardware" addresses to unmistakingly establish a BLE connection with the right device. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera. The two precise device addresses are critical to assure a reliable test! You have to insert the values in the program code!<br> 
