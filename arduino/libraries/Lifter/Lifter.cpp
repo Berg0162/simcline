@@ -1,21 +1,92 @@
+/*
+ * Lifter class: all basic up/down/brake actions 
+ * Version #2 code changes
+ * 10/01/2022 -> VL6180X timeout errors -> reset VL6180X separately and continue
+ * 10/02/2022 -> More debug info, rework of settings, Single Shot is active, delay's deleted
+ * 
+ */
 #include "Lifter.h"
 #include "SPI.h"
 #include "Wire.h"
 
-//#include "Adafruit_GFX.h"
-//#include "Adafruit_SSD1306.h"
+// NOTICE: COMPILER DIRECTIVE !!!!
+// that leaves in or out almost all Serial.print statements!
+// UNCOMMENT TO ACTIVATE
+//#define DEBUG 1
+
+// NOTICE: COMPILER DIRECTIVE !!!!
+// setup VL6180X Range Continuous or Single Shot, read the manual.... 
+#define _RANGE_CONTINUOUS 0 // 1 = Range Continuous   0 = Single Shot
 
 #include "MovingAverageFilter.h"
 // Declare the running average filter for VL6180X Range measurements
 // Filter is only used in the Lifter Class 
 // Sampling is at about 10 Hz --> 10 VL6180X-RANGE-readings per second
-#define NUMBER_OF_RANGE_READINGS 10
+#define _NUMBER_OF_RANGE_READINGS 10
 // Instantiate MovingAverageFilter class
-  MovingAverageFilter movingAverageFilter_Range(NUMBER_OF_RANGE_READINGS);
-  
+  MovingAverageFilter movingAverageFilter_Range(_NUMBER_OF_RANGE_READINGS);
 // Instantiate Lifter class
   Lifter::Lifter() {
   }
+
+void Lifter::Fill_Moving_Average_Filter(void)
+{
+  // fill the movingAverageFilter with current values
+  // these blur operation when movement changes of direction
+#ifdef DEBUG
+    Serial.print("ToF Range: ");
+#endif
+  for (int i = 0; i < _NUMBER_OF_RANGE_READINGS; i++) {
+    _CurrentPosition = GetVL6180X_Range_Reading();
+#ifdef DEBUG
+    Serial.printf("%03d ", _CurrentPosition);
+#endif
+    } 
+#ifdef DEBUG
+  Serial.println();
+#endif
+}
+
+void Lifter::InitVL6180X(void)
+{  
+// setup wire communication and default settings for the VL6180X
+#ifdef DEBUG
+  Serial.print("Wire I2C and ToF VL6180X Initialized"); Serial.println();
+#endif
+  Wire.begin();
+// setup VL6180X settings and operating mode
+// Range Continuous or Single Shot, read the manual.... 
+// Set scaling (after configureDefault = 1) of the VL6180X to approriate value 1, 2 or 3
+// Only scaling factors  #3 will work in our situation of 30+ cm range !!!!
+#define _SCALING 3
+  sensor.init();
+  sensor.configureDefault();
+  sensor.setScaling(_SCALING);
+// Single shot operating mode of VL6180X is simplest and default
+// The following is extra code critical for using Continuous mode !!!
+#if _RANGE_CONTINUOUS
+  // Reduce range max convergence time and the inter-measurement
+  // -time to 30 ms and 50 ms, respectively, to allow 10 Hz
+  // operation. Somewhat more power consumption but higher accuracy!
+  sensor.writeReg(VL6180X::SYSRANGE__MAX_CONVERGENCE_TIME, 30);
+  sensor.writeReg(VL6180X::SYSRANGE__INTERMEASUREMENT_PERIOD, 50);
+  // stop continuous mode if already active
+  sensor.stopContinuous();
+  // in case stopContinuous() triggered a single-shot
+  // measurement, wait for it to complete
+  delay(300);
+  // start range continuous mode with a period of 100 ms
+  sensor.startRangeContinuous(100);
+  #ifdef DEBUG
+  Serial.print("VL6180X Range Continuous Mode Selected"); Serial.println();
+  #endif
+#else 
+  #ifdef DEBUG
+  Serial.print("VL6180X Single Shot Mode Selected"); Serial.println();
+  #endif
+#endif
+  sensor.setTimeout(500);
+}
 
 void Lifter::Init(int OutPin1, int OutPin2, int MINPOS, int MAXPOS, int BANDWTH)
 {
@@ -31,11 +102,7 @@ void Lifter::Init(int OutPin1, int OutPin2, int MINPOS, int MAXPOS, int BANDWTH)
   _BANDWIDTH = BANDWTH;
   _MINPOSITION = MINPOS;
   _MAXPOSITION = MAXPOS;
-
-  // NOTICE: COMPILER DIRECTIVE !!!!
-  // that leaves out almost all print statements!
-//#define DEBUG is uit !!
-  
+ 
 #ifdef DEBUG
   Serial.print("Pin1: "); Serial.print(_actuatorOutPin1); Serial.print(" Pin2: "); Serial.print(_actuatorOutPin2); 
   Serial.print(" BandWidth: "); Serial.print(_BANDWIDTH); Serial.print(" MinPosition: "); Serial.print(_MINPOSITION);
@@ -46,63 +113,34 @@ void Lifter::Init(int OutPin1, int OutPin2, int MINPOS, int MAXPOS, int BANDWTH)
   _IsMovingUp = false;
   _IsMovingDown = false;
   _TargetPosition = 400; // Choose the safe value of a flat road
-  
-// setup wire communication and defaults for the VL6180X
-  Wire.begin();
-  
-// setup VL6180X settings and operating mode
-// Range Continuous or Single Shot, read the manual.... 
-// NOTICE: COMPILER DIRECTIVE !!!!
-  #define RANGE_CONTINUOUS
-// Set scaling (after configureDefault = 1) of the VL6180X to approriate value 1, 2 or 3
-//  Only scaling factors  #3 will work in our situation of 30+ cm range
-  #define _SCALING 3
-  sensor.init();
-  sensor.configureDefault();
-  sensor.setScaling(_SCALING);
-// Single shot operating mode of VL6180X is simplest and default
-// The following is extra code critical for using Continuous mode !!!
-  #ifdef RANGE_CONTINUOUS
-  // Reduce range max convergence time and the inter-measurement
-  // -time to 30 ms and 50 ms, respectively, to allow 10 Hz
-  // operation. Somewhat more power consumption but higher accuracy!
-  sensor.writeReg(VL6180X::SYSRANGE__MAX_CONVERGENCE_TIME, 30);
-  sensor.writeReg(VL6180X::SYSRANGE__INTERMEASUREMENT_PERIOD, 50);
-  // stop continuous mode if already active
-  sensor.stopContinuous();
-  // in case stopContinuous() triggered a single-shot
-  // measurement, wait for it to complete
-  delay(300);
-  // start range continuous mode with a period of 100 ms
-  sensor.startRangeContinuous(100);
-#ifdef DEBUG
-  Serial.print(" ---------- VL6180X Range Continuous Mode Selected ---------"); Serial.println();
-#endif
-  #endif
-  sensor.setTimeout(500);
-  
-// fill the movingAverageFilter with actual values instead of default zero's....
-// that blur operation in the early stages (of testing..)
-  for (int i = 0; i < 10; i++) {
-    _CurrentPosition = GetVL6180X_Range_Reading();
-    } 
+// ------------version #2 Setup I2C and initialize VL6180X
+  InitVL6180X(); 
+// ----------- version #2
+  // fill the movingAverageFilter with actual values instead of default zero's....
+  // that blur operation in the early stages (of testing..)
+  Fill_Moving_Average_Filter();
 }
 
 int16_t Lifter::GetVL6180X_Range_Reading()
 {
- #ifdef RANGE_CONTINUOUS
+#if _RANGE_CONTINUOUS
     int16_t temp = sensor.readRangeContinuousMillimeters();
- #else
+#else
     int16_t temp = sensor.readRangeSingleMillimeters();
- #endif
-    if (sensor.timeoutOccurred()) 
-        { 
-#ifdef DEBUG
-        Serial.print(" TIMEOUT"); Serial.println();
 #endif
+    if (sensor.timeoutOccurred()) 
+        {
+#ifdef DEBUG
+        Serial.print(">> ERROR << --> VL6180X reports TIMEOUT --> VL6180X is reset --> continue"); Serial.println();
+#endif
+        // ------------version #2 handle timeout error state VL6180X
+        brakeActuator();         // Stop any movement to avoid erroneous behavior of the Actuator
+        InitVL6180X();           // Initialize ToF VL6180X again --> this resets timeout error state!
+        return _CurrentPosition; // Do NOT use latest (temp) reading, it is not valid due to the timeout!!
+        // ----------- version #2
         }
   return movingAverageFilter_Range.process(temp);  
-}
+} 
 
 bool Lifter::TestBasicMotorFunctions()
 {
@@ -116,7 +154,7 @@ bool Lifter::TestBasicMotorFunctions()
   if (PresentPosition01 != (constrain(PresentPosition01, _MINPOSITION, _MAXPOSITION)) )
   { // VL6108X is out of Range ... ?
 #ifdef DEBUG
-    Serial.print(">> ERROR << -> VL6108X Out of Range at start !!"); Serial.println();
+    Serial.print(">> ERROR << --> VL6108X Out of Range at start !!"); Serial.println();
 #endif
     return false; 
   }
@@ -126,11 +164,6 @@ bool Lifter::TestBasicMotorFunctions()
   moveActuatorUp();
   delay(800); // Wait for some time
   brakeActuator();
-  
-  for (int i = 0; i < 10; i++) {  // Determine precise position after 800 ms of movement !
-     _CurrentPosition = GetVL6180X_Range_Reading();
-     } 
- 
   int16_t PresentPosition02 = (_CurrentPosition + _BANDWIDTH);
   if (PresentPosition02 != (constrain(PresentPosition02, _MINPOSITION, _MAXPOSITION)) )
   { // VL6108X is out of Range ... ?
@@ -153,11 +186,6 @@ bool Lifter::TestBasicMotorFunctions()
   moveActuatorDown();
   delay(1600); // Wait some time (extra to "undo" the previous Up movement!!)
   brakeActuator();
-  
-  for (int i = 0; i < 10; i++) {  // Determine precise position after 2400 ms of movement !
-     _CurrentPosition = GetVL6180X_Range_Reading();
-     } 
- 
   PresentPosition01 = (_CurrentPosition - _BANDWIDTH);
   if (PresentPosition01 != (constrain(PresentPosition01, _MINPOSITION, _MAXPOSITION)) )
   { // VL6108X is out of Range ... ?
@@ -188,7 +216,7 @@ int Lifter::GetOffsetPosition()
   if (sensor.timeoutOccurred()) 
     {
 #ifdef DEBUG 
-      Serial.print(" TIMEOUT"); Serial.println();
+      Serial.print("VL6180X persists in TIMEOUT error state!"); Serial.println();
 #endif
     return 3;
     }
@@ -197,22 +225,11 @@ int Lifter::GetOffsetPosition()
   Serial.print("  Current: "); Serial.print(_CurrentPosition);
   Serial.print("  Offset: "); Serial.print(_PositionOffset); 
 #endif
-  /* Show position on OLED
-  display.clearDisplay();
-  display.setTextColor(SSD1306_WHITE);
-  display.setTextSize(2);  // Large characters
-  display.setCursor(36,2);
-  display.print(_PositionOffset);
-  display.setTextSize(2);  // Large characters
-  display.setCursor(32,22);
-  display.print(_CurrentPosition); 
-  display.display(); 
-  */
-  
+ 
   if ( (_PositionOffset >= -_BANDWIDTH) && (_PositionOffset <= _BANDWIDTH) )
     { // postion = 0 + or - BANDWIDTH so don't move anymore!
 #ifdef DEBUG
-    Serial.print(" offset = 0 (within bandwidth) "); Serial.println();
+    Serial.printf(" offset = 0 (within bandwidth %1d) ", _BANDWIDTH); Serial.println();
 #endif
     return 0; 
     }
@@ -259,7 +276,6 @@ void Lifter::moveActuatorUp()
     
     digitalWrite(_actuatorOutPin1, LOW);                           
     digitalWrite(_actuatorOutPin2, HIGH);
-    delay(200);
     _IsMovingUp = true;
     _IsMovingDown = false;
     _IsBrakeOn = false;
@@ -286,7 +302,6 @@ void Lifter::moveActuatorDown()
     // moving in the wrong direction or not moving at all
     digitalWrite(_actuatorOutPin1, HIGH);                           
     digitalWrite(_actuatorOutPin2, LOW);
-    delay(200);
     _IsMovingDown = true;
     _IsMovingUp = false;
     _IsBrakeOn = false;
@@ -302,10 +317,11 @@ void Lifter::brakeActuator()
     if (_IsBrakeOn) {return;}
     digitalWrite(_actuatorOutPin1, LOW);
     digitalWrite(_actuatorOutPin2, LOW);
-    delay(200);
     _IsBrakeOn = true;
     _IsMovingDown = false;
     _IsMovingUp = false; 
+    // Consolidate present position
+    Fill_Moving_Average_Filter();
 #ifdef DEBUG   
     Serial.println(" Set Brake On ");
 #endif

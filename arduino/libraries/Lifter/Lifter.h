@@ -22,6 +22,8 @@ class Lifter {
   int _BANDWIDTH;
   int _MINPOSITION;
   int _MAXPOSITION;
+  void InitVL6180X(void);
+  void Fill_Moving_Average_Filter(void);
   
 public:
  
