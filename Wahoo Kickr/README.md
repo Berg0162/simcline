@@ -196,8 +196,57 @@ BLEClientCharacteristic client_dissn(CHARACTERISTIC_SERIAL_NUMBER_STRING);
 .
 ```
 ```C++
+.
+/* ------------------------------------------------------------------------------------------------
+ * Warning I/O Pins have identical position but different naming depending on the processor board
+ * I/O Pin declarations for connection to Motor driver board MDD3A
+*/
+#if defined(ARDUINO_NRF52840_FEATHER) 
+  #define actuatorOutPin1 A0   // --> A0/P0.02 connected to pin M1A of the MDD3A Motor Driver board
+  #define actuatorOutPin2 A1   // --> A1/P0.03 connected to pin M1B of the MDD3A Motor Driver board
+#endif
+#if defined(ARDUINO_NRF52832_FEATHER) 
+  #define actuatorOutPin1 2    // --> A0/P0.02 connected to pin M1A of the MDD3A Motor Driver board
+  #define actuatorOutPin2 3    // --> A1/P0.03 connected to pin M1B of the MDD3A Motor Driver board
+#endif
+.
 // Declaration of Function prototypes
+int16_t EMA_TargetPositionFilter(int16_t current_value); // EMA filter function for smoothing Target Position values
+void ShowIconsOnTopBar(void);
+void ShowOnOledLarge(const char* Line1, const char* Line2, const char* Line3, uint16_t Pause);
+void ShowSlopeTriangleOnOled(void);
 
+void SetNewRawGradeValue(float RoadGrade);
+void SetManualGradePercentValue(void);
+void SetNewActuatorPosition(void);
+void ControlUpDownMovement(void);
+
+bool getPRSdata(void);
+void setPRSdata(void);
+
+void StartAdvBLEuart(void);
+void prph_bleuart_rx_callback(uint16_t conn_handle);
+
+void Setup_Client_CPS(void);
+void Client_Start_Scanning(void);
+void client_scan_callback(ble_gap_evt_adv_report_t* report);
+void Client_Enable_Notify_Indicate(void);
+void Client_connect_callback(uint16_t conn_handle);
+void Get_client_Diss(uint16_t conn_handle);
+void Client_disconnect_callback(uint16_t conn_handle, uint8_t reason);
+void client_cpcp_indicate_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len);
+void client_cpmc_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len);
+void client_cpwt_indicate_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len);
+
+void Setup_Server_CPS(void);
+void Start_Server_Advertising(void);
+void server_cpwt_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* data, uint16_t len);
+void server_cpcp_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* data, uint16_t len);
+void Periph_adv_stop_callback(void);
+void Periph_connect_callback(uint16_t conn_handle); 
+void Periph_disconnect_callback(uint16_t conn_handle, uint8_t reason);
+void server_cccd_callback(uint16_t conn_handle, BLECharacteristic* chr, uint16_t cccd_value);
+// End Function Definitions
 ```
 <b>Begin of the Arduino Setup() Function</b><br>
 + Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!
@@ -210,83 +259,101 @@ lift.Init(actuatorOutPin1, actuatorOutPin2, MINPOSITION, MAXPOSITION, BANDWIDTH)
 ```
 ```C++
 .
-// Test Actuator and VL8106X for proper functioning
-ShowOnOledLarge("Testing", "Up & Down", "Functions", 100);
-if (!lift.TestBasicMotorFunctions()) {
+  // Test Actuator and VL8106X for proper functioning
+  ShowOnOledLarge("Testing", "Up & Down", "Functions", 100);
+  if (!lift.TestBasicMotorFunctions()) {
     ShowOnOledLarge("Testing", "Functions", "Failed!", 500);
     IsBasicMotorFunctions = false; // Not working properly
+#if Serial_Monitor  
+    Serial.println("Basic Motor Funtions are NOT working!!");
+#endif
     }
-else {
-    ShowOnOledLarge("Testing", "Functions", "Succes!", 500);
+  else {
+    ShowOnOledLarge("Testing", "Functions", "Done!", 500);
     // Is working properly
     IsBasicMotorFunctions = true;
+#if Serial_Monitor  
+    Serial.println("Basic Motor Funtions are working!!");
+#endif
     // Put Simcline in neutral: flat road position
-    SetNeutralValues(); // set relevant flat road values
-    while (ControlUpDownMovement()) { // wait until flat road position is reached
-    }
-    }
+    // Init EMA filter at first call with flat road position as reference
+    TargetPosition = EMA_TargetPositionFilter(TargetPosition); 
+    SetNewActuatorPosition();
+    ControlUpDownMovement();
+  }
 .    
 ```
-+ Initialize Bluefruit with maximum connections as Peripheral = 1, Central = 1.
++ Initialize BLE with maximum connections as Peripheral = 1, Central = 1 and start...
 ```C++
 .
+  // begin (Peripheral = 1, Central = 1)
   Bluefruit.begin(1, 1);
-  Bluefruit.setTxPower(4); // Check bluefruit.h for supported values
-  Bluefruit.setName("Bluefruit-nRF52");
-.
-```
-+ Setup Central Scanning for an advertising TACX trainer...
-```C++
-.
-  Bluefruit.Scanner.restartOnDisconnect(true);
-  Bluefruit.Scanner.filterRssi(-70);      // original value of -80 , we want to scan only nearby peripherals, so get close to your TACX trainer !!
-  Bluefruit.Scanner.setInterval(160, 80); // in units of 0.625 ms
-// We are only interested in the services of the TACX Trainer
-  Bluefruit.Scanner.filterUuid(TACX_FEC_PRIMARY_SERVICE_Uuid);
-  Bluefruit.Scanner.useActiveScan(true);
-.    
-```
-+ Initialize TACX FE-C trainer services and characteristics.
-+ Declare Callbacks for Peripheral (smartphone connection) and Callbacks for Central (trainer connection).
-```C++
-.
-// Declare Callbacks for Peripheral (smartphone connection)
-  Bluefruit.Periph.setConnectCallback(prph_connect_callback);
-  Bluefruit.Periph.setDisconnectCallback(prph_disconnect_callback);
+  // Set the device name (keep it short!) 
+#if Serial_Monitor
+  Serial.println("Setting Device Name to 'Wahoo Sim'");
+#endif
+  // Supported tx_power values depending on mcu:
+  // - nRF52832: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +3dBm and +4dBm.
+  // - nRF52840: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +2dBm, +3dBm, +4dBm, +5dBm, +6dBm, +7dBm and +8dBm.
+  Bluefruit.setTxPower(4); // See above for supported values: +4dBm
+  Bluefruit.setName("Wahoo Sim");
 
-// Callbacks for Central (trainer connection)
-  Bluefruit.Central.setDisconnectCallback(disconnect_callback);
-  Bluefruit.Central.setConnectCallback(connect_callback);
-  Bluefruit.Scanner.setRxCallback(scan_callback);
-  Bluefruit.Scanner.setStopCallback(scan_stop_callback);
-
-// set up callback for receiving ANT+ FE-C packets; this is the main work horse!
-  fecrd.setNotifyCallback(fecrd_notify_callback);
-.    
-```
-+ Initialize some characteristics of the Device Information Service.
-+ All initialized --> Start the actual scanning!
-```C++
-.
-// Show Scanning message on the Oled
-  ShowOnOledLarge("Scanning", "for", "Trainer", 500);
-  Bluefruit.Scanner.start(300); // 0 = Don't stop scanning or after n, in units of hundredth of a second (n/100)
+  Setup_Client_CPS();
+  Client_Start_Scanning();
   while (Bluefruit.Scanner.isRunning()) { // do nothing else but scanning....
   }
+#if Serial_Monitor 
+  Serial.println("Scanning for Wahoo Cycle Power Service is stopped!");
+#endif  
+  TimeInterval = millis() + TIME_SPAN; // ADD just enough delay
+  // wait enough time or go on when client is connected and set!
+  while ( (TimeInterval > millis()) || (!Trainer.IsConnected) ) {
+    }
+
+  // Setup the Server Cycle Power Service
+  // BLEService and BLECharacteristic classes initialized
+  Setup_Server_CPS();
+  Start_Server_Advertising();
+  
+  while (Bluefruit.Advertising.isRunning()) { // ONLY advertise!
+  }
+#if Serial_Monitor 
+  Serial.println("Wahoo Simulated Advertising stopped! Paired to Zwift?");
+#endif  
+  TimeInterval = millis() + TIME_SPAN; // ADD just enough DELAY
+  // wait enough time or go on when server is connected and set!
+  while ( (TimeInterval > millis()) || (!Laptop.IsConnected) ) { 
+    }
+  // Only now enable Client (Wahoo) data streams...
+  Client_Enable_Notify_Indicate(); 
+#if Serial_Monitor   
+  Serial.println("Up and running!");
+#endif
+  // Initialize BLE Uart functionality for connecting to smartphone No advertising!!
+  bleuart.begin();
+  // End Setup
+.
+```
+
+```C++
+.
+.    
+```
+
+```C++
+.
+
+.    
+```
+
+```C++
+.
+
 .    
 ```
 + Initialize and setup BLE Uart functionality for connecting to smartphone --> Start the advertising!
 ```C++
-   bleuart.begin();
-   bleuart.setRxCallback(prph_bleuart_rx_callback);
-// Advertising packet construction
-   Bluefruit.Advertising.addFlags(BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE);
-   Bluefruit.Advertising.addTxPower();
-// Include the BLE UART (AKA 'NUS') 128-bit UUID
-   Bluefruit.Advertising.addService(bleuart);
-   Bluefruit.Advertising.setStopCallback(adv_stop_callback);
-// Start advertising: to be picked up by a Smartphone with the Companion App!
-   Bluefruit.Advertising.start(60); // 0 = Don't stop advertising or after n (!) seconds -> 1 minuut
+.
 .    
 ```
 <b>End of the Arduino Setup() Function</b><br>
@@ -300,37 +367,14 @@ else {
     }
 .
 ```
-+ <b>fecrd_notify_callback</b> is a callback that is triggered when a ANT+ message is sent from TACX Trainer.
+
 ```C++
 .
-  void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len) {
-// The FE-C Read charateristic of ANT+ packets
-// In TACX context receive or send arrays of data ranging from 1--20 bytes so FE-C
-// will not exceed the 20 byte maximum...
-// Data pages are broadcast (by the trainer) at 4Hz message rate
-  uint8_t buffer[20 + 1];
-  memset(buffer, 0, sizeof(buffer)); // fill with zero
-// Transfer first the contents of data to buffer (array of chars)
-  for (int i = 0; i < len; i++) {
-    if ( i <= sizeof(buffer)) {
-      buffer[i] = *data++;
-    }
-   }
 .   
 ```
-+ All ANT+ FE-C message pages are handled, parsed and relevant variables set to new values.
+
 ```C++
-// Show the actual values of the trainer on the Oled
-  if (OledDisplaySelection == 1) {
-    ShowValuesOnOled();
-  } else {
-    ShowSlopeTriangleOnOled();
-  }
-// Check and control motor up/down movement within settings!
-  if (IsBasicMotorFunctions) {
-    while (ControlUpDownMovement()) {
-    }
-  }
+
 .  
 ```
 + Send a request for Page 51 about every 4 seconds.
