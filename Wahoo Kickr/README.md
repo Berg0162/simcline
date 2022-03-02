@@ -254,7 +254,10 @@ void server_cccd_callback(uint16_t conn_handle, BLECharacteristic* chr, uint16_t
 + Initialize Lifter Class data, variables, test and set to work!
 ```C++
 .
-lift.Init(actuatorOutPin1, actuatorOutPin2, MINPOSITION, MAXPOSITION, BANDWIDTH);
+  //Show Name and SW version on Oled
+  ShowOnOledLarge("SIMCLINE", "Wahoo", "3.4.2", 500);
+  // Initialize Lifter Class data, variables, test and set to work !
+  lift.Init(actuatorOutPin1, actuatorOutPin2, MINPOSITION, MAXPOSITION, BANDWIDTH);
 .
 ```
 ```C++
@@ -334,50 +337,109 @@ lift.Init(actuatorOutPin1, actuatorOutPin2, MINPOSITION, MAXPOSITION, BANDWIDTH)
   // End Setup
 .
 ```
-
++ Actuator movement is controlled in this function
 ```C++
 .
+void ControlUpDownMovement(void) // Move fully controlled to the right position
+{
+  // Check Position and move Up/Down until target position is reached, 
+  // BLE channels can interrupt and change target position on-the-fly !!
+ 
+  if (!IsBasicMotorFunctions) { return; } // do nothing that can damage construction!!
+  int OnOffsetAction = 0;
+  InControlUpDownMovementLoop = true;
+do {
+  OnOffsetAction = lift.GetOffsetPosition(); // calculate offset to target and determine action
+  switch (OnOffsetAction)
+  {
+    case 0 :
+        lift.brakeActuator();
+#if Serial_Monitor_Movement
+      Serial.println(F(" -> Brake"));
+#endif
+      break;
+    case 1 :
+      lift.moveActuatorUp();
+#if Serial_Monitor_Movement
+      Serial.println(F(" -> Upward"));
+#endif
+      break;
+    case 2 :
+      lift.moveActuatorDown();
+#if Serial_Monitor_Movement
+      Serial.println(F(" -> Downward"));
+#endif
+      break;
+    case 3 :
+      // Timeout --> OffsetPosition is undetermined --> do nothing and brake
+      lift.brakeActuator();
+#if Serial_Monitor_Movement
+      Serial.println(F(" -> Timeout"));
+#endif
+      break;
+  }
+} while ( (OnOffsetAction == 1) || (OnOffsetAction == 2) ); // Run the loop until target position is reached!
+  InControlUpDownMovementLoop = false;
+} // end 
 .    
 ```
-
++ Road inclination data are extracted from the Server CPWT Cycling Power Wahoo Trainer data field
 ```C++
 .
-
-.    
-```
-
-```C++
-.
-
-.    
-```
-+ Initialize and setup BLE Uart functionality for connecting to smartphone --> Start the advertising!
-```C++
-.
-.    
-```
-<b>End of the Arduino Setup() Function</b><br>
-
-+ The callback functions are dominating completely the processing and <b>loop()</b> would never have been called, since there is a constant stream of FE-C packets that are coming in!
-+ The function <b>fecrd_notify_callback</b> does the bulk of the work!
-```C++
-.
-    void loop()
-    { // Do not use ... !!!
+void server_cpwt_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* data, uint16_t len)
+{    
+  // Server CPWT Cycling Power Wahoo Trainer data field
+  // Transfer CPWT data from the Server (Zwift) to the Client (Wahoo)
+  client_cpwt.write_resp(data, len); // Just pass on and process later!
+  // Process to extract critical data values
+  uint8_t cpwtDataLen = (uint8_t)len;    // Get the actual length of data bytes and type cast to (uint8_t)
+  uint8_t cpwtData[cpwtDataLen];
+  memset(cpwtData, 0, cpwtDataLen); // set to zero
+  // Display the raw request packet actual length
+#if Serial_Monitor
+  Serial.printf("Server CPWT Data [Len: %d] [Data:  ", len);
+#endif
+  // Transfer the contents of data to cpwtData
+  for (int i = 0; i < cpwtDataLen; i++) {
+    if ( i <= sizeof(cpwtData)) {
+      cpwtData[i] = *data++;
+#if Serial_Monitor
+      // Display the raw request packet byte by byte in HEX
+      Serial.printf("%02X ", cpwtData[i], HEX);
+#endif
     }
+  }
 .
+.
+  if (cpwtData[0] == setSimGrade) {
+    uint16_t gr = ( cpwtData[1] + (cpwtData[2]*256) ); // This works perfect !!!
+    float SimGrade = 100 * float( ((gr * 2.0 / 65535) - 1.0) ); // Percentage of road grade --> range: between +1 and -1 (!)
+    SetNewRawGradeValue(SimGrade);
+    SetNewActuatorPosition();
+    ShowSlopeTriangleOnOled();
+  }
+  // Check position with the settings
+  if (!InControlUpDownMovementLoop) {
+    ControlUpDownMovement();
+  } 
+} // end
+.    
 ```
-
++ The callback functions are dominating completely
 ```C++
 .
-.   
+void loop()
+{ // Do not use ... !!!
+  // -------------------------------------------------------
+  // The callback/interrupt functions are dominating completely the
+  // processing and loop() is never ever (!) called,
+  // since there is a constant stream of BLE packets, handled with
+  // high priority interrupts that are coming in!
+  // -------------------------------------------------------
+ }
+// END of program
+.
 ```
-
-```C++
-
-.  
-```
-+ Send a request for Page 51 about every 4 seconds.
 
 # SIMCLINE Companion App<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/App_screens.jpg" width="600" height="600" alt="Companion App"><br clear="left">
