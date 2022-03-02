@@ -451,13 +451,15 @@ After some exploring of the field (I had no experience with App development), th
 + Or upload the SIMCLINE Companion App <b>APK</b> to your Android device directly and install the APK. Android will call this a security vulnerability!
 
 # Flow and Some Code Snippets<br>
-+ At startup SIMCLINE starts (BLE) advertising, independent of whether a trainer connection is realized before or not! The Companion App establishes a connection over BLE and the Nordic UART service (a.k.a. BLEUART) for exchange of information is applied. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings (<= 20 bytes) containing diagnostic messages or cyling variables.<br>
++ The Simcline Companion app is differently functioning with this implementation of the Simcline Wahoo code... First of all and most important the "Bridge-Function" is a very heavy burden on the processing capacity of the Feather nRF52. This simply does NOT (!) allow the smartphone to be connected over BLE at the same time the Laptop/Desktop (with Zwift) is connected, as is the case when you have a TACX trainer connected!
++ After startup of the Simcline is established and it has paired with trainer and laptop (with Zwift), you have to disconnect (unpair) first the Simcline (a.k.a. Wahoo Sim) on the Zwift pairing screen. Only then it starts (BLE) advertising for the smartphone to connect! The Companion App (on your smartphone) establishes a connection over BLE with the Nordic UART service (a.k.a. BLEUART) for exchange of information. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings (<= 20 bytes) containing diagnostic messages or cyling variables.<br>
 + At first the SIMCLINE sends the latest (persistent) settings data to allow the App user to assess the current values.
-+ The SIMCLINE sends regularly cyling data (like Speed, Power, Cadence, Grade etcetera) that were received from the trainer (in ANT+ FE-C packets) and processed.
-+ At any time the App user changes the current settings or control data, the Companion App sends these to the SIMCLINE to make use of.
-<img src="https://github.com/Berg0162/simcline/blob/master/images/ButtonSendCache.jpg" alt="Companion App"><br clear="left">
-+ The SIMCLINE receives asynchronously settings and sets the appropriate operational variables in accordance. This determines instantly the working of the equipment.
++ From this moment on the App user can change the current settings or control data, the Companion App sends these to the SIMCLINE to make use of.
++ The SIMCLINE receives asynchronously settings and sets the appropriate operational variables in accordance. This determines only at a later stage the working of the equipment!
 + The settings are persistently stored for future use.
++ The SIMCLINE is <b>NOT</b> capable of sending on-the-fly cyling data (like Speed, Power, Cadence or Grade), however, other functionality like manual movement control is available.
++ After you have disconnected the Companion app, you can renew a BLE connection (pair) with the Laptop/Desktop (with Zwift) and continue or start riding... New settings will then be active!
+<img src="https://github.com/Berg0162/simcline/blob/master/images/ButtonSendCache.jpg" alt="Companion App"><br clear="left">
 ```C++
 .
 void prph_bleuart_rx_callback(uint16_t conn_handle) {
@@ -488,8 +490,6 @@ void prph_bleuart_rx_callback(uint16_t conn_handle) {
 .
 .
 ```
-+ In addition to the OLED display the Companion App can serve as an enhanced screen for road grade and cycling data.
-+ Until the BLE connection is disconnected, manually or by quitting the App, both devices remain connected.
 
 # Mechanical Construction of SIMCLINE<br>
 There is an elaborated <b>Instructable</b> available with all the nitty gritty of how to buy or create, construct and install the various parts and components of the SIMCLINE.<br> 
