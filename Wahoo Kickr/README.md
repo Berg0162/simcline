@@ -30,14 +30,14 @@ When I started the project in 2020 I did not have any practical experience with 
 
 # To see is to believe!<br>
 I can understand and respect that you have some reserve: Is this really working in my situation? Better test if it is working, before buying all components and start building.
-In the Github repository (see above) you will find the appropriate test code named: <b>Test_Wahoo_Client_v03</b>, <b>Test_Wahoo_Server_v03</b> and <b>Test_Wahoo_Zwift_Bridge_v03</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
+In the Github repository (see above) you will find the appropriate test code named: <b>Test_Wahoo_Client_v03</b>, <b>Test_Wahoo_Server_v03</b> and <b>Test_Wahoo_Zwift_Bridge_v031</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
 
 <b>What it does in short:</b><br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Wahoo_Feather_Zwift_BLE.png" align="left" width="1000" height="500" alt="Simcline in the Middle"><br>
 The <b>Test_Wahoo_Zwift_Bridge</b> code links a bike trainer (BLE Server Wahoo KICKR) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52840/832, like a bridge in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! This test code is fully ignorant of the mechanical components that drive the Simcline. It simply estabishes a virtual BLE bridge and allows you to ride the bike on the Wahoo trainer and feel the resistance that comes with it, thanks to Zwift. The experience should not differ from a normal direct one-to-one connection, Zwift - Wahoo KICKR!<br>
 + The client-side scans and connects with the Wahoo relevant Cycling Power Service (<b>CPS</b>) plus the additional Wahoo proprietary CPS characteristic and collects cyling power data like Zwift would do! The code with the name: <b>Test_Wahoo_Client_v03</b> is doing just that one side of the "bridge"!
 + The Server-side advertises and enables connection with Cycling apps like Zwift and collects relevant resistance data, it simulates as if an active Wahoo trainer is connected to Zwift or alike! The code with the name: <b>Test_Wahoo_Server_v03</b> is doing just the other side of the "bridge"!
-+ The <b>Test_Wahoo_Zwift_Bridge_v03</b> code is connecting both sides at the same time: the full-blown bridge!<br clear="left">
++ The <b>Test_Wahoo_Zwift_Bridge_v031</b> code is connecting both sides at the same time: the full-blown bridge!<br clear="left">
 
 <b>How to make it work?</b><br>
 The requirements are simple: 
@@ -54,9 +54,23 @@ Please follow the instructions at the first part of the program code!
 Please write down the MAC or Device Addresses of a) your Wahoo trainer and b) your Desktop/Laptop with Zwift. These are presented in the Serial Monitor log file when running the Client and Server test code.<br>
 
 <b>Now it is time to test the bridge!</b><br>
-The <b>Test_Wahoo_Zwift_Bridge_v03</b> code needs these "hardware" addresses to unmistakingly establish a BLE connection with the right device. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera. The two precise device addresses are critical to assure a reliable test! You have to insert the values in the program code!<br> 
+The <b>Test_Wahoo_Zwift_Bridge_v031</b> code needs these "hardware" addresses to unmistakingly establish a BLE connection with the right device. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera. 
+```C++
+.
+// -----------------------------------------------------------------
+// Your hardware MAC/DEVICE ADDRESSES
+// Laptop/Desktop Device Address that runs Zwift: [00:01:02:03:04:05]
+// Little Endian: in reversed order !!!!
+#define LAPTOPADDRESS {0x05,0x04,0x03,0x02,0x01,0x00}
+// Trainer Wahoo KICKR Device Address [00:01:02:03:04:05]
+// Little Endian: in reversed order !!!!
+#define TRAINERADDRESS {0x05,0x04,0x03,0x02,0x01,0x00}
+// -----------------------------------------------------------------
+.
+```
+The two precise device addresses are critical to assure a reliable test! You have to insert the values in the program code!<br> 
 
-1) First insert in the <b>Test_Wahoo_Zwift_Bridge_v03</b> code the two precise BLE MAC Addresses it has to connect with
+1) First insert in the <b>Test_Wahoo_Zwift_Bridge_v031</b> code the two precise BLE MAC Addresses it has to connect with
 2) Upload and Run this code on the Feather nRF52840
 2) Start the Serial Monitor to catch debugging info
 3) Start/Power-On the Wahoo trainer  
@@ -87,25 +101,13 @@ Small display with screen of: 26.6 mm x 19 mm. Shows cycling data and diagnostic
 The sensor contains a very tiny laser source, and a matching sensor. The VL6180X can detect the "time of flight", or how long the laser light has taken to bounce back to the sensor. Since it uses a very narrow light source, it is perfect for determining distance of only the surface directly in front of it. The sensor registers quite accurately the (change in) position of the wheel axle during operation, by measuring the distance between the top of the inner frame and the reflection plate that is mounted on the carriage. The distance feedback of the sensor is crucial for determining how to set the position of the carriage and axle in accordance with the grade information that for example Zwift is using to set the resistance of the trainer. NOTICE: Install Right Angle Through Hole Male PCB Header Pins on the board.<br>
 In retrospect I do not regret the component choices made. All components are documented very well. There are lots of examples for use in an Arduino enviroment. They have turned out to be very reliable.<br clear="left">
 
-<b>How to detect the grade of the simulated track?</b><br>
-The SIMCLINE is paired with the trainer over a different channel: Bluetooth! In that configuration it is complying to the ANT+ FE-C protocol as well but over Bluetooth LE. The trainer is not only broadcasting FE-C messages with cycling data (speed, cadence, power, etcetera) over ANT+ to the <b>controller</b>-application (like Zwift), but also over the BLE connection to the paired Feather nRF52. The program of the Feather nRF52 is dealing with these data in its own way, independent of the <b>ANT+ controller</b>-application.
-At regular intervals the Feather nRF52 is programmed to send a socalled Common Page 70 (0x46) (Request Data Page) with the request data page field set to Data Page <b>51</b>.
-```C++
-.
-.
-```
-
-```C++
-.
-.
-```
-
 # Overview of Arduino Program Code Flow and Snippets<br>
 + Include headers of libraries and declare classes
 ```C++
 .
-// Library Adafruit Feather nRF52 Bluefruit (Bluetooth Low Energy)
 #include <bluefruit.h>
+// Compile toggle that determines Serial Monitor is switched ON (1) or OFF (0)
+#define Serial_Monitor 1
 // Libraries for use of I2C devices (Oled and VL6180X distance sensor)
 #include <SPI.h>
 #include <Wire.h>
@@ -114,63 +116,88 @@ At regular intervals the Feather nRF52 is programmed to send a socalled Common P
 #include <Adafruit_SSD1306.h>
 // Additional splash screen bitmap and icon(s) for Oled
 #include "Adafruit_SSD1306_Icons.h" // needs to be in directory of main code
-// Declare the SSD1306 Class
+// Declarations for an SSD1306 128x64 display connected to I2C (SDA, SCL pins)
+#define SCREEN_WIDTH 128            // SSD1306-OLED display width, in pixels
+#define SCREEN_HEIGHT 64            // SSD1306-OLED display height, in pixels
+#define OLED_RESET -1               // No reset pin on this OLED display
+#define OLED_I2C_ADDRESS 0x3C       // I2C Address of OLED display
+// Declare the display
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 #include <avr/dtostrf.h>
-// LittleFS for internal storage of persistent data on the Feather nRF52
-#include <Adafruit_LittleFS.h>
-#include <InternalFileSystem.h>
-using namespace Adafruit_LittleFS_Namespace;
-// Managing persistence of some data with LittleFile system
-// PeRSistent Data  --> PRS data
-#define PRS_FILENAME "/prsdata.txt"
-// Declare the File Class
-File file(InternalFS);
-// LittleFS--------------------------------------------------------------
-// Library code for low level measuring (VL6180X) and controlling UP and down movement
-#include <Lifter.h>
 .
 ```
-+ Define variables, set to default values and initialize classes.
++ Declare crucial BLE services, variables and charateristics 
 ```C++
 .
+/* Cycling Power Service
+ * CP Service: 0x1818  
+ * CP Characteristic: 0x2A63 (Measurement)
+ * CP Characteristic: 0x2A65 (Feature)
+ * CP Characteristic: 0x2A5D (Location) NOT supported in Wahoo legacy trainers
+ * CP Characteristic: 0x2A66 (CYCLING_POWER_CONTROL_POINT)
+ */
+ // --------------------------------------------------------------------------------------------------------------------------------------------
+BLEService        server_cps = BLEService(UUID16_SVC_CYCLING_POWER);
+// Define how Server CPS is advertised
+const uint16_t Server_appearance = 0x0480;  // 1152 -> Cycling
+BLECharacteristic server_cpmc = BLECharacteristic(UUID16_CHR_CYCLING_POWER_MEASUREMENT);
+BLECharacteristic server_cpfc = BLECharacteristic(UUID16_CHR_CYCLING_POWER_FEATURE);
+BLECharacteristic server_cplc = BLECharacteristic(UUID16_CHR_SENSOR_LOCATION);
+BLECharacteristic server_cpcp = BLECharacteristic(UUID16_CHR_CYCLING_POWER_CONTROL_POINT); // Indicate, write
+
+// Hidden Wahoo Trainer characteristic to the Cycling Power Service !
+// Unknown Characteristic is 128 bit:            A0 26 E0 05 - 0A 7D - 4A B3 - 97 FA - F1 50 0F 9F EB 8B
 // Declare in Reversed order !!!
-uint8_t TACX_FEC_PRIMARY_SERVICE_Uuid[16]=     {0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0xC1, 0xFE, 0x40, 0x6E,};
-uint8_t TACX_FEC_READ_CHARACTERISTIC_Uuid[16]= {0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0xC2, 0xFE, 0x40, 0x6E,};
-uint8_t TACX_FEC_WRITE_CHARACTERISTIC_Uuid[16]={0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0xC3, 0xFE, 0x40, 0x6E,};
+uint8_t CYCLING_POWER_WAHOO_TRAINER_Uuid[16] = {0x8B, 0xEB, 0x9F, 0x0F, 0x50, 0xF1, 0xFA, 0x97, 0xB3, 0x4A, 0x7D, 0x0A, 0x05, 0xE0, 0x26, 0xA0};
+BLECharacteristic server_cpwt = BLECharacteristic(CYCLING_POWER_WAHOO_TRAINER_Uuid);
+
+// Server helper class instance for Device Information Service
+BLEDis bledis;
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+BLEClientService        client_cps(UUID16_SVC_CYCLING_POWER);
+BLEClientCharacteristic client_cpmc(UUID16_CHR_CYCLING_POWER_MEASUREMENT);
+BLEClientCharacteristic client_cpfc(UUID16_CHR_CYCLING_POWER_FEATURE);
+uint32_t client_cpfcDef = 0;
+BLEClientCharacteristic client_cplc(UUID16_CHR_SENSOR_LOCATION);
+uint16_t client_cplc_loc_value = 0;
+BLEClientCharacteristic client_cpcp(UUID16_CHR_CYCLING_POWER_CONTROL_POINT); // Indicate, write
+BLEClientCharacteristic client_cpwt(CYCLING_POWER_WAHOO_TRAINER_Uuid);
 .
 ```
 ```C++
 .
-//Declare crucial services and charateristics for TACX FE-C trainer
-BLEClientService        fecps(TACX_FEC_PRIMARY_SERVICE_Uuid);
-BLEClientCharacteristic fecrd(TACX_FEC_READ_CHARACTERISTIC_Uuid);
-BLEClientCharacteristic fecwr(TACX_FEC_WRITE_CHARACTERISTIC_Uuid);
+// CPS Wahoo Trainer Operation Codes in Decimal
+const uint8_t unlock                     = 32;
+const uint8_t setResistanceMode          = 64;
+const uint8_t setStandardMode            = 65;
+const uint8_t setErgMode                 = 66;
+const uint8_t setSimMode                 = 67;
+const uint8_t setSimCRR                  = 68;
+const uint8_t setSimWindResistance       = 69;
+const uint8_t setSimGrade                = 70;
+const uint8_t setSimWindSpeed            = 71;
+const uint8_t setWheelCircumference      = 72;
+const uint8_t UnlockCommandBuf[3]        = {unlock, 0xEE, 0xFC}; // Unlock codes
+.
+```
+```C++
+.
+#define SERVICE_DEVICE_INFORMATION                  0x180A
+#define CHARACTERISTIC_MANUFACTURER_NAME_STRING     0x2A29
+#define CHARACTERISTIC_MODEL_NUMBER_STRING          0x2A24
+#define CHARACTERISTIC_SERIAL_NUMBER_STRING         0x2A25
+
+// Client Service Device Information
+BLEClientService        client_diss(SERVICE_DEVICE_INFORMATION);
+BLEClientCharacteristic client_disma(CHARACTERISTIC_MANUFACTURER_NAME_STRING);
+BLEClientCharacteristic client_dismo(CHARACTERISTIC_MODEL_NUMBER_STRING);
+BLEClientCharacteristic client_dissn(CHARACTERISTIC_SERIAL_NUMBER_STRING);
 .
 ```
 ```C++
 // Declaration of Function prototypes
-bool getPRSdata(void);
-void setPRSdata(void);
-void prph_connect_callback(uint16_t conn_handle);
-void prph_disconnect_callback(uint16_t conn_handle, uint8_t reason);
-void prph_bleuart_rx_callback(uint16_t conn_handle);
-void prph_bleuart_TX_Grade(void);
-void prph_bleuart_TX_PWR_CAD(void);
-void prph_bleuart_TX_ADT_SPD_AET(void);
-void scan_stop_callback(void);
-void adv_stop_callback(void);
-void scan_callback(ble_gap_evt_adv_report_t* report);
-void connect_callback(uint16_t conn_handle);
-void disconnect_callback(uint16_t conn_handle, uint8_t reason);
-void SendRequestPage51(void);
-void fecrd_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, uint16_t len);
-void SetNeutralValues(void);
-bool ControlUpDownMovement(void);
-void ShowOnOledLarge(char *Line1, char *Line2, char *Line3, uint16_t Pause);
-void BuildBasicOledScreen(void);
-void ShowValuesOnOled(void);
-void ShowSlopeTriangleOnOled(void);
+
 ```
 <b>Begin of the Arduino Setup() Function</b><br>
 + Get or set (first time only) the values of relevant and crucial variables to persistence, whith the Companion App the user can set these on the fly!
