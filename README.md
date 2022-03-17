@@ -10,7 +10,12 @@ The SIMCLINE pairs directly to the smart trainer and with your PC/Laptop with (Z
 During operation an OLED display shows the road grade in digits and in graphics.<br>
 The SIMCLINE Companion App (for Android smartphones) can be paired, only when the training App is disconnected, for adjusting operational settings, like Ascent Grade Limit (between 0-20%), Descent Grade Limit (between 0-10%), Road Grade Change Factor (between 0-100%) and manual Up and Down control. Notice that the Companion App has a slightly different functionality depending of what brand of trainer (TACX or Wahoo) is connected, due to specific connectivity differences. <br clear="left"> 
 <br>
-There are elaborated <b>Instructables</b> available with all the nitty gritty of how to create, construct and install the various parts and components of the different SIMCLINE versions. The applied electronic components in the 2 projects are somewhat different but NOT in an essential way, as documented hereafter.<br>
+There are <b>Instructables</b> available with all the nitty gritty of how to create, construct and install the various parts and components of the different SIMCLINE versions.<br>
+
+# [SIMCLINE version 1.0](https://www.instructables.com/id/SIMCLINE-Simulation-of-Changing-Road-Incline-for-I/)<br>
+# [SIMCLINE version 2.0](https://www.instructables.com/SIMCLINE-20-Easy-Simulation-of-Road-Incline/)<br>
+
+The applied electronic components in the 2 projects are somewhat different but NOT in an essential way, as documented hereafter.<br>
 <b>NOTICE that the SIMCLINE control code can be run with both (mechanically different) SIMCLINE versions!</b> However, 2 different code versions are specially designed for operating with a TACX <b>or</b> Wahoo trainer!</b> You will find in the arduino folder all the test programs and the common libraries. These will help you to test the electronic components separately and built together of both SIMCLINE versions.<br> 
 
 Finally you have to select the SIMCLINE code that is appropriate for the trainer of your liking!<br>
