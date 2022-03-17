@@ -36,3 +36,29 @@ There is an elaborated <b>Instructable</b> available with all the nitty gritty o
 See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" align="left" alt="Instructables"> [SIMCLINE 2.0 Instructables](https://www.instructables.com/SIMCLINE-20-Easy-Simulation-of-Road-Incline/)
 <br clear="left">
 
+# Electronic Components and Circuitry used in version 2.0<br>
+This project could have been elaborated with many different electronic parts. I have chosen for the following 5 compact active components that are slightly different from the earlier SIMCLINE project and that can finally all be mounted inside the components box:
+
+<b>Adafruit DRV8871 DC Motor Driver</b><br>
+A small one channel motor driver for 12 V (6.5 - 48 V) and 3,6 Amperes max. This board enables the processor to set the Actuator motor in up or down movement. It transforms logical digital levels (Go Up, Go Down and Stop) from the Feather nRF52 to switching of 12 Volt at 3,6 Amperes max., the levels at which the Actuator works. Notice that default the board comes limited to 2,6 Amperes and you need to add a resistor to set for max current level. Install Vertical Through Hole Male PCB Header Pins on the board; this will allow correct mounting of the board inside the components box!
+
+<b>Adafruit Feather nRF52840 Express</b><br>
+Is another easy-to-use all-in-one Bluetooth Low Energy board with a native-Bluetooth chip, the nRF52840! Notice that the Feather nRF52840 Express is to be preferred and has better value for money!
+
+> This chip has twice the flash, and four times the SRAM of its earlier sibling, the nRF52832. 1 MB of FLASH and 256KB of SRAM. Compared to the nRF51, this board has 4-8 times more of everything.
+
+It's Adafruit's take on an 'all-in-one' Arduino-compatible + Bluetooth Low Energy with built in USB and battery charging. It is a low power, handsome and fast processor board with lots of memory and I/O pins. Can easily be programmed over the USB connection. The programmed Feather nRF52840 is communicating with (a) the trainer to collect power output information and (b) with the training App for resistance settings (like grade) or (c) optionally with the Companion App on your mobile phone. The programmed Feather nRF52 is in full control of the SIMCLINE operation.
+
+<b>OLED display blue/white 128x64 pixels (0,96 Inch, I2C)</b><br>
+Small display board has a critical overall board size of 25 mm * 27 mm (!); (See for example: Webshop). Display area itself is: 25 mm x 14 mm. Shows cycling data and diagnostic info that is gathered during operation by the Feather nRF52 to inform the SIMCLINE user about relevant information. NOTICE: a) Many different formfactors are offered at webshops; b) Install Vertical Through Hole Male PCB Header Pins on the board; this will allow correct mounting of the board inside the components box!
+
+<b>Pololu Time-of-Flight-Distance sensor VL6180X</b><br> The sensor board (12.7 * 17.8 mm) contains a very tiny laser source, and a matching sensor. The VL6180X can detect the "time of flight", or how long the laser light has taken to bounce back to the sensor. Since it uses a very narrow light source, it is perfect for determining distance of only the surface directly in front of it. The sensor registers quite accurately the (change in) position of the wheel axle during operation, by measuring the distance between the top of the inner frame and the reflection plate that is mounted on the carriage. The distance feedback of the sensor is crucial for determining how to set the position of the carriage and axle in accordance with the grade information that for example Zwift is using to set the resistance of the trainer. NOTICE: a) VL6180X boards are also offered by different suppliers and have different formfactors; b) Install Straight Angle Through Hole Male PCB Header Pins on the board; this will allow later flat mounting of the sensor board in the components box !
+
+<b>Pololu D24V5F5</b><br>
+This is a small 5V, 500mA Step-Down Voltage Regulator that is responsible for voltage conversion from 12V to 5V, the power supply for all components boards. NOTICE: Install Straight Angle Through Hole Male PCB Header Pins on the board; this will allow later easy mounting of the sensor board in the components box !
+
+All components are documented very well and are low cost. There are lots of examples for use in an Arduino environment. They have turned out to be very reliable. The exact wiring of the components can be followed in the figure above.
+
+When I started this project I did have some practical experience with some of the components. So I had to setup the circuitry step by step adding components and did some instructive testing first.
+
+
