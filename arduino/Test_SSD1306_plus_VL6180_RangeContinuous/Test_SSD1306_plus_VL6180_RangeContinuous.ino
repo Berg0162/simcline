@@ -1,4 +1,4 @@
-/* This example demonstrates how to use interleaved mode to
+ /* This example demonstrates how to use interleaved mode to
 take continuous range and ambient light measurements. The
 datasheet recommends using interleaved mode instead of
 running "range and ALS continuous modes simultaneously (i.e.
@@ -28,6 +28,16 @@ The range readings are in units of mm. */
 #include <VL6180X.h>
 #include <MovingAverageFilter.h>
 
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128     // OLED display width, in pixels
+#define SCREEN_HEIGHT 64     // OLED display height, in pixels
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+#define OLED_RESET     -1         // No reset pin on this OLED display
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
 VL6180X sensor;
 
 // Declare our filter
@@ -39,8 +49,22 @@ int16_t AverageRange;
 void setup()
 {
   Serial.begin(115200);
-  Wire.begin();
+  while ( !Serial ) delay(10);   // for feather nrf52 with native usb
 
+// Init OLED Display
+   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) 
+   { // Address 0x3C for 128x64
+   Serial.println("SSD1306 allocation failed");
+   }
+  else
+  {
+  // Show Oled with initial display buffer contents on the screen --
+  // the library initializes this with a Adafruit splash screen (edit the splash.h in the library).
+  display.display();
+  delay(2000);                    // Pause some time
+  }
+  
+  Wire.begin();
   sensor.init();
   sensor.configureDefault();
   sensor.setScaling(3);        // !!!!!!!!!!!!!!!!!!!!!!
@@ -60,22 +84,44 @@ void setup()
   delay(300);
   // start range continuous mode with period of 100 ms
   sensor.startRangeContinuous(100);
+  
+  Serial.print("Test VL6180X Range Continuous with Scaling = ");
+  Serial.print(sensor.getScaling());
+  Serial.println("x");
 
-  Serial.print("READOUT__AVERAGING_SAMPLE_PERIOD: ");
+  Serial.print("Setting READOUT__AVERAGING_SAMPLE_PERIOD: ");
   Serial.println(sensor.readReg(VL6180X::READOUT__AVERAGING_SAMPLE_PERIOD));
- 
+
+  // Clear and set Oled display for further use
+  display.clearDisplay();
+  display.setTextColor(SSD1306_WHITE);
+  display.setTextSize(2);  // Large characters
+  display.setCursor(16,22);
+  display.print("SIMCLINE"); 
+  display.display(); 
+  delay(1000);
 
 }
 
 void loop()
 {
-  Serial.print("Range: ");
+  Serial.print("Raw Range: ");
   RawRange = sensor.readRangeContinuousMillimeters();
   Serial.print(RawRange);
-  
   AverageRange = movingAverageFilter_Range.process(RawRange);
-  
   Serial.print(" Running average: "); Serial.print(AverageRange);
+    
+  // Show on OLED
+  display.clearDisplay();
+  display.setTextColor(SSD1306_WHITE);
+  display.setTextSize(2);  // Large characters
+  display.setCursor(36,2);
+  display.print(sensor.getScaling());
+  display.print("x");
+  display.setCursor(32,22);
+  display.print(sensor.readRangeContinuousMillimeters()); 
+  display.display(); 
+
  
   if (sensor.timeoutOccurred()) { Serial.print(" TIMEOUT"); }
 

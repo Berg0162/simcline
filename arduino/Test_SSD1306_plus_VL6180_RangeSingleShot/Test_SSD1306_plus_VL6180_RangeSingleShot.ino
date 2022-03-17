@@ -46,6 +46,10 @@ void setup()
   // Set scaling (after configureDefault = 1) of the VL6180X to approriate value 1, 2 or 3
   sensor.setScaling(SCALING);
   sensor.setTimeout(500);
+  
+  Serial.print("Test VL6180X Range Single Shot with Scaling = ");
+  Serial.print(sensor.getScaling());
+  Serial.println("x");
 
   // Clear and set Oled display for further use
   display.clearDisplay();
@@ -59,9 +63,6 @@ void setup()
 
 void loop() 
 { 
-  Serial.print("(Scaling = ");
-  Serial.print(sensor.getScaling());
-  Serial.print("x) ");
 
   Serial.print(sensor.readRangeSingleMillimeters());
   
@@ -76,7 +77,7 @@ void loop()
   display.print(sensor.readRangeSingleMillimeters()); 
   display.display(); 
 
-  if (sensor.timeoutOccurred()) { Serial.print(" TIMEOUT"); }
+  if (sensor.timeoutOccurred()) { Serial.print(" ---> TIMEOUT"); }
   
   Serial.println();
 }
