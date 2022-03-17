@@ -489,7 +489,7 @@ So when the Simcline seems not to follow the road inclination values on the trai
 <br>
 
 
-# [Code support for smart TACX trainers](https://github.com/Berg0162/simcline/edit/master/Tacx%20Smart/README.md)<br>
+# [Code support for smart TACX trainers](https://github.com/Berg0162/simcline/edit/master/Tacx%20Smart/)<br>
 
 # Mechanical Construction of SIMCLINE<br>
 There are elaborated <b>Instructables</b> available with all the nitty gritty of how to create, construct and install the various parts and components of the SIMCLINE.<br> 
