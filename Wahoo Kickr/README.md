@@ -494,11 +494,6 @@ void prph_bleuart_rx_callback(uint16_t conn_handle) {
 .
 ```
 
-# Mechanical Construction of SIMCLINE<br>
-There is an elaborated <b>Instructable</b> available with all the nitty gritty of how to buy or create, construct and install the various parts and components of the SIMCLINE.<br> 
-See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" align="left" alt="Instructables"> [SIMCLINE Instructables](https://www.instructables.com/id/SIMCLINE-Simulation-of-Changing-Road-Incline-for-I/)
-<br clear="left">
-
 # Simcline in TTS4 controlled operation<br>
 In the following images is shown how the Simcline is operating when different inclination values are applied by the training software. In the present situation the Simcline is controlled by the TACX Training System (TTS4 is no longer supported by Tacx). The software is still running on my laptop and is operating in Workout Mode: <b>Slope-Time</b>. After setting the slope (in workout mode by the user) the Tacx trainer is instructed to set resistance exactly with that inclination. The Simcline polls regularly for this value with the Tacx trainer and sets the height of the front wheel axle in accordance. Notice the position and inclination with respect to the measuring tape. The measuring tape starts (zero centimeter position) at the lowest possible position of -10%. 10 Centimeter height is flat road level (0% inclination)....<br> Notice that TTS4 in this mode is <b>WhatYouSeeIsWhatYouGet</b>, the inclination that is shown on the app screen is exactly sent to the trainer for resistance setting!<br>
 Please notice that today many training apps are concerned more about "<i>the optimal user experience</i>" rather than with <b>WYSIWYG</b>, with respect to the road inclination. Most apps manipulate in some way the inclination that is sent to the trainer. When it is made clear <b>HOW</b> that inclination is manipulated (like the Difficulty Setting with Zwift) one can choose to allow for that <i>optimal user experience</i> or undo the setting and go for real road feel!<br>
@@ -507,5 +502,18 @@ So when the Simcline seems not to follow the road inclination values on the trai
 
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_in_operation.jpg" width="1000" height="600" alt="Simcline at work"><br clear="left">
 <br>
+
+
+# [Code support for smart TACX trainers](https://github.com/Berg0162/simcline/edit/master/Tacx%20Smart/README.md)<br>
+
+# Mechanical Construction of SIMCLINE<br>
+There are elaborated <b>Instructables</b> available with all the nitty gritty of how to create, construct and install the various parts and components of the SIMCLINE.<br> 
+
+# SIMCLINE 1.0<br>
+See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" align="left" alt="Instructables"> [SIMCLINE 1.0 Instructables](https://www.instructables.com/id/SIMCLINE-Simulation-of-Changing-Road-Incline-for-I/)<br clear="left">
+
+# SIMCLINE 2.0<br>
+See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" align="left" alt="Instructables"> [SIMCLINE 2.0 Instructables](https://www.instructables.com/SIMCLINE-20-Easy-Simulation-of-Road-Incline/)<br clear="left">
+
 
 
