@@ -49,7 +49,7 @@ Please follow the instructions at the first part of the program code!
 + Start your reconnaissance with running <b>Test_FTMS_Client_v03</b> and experience how the Feather is controlling the resistance of your FTMS enabled trainer. 
 + Next step is running <b>Test_FTMS_Server_v03</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the nRF52 Feather.<br>
 
-<i>The 3 <ul>test</ul> programs (Client, Server and the Bridge) are NOT using a separate display, only Serial Monitor to show what is happening!</i><br>
+<i>The 3 <b>test</b> programs (Client, Server and Bridge) are only using Serial Monitor (screen output) to show what is happening!</i><br>
 Please write down the MAC or Device Addresses of a) your FTMS enabled trainer and b) your Desktop/Laptop with Zwift. These are presented in the Serial Monitor log file when running the Client and Server test code.<br>
 
 <b>Now it is time to test the bridge!</b><br>
