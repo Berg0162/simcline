@@ -29,7 +29,7 @@ According to the smart trainer recommendations guide winter 2020-2021 of [DCRain
 |Tacx |ANT+ FE-C on all ‘Smart’ branded trainers (except Satori). FTMS on all non-NEO models.|
 |Wahoo |ANT+ FE-C on all smart trainers. Gives developers access to private Wahoo Bluetooth Smart control, no proper FTMS support yet.|
 
-Source of this table is: [DCRainmaker](https://www.dcrainmaker.com/2020/11/smart-cycle-trainer-recommendations-guide-winter.html)
+                                                                                           Source of this table is: [DCRainmaker](https://www.dcrainmaker.com/2020/11/smart-cycle-trainer-recommendations-guide-winter.html)
 <br>
    
 <b>Man-In-The-Middle</b> is a powerful software engineering pattern that is applied in many software designs. Unfortunately it is also known for a negative application in communication traffic: MITM is a common type of cybersecurity attack that allows attackers to eavesdrop on the communication between two targets.
