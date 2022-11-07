@@ -4,19 +4,29 @@
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_2_0.jpg" width="300" height="300" ALIGN="left" alt="SIMCLINE 2">
 The SIMCLINE physically adjusts the bike position to mimic hilly roads, climbing and descending. This allows the rider to naturally change position on the bike, engage climbing muscles, and improve pedaling technique to become a more efficient and powerful climber.<br>
 Without user intervention the SIMCLINE will replicate inclines and declines depicted in (online & offline) training programs (like Zwift, Rouvy, VeloReality and many others) that adjust accordingly the resistance of the indoor trainer.<br>
-The SIMCLINE auto connects at power up with a smart FTMS enabled trainer and let's relive the ascents and descents from favorite rides or routes while training indoors.<br>
+The SIMCLINE auto connects at power up with a FTMS enabled smart trainer and let's relive the ascents and descents from favorite rides or routes while training indoors.<br>
 The physical reach is: 20% maximum incline and -10% maximum decline. However, the reach that the rider is comfortable with can be adjusted!<br>
-The SIMCLINE pairs directly to the FTMS enabled trainer and with your PC/Laptop with (Zwift) training App for a connection that notifies the SIMCLINE to simulate autonomous the (change in) physical grade of the road during an indoor ride.<br>
+The SIMCLINE pairs directly to the FTMS enabled trainer and with your PC/Laptop/Tablet with (Zwift) training App for a connection that notifies the SIMCLINE to simulate autonomous the (change in) physical grade of the road during an indoor ride.<br>
 During operation an OLED display shows the road grade in digits and in graphics.<br>
 The SIMCLINE Companion App (for Android smartphones) can be paired, only when the training App is disconnected, for adjusting operational settings, like Ascent Grade Limit (between 0-20%), Descent Grade Limit (between 0-10%), Road Grade Change Factor (between 0-100%) and manual Up and Down control. Notice that the Companion App has a slightly different functionality depending of what brand of trainer (TACX, Wahoo or FTMS enabled) is connected, due to specific connectivity differences. <br clear="left"> 
 
 # Man-In-The-Middle (MITM) software pattern<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/FTMS_Man_in_the_Middle.jpg" align="left" width="1000" height="500" alt="Man in the Middle"><br>
-TACX published in 2015 a document [TACX, FE-C and Bluetooth](https://github.com/Berg0162/simcline/blob/master/docs/How_to_FE_C_over_BLE_v1_0_0.pdf) that explains how to use the FE-C ANT+ protocol over BLE feature implemented on all(?) TACX Smart Trainers. TACX designed this feature because at that time an open standard (on BLE) for trainers was lacking. During 2015-2017 (<b>FTMS</b>) FiTness Machine Service protocol to control fitness equipment over Bluetooth has been designed and very well documented. According to the smart trainer recommendations guide winter 2019-2020 of [DCRainmaker](https://www.dcrainmaker.com/2019/10/the-smart-trainer-recommendations-guide-winter-2019-2020.html) the situation evolved:
-> Meanwhile, for Bluetooth Smart, there’s FTMS, which is basically the same thing as FE-C when it comes to trainers. It’s not quite as widely adopted yet by trainer companies, but is by app companies. On the trainer company side only Elite, Saris, and Kinetic support it across the board. With Tacx having it on some but not all units, and Wahoo having it on no units (but all Wahoo and Tacx trainers support a <b>proprietary</b> Bluetooth Smart with all major apps anyway).<br>
-
-The next generation of Simclines will hopefully be based on this FTMS, when all companies embrace its open standard, however, today we still have to open our box of tricks with some companies! <br>
-
+From 2015 to 2017 the Sports and Fitness Working Group (SIG) designed a Bluetooth Service specification. This service exposes training-related data in the sports and fitness environment, which allows a Server (e.g., a fitness machine) to send training-related data to a Client. In Februari 2017 the specification reached a stable version 1.0 [FiTness Machine Service](https://www.bluetooth.com/specifications/specs/fitness-machine-service-1-0/). <b>FTMS<\b> is an open (nonproprietary) protocol that is not owned by any particular company and not limited to a particular company's products. It can be compared in that respect with FE-C over Ant+, however FTMS is targeted to control fitness equipment over <b>Bluetooth<\b>!<br>
+According to the smart trainer recommendations guide winter 2020-2021 of [DCRainmaker](https://www.dcrainmaker.com/2020/11/smart-cycle-trainer-recommendations-guide-winter.html) the situation evolved:
+>Meanwhile, for Bluetooth Smart, there’s FTMS, which is basically the same thing as FE-C when it comes to trainers. It’s not quite as widely adopted yet by trainer companies, but is by app companies. On the trainer company side only Elite, Saris, and Kinetic support it across the board. With Tacx having it on some but not all units, and Wahoo having it on no units (but all Wahoo and Tacx trainers support private Bluetooth Smart with all major apps anyway). Each year Wahoo and Tacx say they’ll get around to adding it to their higher-end units, and each year they don’t (practically speaking though, it won’t impact your app usage, since all major apps support Tacx/Wahoo variants anyway).<br>
+<ul> 
+Elite: ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.
+Gravat: ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers
+JetBlack: ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.
+Kinetic: ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.
+Minoura: ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.
+Saris: ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.
+STAC: ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.
+Tacx: ANT+ FE-C on all ‘Smart’ branded trainers (except Satori). FTMS on all non-NEO models.
+Wahoo: ANT+ FE-C on all smart trainers. Gives developers access to private Wahoo Bluetooth Smart control, no proper FTMS support yet.
+ <\ul>
+   
 <b>Man-In-The-Middle</b> is a powerful software engineering pattern that is applied in many software designs. Unfortunately it is also known for a negative application in communication traffic: MITM is a common type of cybersecurity attack that allows attackers to eavesdrop on the communication between two targets.
 We have applied the very principle: the Simcline is strategicly positioned in between the BLE communication of the FTMS enabled Trainer and the training App (like Zwift) running on the PC/Laptop, all communication traffic can be inspected in that MITM position, when it is passed on from one to the other, in both directions. When Zwift sends resistance information (like the road inclination) to the FTMS enabled trainer, this information can be intercepted and applied to determine the up/down positioning of the Simcline. <br>
 
