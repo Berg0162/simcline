@@ -13,10 +13,9 @@ The SIMCLINE Companion App (for Android smartphones) can be paired, only when th
 # Man-In-The-Middle (MITM) software pattern<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/FTMS_Man_in_the_Middle.jpg" align="left" width="1000" height="500" alt="Man in the Middle"><br>
 From 2015 to 2017 the Sports and Fitness Working Group (SIG) designed a Bluetooth Service specification. This service exposes training-related data in the sports and fitness environment, which allows a Server (e.g., a fitness machine) to send training-related data to a Client. In Februari 2017 the service specification reached a stable version: 1.0 [see: FiTness Machine Service](https://www.bluetooth.com/specifications/specs/fitness-machine-service-1-0/).
-<b>FTMS</b> is an open (nonproprietary) protocol that is not owned by any particular company and not limited to a particular company's products. It can be compared in that respect with FE-C over ANT+, however <b>FTMS</b> is targeted to control fitness equipment over <b>Bluetooth</b>!<br>
+<b>FTMS</b> is an open (nonproprietary) protocol that is not owned by any particular company and not limited to a particular company's product. It can be compared in that respect with FE-C over ANT+, however <b>FTMS</b> is targeted to control fitness equipment over <b>Bluetooth</b>!<br>
 According to the smart trainer recommendations guide winter 2020-2021 of [DCRainmaker](https://www.dcrainmaker.com/2020/11/smart-cycle-trainer-recommendations-guide-winter.html) the situation evolved:
 >Meanwhile, for Bluetooth Smart, there’s FTMS, which is basically the same thing as FE-C when it comes to trainers. It’s not quite as widely adopted yet by trainer companies, but is by app companies. On the trainer company side only Elite, Saris, and Kinetic support it across the board. With Tacx having it on some but not all units, and Wahoo having it on no units (but all Wahoo and Tacx trainers support private Bluetooth Smart with all major apps anyway). Each year Wahoo and Tacx say they’ll get around to adding it to their higher-end units, and each year they don’t (practically speaking though, it won’t impact your app usage, since all major apps support Tacx/Wahoo variants anyway).<br>
-
 
 |Trainer  |Supported protocols|
 |-----------|-------------------------------------------------------------------------------------| 
@@ -29,6 +28,7 @@ According to the smart trainer recommendations guide winter 2020-2021 of [DCRain
 |STAC |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
 |Tacx |ANT+ FE-C on all ‘Smart’ branded trainers (except Satori). FTMS on all non-NEO models.|
 |Wahoo |ANT+ FE-C on all smart trainers. Gives developers access to private Wahoo Bluetooth Smart control, no proper FTMS support yet.|
+Source of this table is: [DCRainmaker](https://www.dcrainmaker.com/2020/11/smart-cycle-trainer-recommendations-guide-winter.html)
 <br>
    
 <b>Man-In-The-Middle</b> is a powerful software engineering pattern that is applied in many software designs. Unfortunately it is also known for a negative application in communication traffic: MITM is a common type of cybersecurity attack that allows attackers to eavesdrop on the communication between two targets.
