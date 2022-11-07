@@ -17,17 +17,17 @@ According to the smart trainer recommendations guide winter 2020-2021 of [DCRain
 >Meanwhile, for Bluetooth Smart, there’s FTMS, which is basically the same thing as FE-C when it comes to trainers. It’s not quite as widely adopted yet by trainer companies, but is by app companies. On the trainer company side only Elite, Saris, and Kinetic support it across the board. With Tacx having it on some but not all units, and Wahoo having it on no units (but all Wahoo and Tacx trainers support private Bluetooth Smart with all major apps anyway). Each year Wahoo and Tacx say they’ll get around to adding it to their higher-end units, and each year they don’t (practically speaking though, it won’t impact your app usage, since all major apps support Tacx/Wahoo variants anyway).<br>
 
 
-|Trainer|Access|
+|Trainer  |Supported protocols|
 |-----------|-------------------------------------------------------------------------------------| 
-|Elite: |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
-|Gravat: |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers|
-|JetBlack: |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
-|Kinetic: |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
-|Minoura: |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
-|Saris: |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
-|STAC: |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
-|Tacx: |ANT+ FE-C on all ‘Smart’ branded trainers (except Satori). FTMS on all non-NEO models.|
-|Wahoo: |ANT+ FE-C on all smart trainers. Gives developers access to private Wahoo Bluetooth Smart control, no proper FTMS support yet.|
+|Elite |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
+|Gravat |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers|
+|JetBlack |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
+|Kinetic |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
+|Minoura |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
+|Saris |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
+|STAC |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
+|Tacx |ANT+ FE-C on all ‘Smart’ branded trainers (except Satori). FTMS on all non-NEO models.|
+|Wahoo |ANT+ FE-C on all smart trainers. Gives developers access to private Wahoo Bluetooth Smart control, no proper FTMS support yet.|
 <br>
    
 <b>Man-In-The-Middle</b> is a powerful software engineering pattern that is applied in many software designs. Unfortunately it is also known for a negative application in communication traffic: MITM is a common type of cybersecurity attack that allows attackers to eavesdrop on the communication between two targets.
