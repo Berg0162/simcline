@@ -47,7 +47,7 @@ When I started the project in 2020 I did not have any practical experience with 
 
 # To see is to believe!<br>
 I can understand and respect that you have some reserve: Is this really working in my situation? Better test if it is working, before buying all components and start building.
-In the Github repository (see above) you will find the appropriate test code named: <b>Test_FTMS_Client_v03</b>, <b>Test_to_be_determined</b> and <b>Test_to_be_determined</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
+In the Github repository (see above) you will find the appropriate files with test code: <b>Test_FTMS_Client_plus_CPS_CSC_v01</b>, <b>Test_to_be_determined</b> and <b>Test_to_be_determined</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
 
 <b>What it does in short:</b><br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/FTMS_Feather_Zwift_BLE.jpg" align="middle" width="950" height="700" alt="Simcline in the Middle"><br>
