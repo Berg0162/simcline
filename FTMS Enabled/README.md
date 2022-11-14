@@ -66,5 +66,5 @@ Please follow the instructions at the first part of the program code!
 + Next step is running <b>FTMS_Server_v01</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the nRF52 Feather.<br>
 
 <i>The 2 presently available programs (FTMS Client and FTMS Server) are only using Serial Monitor (screen output) to show what is happening!</i><br>
-Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... If that is the case: Open an <b>Issue</b> and paste the relevant screen output in your <b>Issues</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!
+Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... If that is the case: Open [Issues](https://github.com/Berg0162/simcline/issues), click the green button <b>New Issue</b> and paste the relevant screen output in your <b>Issue</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!
 
