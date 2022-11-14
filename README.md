@@ -24,6 +24,8 @@ Finally you have to select the SIMCLINE code that is appropriate for the trainer
 
 # [Code support for Wahoo KICKR trainers](https://github.com/Berg0162/simcline/tree/master/Wahoo%20Kickr/)<br>
 
+# [Code support for FTMS enabled trainers](https://github.com/Berg0162/simcline/tree/master/FTMS%20Enabled/)<br>
+
 # SIMCLINE 1.0<br>
 See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" align="left" alt="Instructables"> [SIMCLINE 1.0 Instructables](https://www.instructables.com/id/SIMCLINE-Simulation-of-Changing-Road-Incline-for-I/)
 <br clear="left">
