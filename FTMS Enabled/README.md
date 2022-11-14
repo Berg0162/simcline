@@ -43,28 +43,28 @@ We have applied the very principle: the Simcline is strategicly positioned in be
 + Download all the code from [Github](https://github.com/Berg0162/simcline/tree/master/FTMS%20Enabled) and install. <br>
 
 # How to make it work?<br>
-The requirements in this test phase are simple: 
+The requirements in this phase are simple: 
 + running Zwift app or alike, 
 + working Feather nRF52840/52832 board and 
 + a FTMS enabled Trainer.<br>
 
 # Testing is Knowing!<br>
 I can understand and respect that you have some reserve: Is this really working in my situation? Better test if it is working, before buying all components and start building.
-In the Github repository (see above) you will find the appropriate files with test code: <b>FTMS_Client_v01</b> and <b>FTMS_Server_v01</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
+In the Github repository (see above) you will find the appropriate files with code: <b>FTMS_Client_v01</b> and <b>FTMS_Server_v01</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
 
 <b>What it does in short:</b><br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/FTMS_Feather_Zwift_BLE.jpg" align="middle" width="950" height="700" alt="Simcline in the Middle"><br>
-A working <b>MITM</b> implementation links a bike trainer (BLE Server FTMS) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52840/832, like a <b>bridge</b> in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! The <b>MITM</b> test code is fully ignorant of mechanical or electronic components that drive the Simcline construction. It simply estabishes a virtual BLE bridge and allows you to ride the bike on the FTMS enabled Trainer and feel the resistance that comes with it, thanks to Zwift. The experience should not differ from a normal direct one-to-one connection, Zwift - FTMS enabled Trainer!<br>
+A working <b>MITM</b> implementation links a bike trainer (BLE Server FTMS) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52840/832, like a <b>bridge</b> in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! The <b>MITM</b> code is fully ignorant of mechanical or electronic components that drive the Simcline construction. It simply estabishes a virtual BLE bridge and allows you to ride the bike on the FTMS enabled Trainer and feel the resistance that comes with it, thanks to Zwift. The experience should not differ from a normal direct one-to-one connection, Zwift - FTMS enabled Trainer!<br>
 All FTMS enabled indoor trainers expose your efforts on the bike in 2 additional BLE services: Cyling Power (CPS) and Speed & Cadence (CSC). These services are detected and applied by many training app's and are therefore an integral part of the present design of the MITM bridge. Training app's simply expect, when they connect to the FTMS enabled trainer, that the CPS and CSC services are available in one go! The Zwift pairing screen is a good example: it expects Power (CPS), Cadence (CSC) and a "Controllable" (with FTMS) to be connected...
 + The client-side (Feather nRF52) scans for (a trainer) and connects with <b>FTMS, CPS and CSC</b> and collects cyling power, speed and cadence data like Zwift would do! The code with the name: <b>FTMS_Client_v01</b> is doing just that one side of the "bridge"!
 + The Server-side (Feather nRF52) advertises and enables connection with training/cycling/game apps like Zwift and collects relevant resistance data, it simulates as if an active <b>FTMS</b> enabled trainer is connected to Zwift or alike! Notice that the Server-side also exposes active <b>CPS</b> and <b>CSC</b> services. The code with the name: <b>FTMS_Server_v01</b> is doing just the other side of the "bridge"!
 + The <b>MITM</b> code is connecting both sides at the same time: a full-blown bridge! (This code is still work in progress)<br clear="left">
 
-<b>Use the test code for reconnaissance!</b><br>
+<b>Use the code for reconnaissance and testing!</b><br>
 Please follow the instructions at the first part of the program code!
 + Start your reconnaissance with running <b>FTMS_Client_plus_v01</b> and experience how the Feather is controlling the resistance of your FTMS enabled trainer. 
 + Next step is running <b>FTMS_Server_v01</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the nRF52 Feather.<br>
 
-<i>The 2 presently available <b>test</b> programs (FTMS Client and FTMS Server) are only using Serial Monitor (screen output) to show what is happening!</i><br>
+<i>The 2 presently available programs (FTMS Client and FTMS Server) are only using Serial Monitor (screen output) to show what is happening!</i><br>
 Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... If that is the case: Open an <b>Issue</b> and paste the relevant screen output in your <b>Issues</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!
 
