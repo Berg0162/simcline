@@ -68,8 +68,6 @@ Please follow the instructions at the first part of the program code!
 + Start your reconnaissance with running <b>FTMS_Client_plus_v01</b> and experience how the Feather is controlling the resistance of your FTMS enabled trainer. 
 + Next step is running <b>FTMS_Server_v01</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the nRF52 Feather.<br>
 
-<i>The 3 <b>test</b> programs (Client, Server and Bridge) are only using Serial Monitor (screen output) to show what is happening!</i><br>
-Please write down the MAC or Device Addresses of a) your FTMS enabled trainer and b) your Desktop/Laptop with Zwift. These are presented in the Serial Monitor log file when running the Client and Server test code.<br>
+<i>The 2 presently available <b>test</b> programs (FTMS Client and FTMS Server) are only using Serial Monitor (screen output) to show what is happening!</i><br>
+Please supply me with the Serial Monitor output (Copy/Paste) when pairing and/or connection processes are not successful or error messages appear.. Open an Issue and paste the relevant screen output in your Issue post to detail what went wrong!
 
-<b>Now it is time to test the bridge!</b><br>
-The <b>Bridge_to_be_determined</b> code needs these "hardware" addresses to unmistakingly establish a BLE connection with the right device. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera.
