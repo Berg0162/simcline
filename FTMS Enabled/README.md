@@ -62,9 +62,9 @@ All FTMS enabled indoor trainers expose your efforts on the bike in 2 additional
 
 <b>Use the code for reconnaissance and testing!</b><br>
 Please follow the instructions at the first part of the program code!
-+ Start your reconnaissance with running <b>FTMS_Client_plus_v01</b> and experience how the Feather is controlling the resistance of your FTMS enabled trainer. Notice that is piece of code is highly dependent on the type and brand of FTMS enabled trainer and therefore most critical!
++ Start your reconnaissance with running <b>FTMS_Client_plus_v01</b> and experience how the Feather is controlling the resistance of your FTMS enabled trainer. Notice that this piece of code is highly dependent on the type and brand of FTMS enabled Trainer and therefore most critical!
 + Next step is running <b>FTMS_Server_v01</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the nRF52 Feather. Notice that this particular piece of code is tested extensively by the author with the Zwift app.<br>
 
 <i>The 2 presently available programs (FTMS Client and FTMS Server) are only using Serial Monitor (screen output) to show what is happening!</i><br>
-Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... If that is the case: Open [Issues](https://github.com/Berg0162/simcline/issues), click the green button <b>New Issue</b> and paste the relevant screen output in your <b>Issue</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!
+Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... If that is the case: Open [Issues](https://github.com/Berg0162/simcline/issues), click the green button <b>New issue</b> and paste the relevant screen output in your <b>Issues</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!
 
