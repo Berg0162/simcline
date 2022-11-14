@@ -54,11 +54,11 @@ In the Github repository (see above) you will find the appropriate files with te
 
 <b>What it does in short:</b><br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/FTMS_Feather_Zwift_BLE.jpg" align="middle" width="950" height="700" alt="Simcline in the Middle"><br>
-The <b>Bridge_to_be_determined</b> code links a bike trainer (BLE Server FTMS) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52840/832, like a bridge in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! This test code is fully ignorant of the mechanical components that drive the Simcline. It simply estabishes a virtual BLE bridge and allows you to ride the bike on the FTMS enabled trainer and feel the resistance that comes with it, thanks to Zwift. The experience should not differ from a normal direct one-to-one connection, Zwift - FTMS enabled trainer!<br>
+A working <b>MITM</b> implementation links a bike trainer (BLE Server FTMS) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52840/832, like a <b>bridge</b> in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! The <b>MITM</b> test code is fully ignorant of mechanical or electronic components that drive the Simcline construction. It simply estabishes a virtual BLE bridge and allows you to ride the bike on the FTMS enabled Trainer and feel the resistance that comes with it, thanks to Zwift. The experience should not differ from a normal direct one-to-one connection, Zwift - FTMS enabled Trainer!<br>
 All FTMS enabled indoor trainers expose your efforts on the bike in 2 additional BLE services: Cyling Power (CPS) and Speed & Cadence (CSC). These services are detected and applied by many training app's and are therefore an integral part of the present design of the MITM bridge. Training app's simply expect, when they connect to the FTMS enabled trainer, that the CPS and CSC services are available in one go! The Zwift pairing screen is a good example: it expects Power (CPS), Cadence (CSC) and a "Controllable" (with FTMS) to be connected...
 + The client-side (Feather nRF52) scans for (a trainer) and connects with <b>FTMS, CPS and CSC</b> and collects cyling power, speed and cadence data like Zwift would do! The code with the name: <b>FTMS_Client_v01</b> is doing just that one side of the "bridge"!
 + The Server-side (Feather nRF52) advertises and enables connection with training/cycling/game apps like Zwift and collects relevant resistance data, it simulates as if an active <b>FTMS</b> enabled trainer is connected to Zwift or alike! Notice that the Server-side also exposes active <b>CPS</b> and <b>CSC</b> services. The code with the name: <b>FTMS_Server_v01</b> is doing just the other side of the "bridge"!
-+ The <b>Bridge_to_be_determined</b> code is connecting both sides at the same time: the full-blown bridge!<br clear="left">
++ The <b>MITM</b> code is connecting both sides at the same time: a full-blown bridge!<br clear="left">
 
 <b>Use the test code for reconnaissance!</b><br>
 Please follow the instructions at the first part of the program code!
@@ -66,5 +66,5 @@ Please follow the instructions at the first part of the program code!
 + Next step is running <b>FTMS_Server_v01</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the nRF52 Feather.<br>
 
 <i>The 2 presently available <b>test</b> programs (FTMS Client and FTMS Server) are only using Serial Monitor (screen output) to show what is happening!</i><br>
-Please supply me with the Serial Monitor output (Copy/Paste) when pairing and/or connection processes are not successful or error messages appear.. Open an Issue and paste the relevant screen output in your Issue post to detail what went wrong!
+Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or whem error messages appear... If that is the case: Open an Issue and paste the relevant screen output in your Issue post to detail what went wrong! 
 
