@@ -42,12 +42,15 @@ We have applied the very principle: the Simcline is strategicly positioned in be
 
 # How to start?<br>
 + Install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) and all the libraries on a PC/Mac.
-+ Download all the code from [Github](https://github.com/Berg0162/simcline/tree/master/FTMS%20Enabled) and install.
-<br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry_02.jpg" align="left" width="200" height="200" alt="Cardboard">
-When I started the project in 2020 I did not have any practical experience with any of the components. So I had to setup the circuitry step by step adding components and did a lot of time consuming but instructive testing first. My advice is to setup (<b>some of</b>) the electronic components first in a similar way as shown on the photo with the cardboard base. Use double sided adhesive tape but only attach it on sections that have no pcb-wiring or soldering, to avoid possible electrical interference. You will find in this Github repository all the code that controls the Simcline and the Arduino test programs (modified for this project) that focus on components separately and in conjunction. <br clear="left">
++ Download all the code from [Github](https://github.com/Berg0162/simcline/tree/master/FTMS%20Enabled) and install. <br>
 
-# To see is to believe!<br>
+# How to make it work?<br>
+The requirements in this test phase are simple: 
++ running Zwift app or alike, 
++ working Feather nRF52840/52832 board and 
++ a FTMS enabled Trainer.<br>
+
+# Testing is Knowing!<br>
 I can understand and respect that you have some reserve: Is this really working in my situation? Better test if it is working, before buying all components and start building.
 In the Github repository (see above) you will find the appropriate files with test code: <b>FTMS_Client_v01</b>, <b>FTMS_Server_v01</b> and <b>Bridge_to_be_determined</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
 
@@ -58,12 +61,6 @@ All FTMS enabled indoor trainers expose your efforts on the bike in 2 additional
 + The client-side (Feather nRF52) scans for (a trainer) and connects with <b>FTMS, CPS and CSC</b> and collects cyling power, speed and cadence data like Zwift would do! The code with the name: <b>FTMS_Client_v01</b> is doing just that one side of the "bridge"!
 + The Server-side (Feather nRF52) advertises and enables connection with training/cycling/game apps like Zwift and collects relevant resistance data, it simulates as if an active <b>FTMS</b> enabled trainer is connected to Zwift or alike! Notice that the Server-side also exposes active <b>CPS</b> and <b>CSC</b> services. The code with the name: <b>FTMS_Server_v01</b> is doing just the other side of the "bridge"!
 + The <b>Bridge_to_be_determined</b> code is connecting both sides at the same time: the full-blown bridge!<br clear="left">
-
-<b>How to make it work?</b><br>
-The requirements are simple: 
-+ running Zwift app or alike, 
-+ working Feather nRF52840/52832 board and 
-+ a FTMS enabled Trainer.<br>
 
 <b>Use the test code for reconnaissance!</b><br>
 Please follow the instructions at the first part of the program code!
