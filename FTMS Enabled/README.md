@@ -76,6 +76,7 @@ Please follow <b>ALWAYS</b> the different usage instructions at the first part o
 + Next step is running <b>FTMS_Server_v01</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the nRF52 Feather. Notice that this particular piece of code is tested intensively by the author with the Zwift app.<br>
 + After a smoothly runs, it is time to test the FTMS bridge!<br>
 The <b>FTMS_Zwift_Bridge_v01</b> code needs the "hardware" addresses to unmistakingly establish a BLE connection with the targeted devices. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera.<br>
+
 Look in the Bridge code for the following snippet and fill in the required addresses:
 ```C++
 .
