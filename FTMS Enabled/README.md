@@ -76,6 +76,19 @@ Please follow the instructions at the first part of the program code!
 + Next step is running <b>FTMS_Server_v01</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the nRF52 Feather. Notice that this particular piece of code is tested intensively by the author with the Zwift app.<br>
 + Only now it is time to test the FTMS bridge!<br>
 The <b>FTMS_Zwift_Bridge_v01</b> code needs the "hardware" addresses to unmistakingly establish a BLE connection with the targeted devices. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera.<br>
-
+```C++
+.
+// -----------------------------------------------------------------
+// Your hardware MAC/DEVICE ADDRESSES
+// Laptop/Desktop Device Address that runs Zwift, printed as: [00:01:02:03:04:05]
+// Little Endian: in reversed order !!!!
+#define LAPTOPADDRESS {0x05,0x04,0x03,0x02,0x01,0x00}
+// FTMS enabled Trainer Device Address, printed as: [00:01:02:03:04:05]
+// Little Endian: in reversed order !!!!
+#define TRAINERADDRESS {0x05,0x04,0x03,0x02,0x01,0x00}
+// -----------------------------------------------------------------
+.
+```
+The two precise device addresses are critical to assure a reliable test run! You have to insert the values in the program code before uploading the code to the Feather nRF52!<br><br>
 Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... If that is the case: Open [Issues](https://github.com/Berg0162/simcline/issues), click the green button: <b>New issue</b> and paste the relevant screen output in your <b>Issues</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!
 
