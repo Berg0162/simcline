@@ -61,6 +61,7 @@ All FTMS enabled indoor trainers expose your efforts on the bike in 2 additional
 + The <b>MITM</b> code is connecting both sides at the same time: a full-blown bridge! (This code is still work in progress)<br clear="left">
 
 <i>The test programs (FTMS Client, FTMS Server and FTMS-Zwift-Bridge) are only using Serial Monitor (screen output) to show what is happening!</i><br>
+Please write down the MAC or Device Addresses of a) your FTMS enabled trainer and b) your Desktop/Laptop with Zwift. These are presented in the Serial Monitor log file when running the Client and Server test code.<br>
 
 <b>Use the code for reconnaissance and testing!</b><br>
 Please follow the instructions at the first part of the program code!
