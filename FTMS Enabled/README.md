@@ -61,16 +61,16 @@ All FTMS enabled indoor trainers expose your efforts on the bike in 2 additional
 + The <b>MITM</b> code is connecting both sides at the same time: a full-blown bridge! (This code is still work in progress)<br clear="left">
 
 <i>The test programs (FTMS Client, FTMS Server and FTMS-Zwift-Bridge) are only using Serial Monitor (screen output) to show what is happening!</i><br>
-Please write down the <b>MAC</b> or <b>Device Addresses</b> of a) your FTMS enabled trainer and b) your Desktop/Laptop with Zwift. These are presented in the Serial Monitor log file when running the Client and Server test code.<br>
-
+```
+Please write down the MAC or Device Addresses of a) your FTMS enabled trainer and b) your Desktop/Laptop with Zwift. 
+These are presented in the Serial Monitor log file when running the Client and Server test code.
+```
 <b>Use the code for reconnaissance and testing!</b><br>
 Please follow the instructions at the first part of the program code!
 + Start your reconnaissance with running <b>FTMS_Client_v012</b> and experience how the Feather is controlling the resistance of your FTMS enabled trainer. Notice that this piece of code is highly dependent on the type and brand of FTMS enabled Trainer and therefore most critical!
 + Next step is running <b>FTMS_Server_v01</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the nRF52 Feather. Notice that this particular piece of code is tested intensively by the author with the Zwift app.<br>
 + Only now it is time to test the FTMS bridge!<br>
-```
-The <b>FTMS_Zwift_Bridge_v01</b> code needs these "hardware" addresses to unmistakingly establish a BLE connection with the targeted devices. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera.
-```
+The <b>FTMS_Zwift_Bridge_v01</b> code needs these "hardware" addresses to unmistakingly establish a BLE connection with the targeted devices. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera.<br>
 
 Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... If that is the case: Open [Issues](https://github.com/Berg0162/simcline/issues), click the green button: <b>New issue</b> and paste the relevant screen output in your <b>Issues</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!
 
