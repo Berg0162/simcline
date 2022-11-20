@@ -50,7 +50,7 @@ The requirements in this phase are simple:
 
 # Testing is Knowing!<br>
 I can understand and respect that you have some reserve: Is this really working in my situation? Better test if it is working, before buying all components and start building.
-In the Github repository (see above) you will find the appropriate files with code: <b>FTMS_Client_v01</b> and <b>FTMS_Server_v01</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
+In the Github repository (see above) you will find the appropriate files with code: <b>FTMS_Client_v013</b> and <b>FTMS_Server_v01</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
 
 <b>What it does in short:</b><br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/FTMS_Feather_Zwift_BLE.jpg" align="middle" width="950" height="700" alt="Simcline in the Middle"><br>
@@ -61,7 +61,7 @@ feel the resistance that comes with the route you have choosen, thanks to Zwift.
 The experience should not differ from a normal direct one-to-one connection, Zwift - FTMS enabled Trainer!
 ```
 All FTMS enabled indoor trainers expose your efforts on the bike in 2 additional BLE services: Cyling Power (CPS) and Speed & Cadence (CSC). These services are detected and applied by many training app's and are therefore an integral part of the present design of the MITM bridge. Training app's simply expect, when they connect to the FTMS enabled trainer, that the CPS and CSC services are available in one go! The Zwift pairing screen is a good example: it expects Power (CPS), Cadence (CSC) and a "Controllable" (with FTMS) to be connected...
-+ The client-side (Feather nRF52) scans for (a trainer) and connects with <b>FTMS, CPS and CSC</b> and collects cyling power, speed and cadence data like Zwift would do! The code with the name: <b>FTMS_Client_v01</b> is doing just that at the left side of the "bridge"!
++ The client-side (Feather nRF52) scans for (a trainer) and connects with <b>FTMS, CPS and CSC</b> and collects cyling power, speed and cadence data like Zwift would do! The code with the name: <b>FTMS_Client_v013</b> is doing just that at the left side of the "bridge"!
 + The Server-side (Feather nRF52) advertises and enables connection with training/cycling/game apps like Zwift and collects relevant resistance data, it simulates as if an active <b>FTMS</b> enabled trainer is connected to Zwift or alike! Notice that the Server-side also exposes active <b>CPS</b> and <b>CSC</b> services. The code with the name: <b>FTMS_Server_v01</b> is doing just at the right side of the "bridge"!
 + The <b>MITM</b> code is connecting both sides at the same time: a full-blown working bridge, <b>FTMS_Zwift_Bridge_v01</b><br clear="left">
 
@@ -74,7 +74,22 @@ These are presented in the Serial Monitor log file when running the Client and S
 Please follow <b>ALWAYS</b> the different usage instructions at the first part of the respective program codes!
 + Start your reconnaissance with running <b>FTMS_Client_v013</b> and experience how the Feather is controlling the resistance of your FTMS enabled trainer. Notice that this piece of code is highly dependent on the type and brand of FTMS enabled Trainer and therefore most critical!
 ```
-
+/* 
+ *  This Feather-nRF52840 tested code scans for the CPS, CSC and FTMS
+ *  that the trainer is advertising, it tries to connect and then 
+ *  enables .....
+ *  
+ *  Requirements: Running FTMS trainer and Feather nRF52 board
+ *  1) Start the trainer and do NOT connect it with other devices
+ *  2) Upload and Run this code on the Feather-nRF52
+ *  3) Start the Serial Monitor to catch verbose debugging and data info
+ *  4) Trainer and Feather should successfully pair or disconnect...
+ *  5) Keep the Serial Monitor visible on top of all windows 
+ *  6) Move the trainer pedals and notice/feel changes in resistance...
+ *     The Client sends Resistance Parameters to the Trainer that coincide 
+ *     with the first 5 minutes of the Zwift Volcano Circuit!
+ *  7) Inspect the info presented by Serial Monitor.....
+ */
 ```
 + Next step is running <b>FTMS_Server_v01</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the nRF52 Feather. Notice that this particular piece of code is tested intensively by the author with the Zwift app.<br>
 + After a smoothly runs, it is time to test the FTMS bridge!<br>
