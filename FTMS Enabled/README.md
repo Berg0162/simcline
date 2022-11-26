@@ -45,7 +45,7 @@ We have applied the very principle: the Simcline is strategicly positioned in be
 # How to make it work?<br>
 The requirements in this phase are simple: 
 + running Zwift app or alike, 
-+ working Feather nRF52840/52832 board and 
++ working Feather nRF52840 board and 
 + a FTMS enabled Trainer.<br>
 
 # Testing is Knowing!<br>
@@ -54,7 +54,7 @@ In the Github repository (see above) you will find the appropriate files with co
 
 <b>What it does in short:</b><br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/FTMS_Feather_Zwift_BLE.jpg" align="middle" width="950" height="700" alt="Simcline in the Middle"><br>
-A working <b>MITM</b> implementation links a bike trainer (BLE Server FTMS) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52840/832, like a <b>bridge</b> in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! The <b>MITM</b> code is fully ignorant of mechanical or electronic components that drive the Simcline construction.<br>
+A working <b>MITM</b> implementation links a bike trainer (BLE Server FTMS) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52840, like a <b>bridge</b> in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! The <b>MITM</b> code is fully ignorant of mechanical or electronic components that drive the Simcline construction.<br>
 ```
 It simply estabishes a virtual BLE bridge and allows you to ride the bike on the FTMS enabled Trainer and 
 feel the resistance that comes with the route you have choosen, thanks to Zwift.
