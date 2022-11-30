@@ -788,7 +788,7 @@ bool checkForUuidPresent(const uint16_t uuid, const uint8_t* reportData, uint8_t
 {
   // Enter uuid in printed format like 0x1826 for UUID16_SVC_FITNESS_MACHINE
   // uuid is internally stored in Little Endian
-  for (int i = 0; i < (reportDataLen); i+=2) { // step 2 for UINT16
+  for (int i = 0; i < (reportDataLen); i++) { // step 1
     if( memcmp(&uuid, (reportData+i), 2) == 0) {
       return true;
     }
