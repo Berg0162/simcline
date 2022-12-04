@@ -175,8 +175,7 @@ Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or
 # Cleanup Zwift devices from the past<br>
 Zwift can sometimes hang onto the wrong info, such as trainers or sensors that were paired to the game in the past. Zwift uses Mac Addresses from previous connections to identify devices. So when device names change Zwift hangs on to the unique Mac Addresses rather than the names that you see in the pairing screens! This can be rather confusing and lead to misunderstandings when you connect devices having only their original names shown and not the actual names....
 Check out the steps below.<br>
-<b>PC/Mac</b>
-To reset all the Zwift stored devices on a PC or Mac, complete these steps:
+For <b>PC/Mac</b> to reset all the Zwift stored devices on a PC or Mac, complete these steps:
 + Close Zwift
 + On your desktop, open Documents
 + Double-click Zwift
