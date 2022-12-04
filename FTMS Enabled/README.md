@@ -170,5 +170,16 @@ Look in the Bridge code for the following snippet and fill in the required addre
 .
 ```
 The two precise device addresses are critical to assure a reliable test run! You have to insert the values in the program code before uploading the code to the Feather nRF52!<br><br>
-Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... If that is the case: Open [Issues](https://github.com/Berg0162/simcline/issues), click the green button: <b>New issue</b> and paste the relevant screen output in your <b>Issues</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!
+Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... If that is the case: Open [Issues](https://github.com/Berg0162/simcline/issues), click the green button: <b>New issue</b> and paste the relevant screen output in your <b>Issues</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!<br>
+
+Zwift can sometimes hang onto the wrong info, such as trainers or sensors that were paired to the game in the past. Check out the steps below.<br>
+<b>PC/Mac</b>
+To reset all the Zwift stored devices on a PC or Mac, complete these steps:
++ Close Zwift
++ On your desktop, open Documents
++ Double-click Zwift
++ Delete knowndevices.xml
+Next time you ride:
++ Launch Zwift
++ Pair your devices
 
