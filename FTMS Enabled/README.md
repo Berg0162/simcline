@@ -105,7 +105,7 @@ Please follow <b>ALWAYS</b> the different usage instructions at the first part o
  *  2) Unpair all previously paired devices
  *  3) Upload and Run this code on the Feather nRF52
  *  4) Start the Serial Monitor to catch debugging info
- *  5) Search on Zwift pairing screens for the Feather nRF52: "nRF52 Sim"
+ *  5) Search on Zwift pairing screens for the Feather nRF52: "Sim nRF52"
  *  6) Pair all three "simulated" devices: Power, Cadence and Controllable
  *  7) Start a default Zwift ride or any ride you wish
  *     No need for you to do work on the trainer!
