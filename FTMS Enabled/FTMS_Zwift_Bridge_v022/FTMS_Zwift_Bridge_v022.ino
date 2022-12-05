@@ -71,28 +71,23 @@ typedef struct
   uint16_t conn_handle;
   bool IsConnected;
 } Device_info_t;
+
 // -----------------------------------------------------------------
 // Your hardware MAC/DEVICE ADDRESSES
 // Laptop/Desktop Device Address that runs Zwift, in printed format: [00:01:02:03:04:05]
 // Little Endian: in reversed order !!!!
-//#define LAPTOPADDRESS {0x05,0x04,0x03,0x02,0x01,0x00}
-
-// Mijn laptop 80:86:F2:7E:B2:87
-#define LAPTOPADDRESS {0x87,0xB2,0x7E,0xF2,0x86,0x80}
-
+#define LAPTOPADDRESS {0x05,0x04,0x03,0x02,0x01,0x00}
 // Trainer FTMS enabled Device Address, in printed format: [00:01:02:03:04:05]
 // Little Endian: in reversed order !!!!
-//#define TRAINERADDRESS {0x05,0x04,0x03,0x02,0x01,0x00}
-
-// Mijn Feather nRF52840 FD:6C:BD:F3:50:95
-#define TRAINERADDRESS {0x95,0x50,0xF3,0xBD,0x6C,0xFD}
-
+#define TRAINERADDRESS {0x05,0x04,0x03,0x02,0x01,0x00}
 // -----------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------------------------
 // Initialize connectable device registration
 Device_info_t Trainer    = {TRAINERADDRESS, {0x00}, BLE_CONN_HANDLE_INVALID, false};
 Device_info_t Laptop     = { LAPTOPADDRESS, {0x00}, BLE_CONN_HANDLE_INVALID, false};
 Device_info_t Smartphone = {        {0x00}, {0x00}, BLE_CONN_HANDLE_INVALID, false};
-// ----------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 /* Generic Access
   #define UUID16_SVC_GENERIC_ACCESS                             0x1800
