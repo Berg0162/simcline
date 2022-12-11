@@ -181,7 +181,7 @@ The two precise device addresses are critical to assure a reliable test run! You
 |Trainer brand/type  |Testing parter|
 |-----------|-------------------------------------------------------------------------------------| 
 |Elite Direto XR |[cherryphilip74](https://github.com/cherryphilip74)|
-|Zwift Hub |Le-Bar|
+|Zwift Hub |[le-joebar](https://github.com/le-joebar)|
 
 Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... If that is the case: Open [Issues](https://github.com/Berg0162/simcline/issues), click the green button: <b>New issue</b> and paste the relevant screen output in your <b>Issues</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!<br>
 
