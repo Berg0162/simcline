@@ -76,6 +76,7 @@ These are presented in the Serial Monitor log file when running the Client and S
 <b>Use the code for reconnaissance and testing!</b><br>
 Please follow <b>ALWAYS</b> the different usage instructions at the first part of the respective program codes!
 + Start your reconnaissance with running <b>FTMS_Client_v025</b> and experience how the Feather is controlling the resistance of your FTMS enabled trainer. Notice that this piece of code is highly dependent on the type and brand of FTMS enabled Trainer and therefore most critical!
++ Be aware of undesirebly <b>autoconnect</b> with your standard equipment setup using ANT+ or FTMS. The FTMS Client (or FTMS-Zwift-Bridge) will reach an error state that does not help you getting representative results during the reconnaisance! I repeat: 2 captains on one ship is a recipe for disaster!
 ```
 /* 
  *  This Feather-nRF52840 tested code scans for the CPS, CSC and FTMS
