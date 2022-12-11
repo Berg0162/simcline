@@ -177,7 +177,7 @@ Look in the Bridge code for the following snippet and fill in the required addre
 ```
 The two precise device addresses are critical to assure a reliable test run! You have to insert the values in the program code before uploading the code to the Feather nRF52!<br><br>
 
-# Become a tester<br>
+# Become a testing partner<br>
 |Trainer brand/type  |Testing parter|FTMS_Client|FTMS_Server|FTMS_Zwift_Bridge|Simcline_FTMS|
 |--------------------|--------------|-----------|-----------|-----------------|-------------|
 |Elite Direto XR |[cherryphilip74](https://github.com/cherryphilip74)|Working|Working|Working|Working|
