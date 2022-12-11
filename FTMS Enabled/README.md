@@ -79,17 +79,19 @@ Please follow <b>ALWAYS</b> the different usage instructions at the first part o
  *  that the trainer is advertising, it tries to connect and then 
  *  enables .....
  *  
- *  Requirements: Running FTMS trainer and Feather nRF52 board
- *  1) Start the trainer and do NOT connect it with other devices
- *  2) Upload and Run this code on the Feather-nRF52
- *  3) Start the Serial Monitor to catch verbose debugging and data info
+ *  Requirements: FTMS trainer and Feather nRF52 board
+ *  1) Upload and Run this code on the Feather-nRF52
+ *  2) Start the Serial Monitor to catch verbose debugging and data info
+ *  3) Power ON and Wake UP trainer -> do NOT connect with other devices
  *  4) Trainer and Feather should successfully pair or disconnect...
  *  5) Keep the Serial Monitor visible on top of all windows 
  *  6) Move the trainer pedals and notice/feel changes in resistance...
  *     The Client sends Resistance Parameters to the Trainer that coincide 
  *     with the first 5 minutes of the Zwift Volcano Circuit!
  *  7) Inspect the info presented by Serial Monitor.....
+ *  
  */
+
 ```
 + Next step is running <b>FTMS_Server_v022</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the nRF52 Feather. Notice that this particular piece of code is tested intensively by the author with the Zwift app.<br>
 ```
