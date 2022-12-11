@@ -34,8 +34,8 @@ According to the smart trainer recommendations guide winter 2020-2021 of [DCRain
 + Notice that a fully working Simcline (acting as a MITM), supporting all FTMS enabled Trainers, is still in the future. At this moment only test code is available and you are invited to test this code with your FTMS enabled Trainer (if you own one).
 # What about ANT+ (FE-C) and FTMS at the same time<br>
 + When a training app (like Zwift) has connected to your trainer using the ANT+ protocol: is it possible to connect other devices via FTMS?<br>
-Since this ANT+ connection enables control of the physical device (trainer) there can NOT be connected another <b>“controller”</b> at the same time over FTMS to avoid safety issues. Only one (1) controlling app is allowed to connect and drive the Trainer at any time. (You know, 2 captains on one ship is a recipe for disaster)
-If this unfortunately and undesirebly happens with your equipment setup the Feather nRF52 code will disconnect with an error message!
+Since this ANT+ connection enables control of the physical device (trainer) there can NOT be connected another <b>“controller”</b> at the same time over FTMS to avoid safety issues. Only one (1) controlling app is allowed to connect and drive the Trainer at any time. You know, 2 captains on one ship is a recipe for disaster!
+If this unfortunately and undesirebly happens with your equipment setup the Feather nRF52 code will disconnect with an error message! So keep these worlds separated! If you intend to use devices with BLE and FTMS: mechanically disconnect the ANT+ dongle to avoid your controller App (like Zwift) to (auto)connect over ANT+.
 # Man-In-The-Middle (MITM) software pattern<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/FTMS_Man_in_the_Middle.jpg" align="left" width="1000" height="500" alt="Man in the Middle"><br>
 <b>Man-In-The-Middle</b> is a powerful software engineering pattern that is applied in many software designs. Unfortunately it is also known for a negative application in communication traffic: MITM is a common type of cybersecurity attack that allows attackers to eavesdrop on the communication between two targets.
