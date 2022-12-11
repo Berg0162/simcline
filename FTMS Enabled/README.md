@@ -178,10 +178,10 @@ Look in the Bridge code for the following snippet and fill in the required addre
 The two precise device addresses are critical to assure a reliable test run! You have to insert the values in the program code before uploading the code to the Feather nRF52!<br><br>
 
 
-|Trainer brand/type  |Testing parter|
-|-----------|-------------------------------------------------------------------------------------| 
-|Elite Direto XR |[cherryphilip74](https://github.com/cherryphilip74)|
-|Zwift Hub |[le-joebar](https://github.com/le-joebar)|
+|Trainer brand/type  |Testing parter|FTMS_Client|FTMS_Server|FTMS_Zwift_Bridge|
+|--------------------|--------------|-----------|-----------|-----------------| 
+|Elite Direto XR |[cherryphilip74](https://github.com/cherryphilip74)|Working|Working|Working|
+|Zwift Hub |[le-joebar](https://github.com/le-joebar)|?|?|?|
 
 Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... If that is the case: Open [Issues](https://github.com/Berg0162/simcline/issues), click the green button: <b>New issue</b> and paste the relevant screen output in your <b>Issues</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!<br>
 
