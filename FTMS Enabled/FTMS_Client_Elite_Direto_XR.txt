@@ -1,0 +1,1410 @@
+Serial Monitor Output Example FTMS_Client code
+--------------------------------------------------------------------------------------------------
+With this v022 version, I felt resistance increased during the pedal (change of slope of the road) in two different moments and intensity.
+light - hard - light - not very hard - light, again with next cycle
+--------------------------------------------------------------------------------------------------
+
+18:13:14.949 -> Feather nRF52 Client/Central: CPS, CSC and FTMS
+18:13:14.949 -> ----------------- Version 02.2 ------------------
+18:13:14.949 -> Initialise the Bluefruit nRF52 module: Client (Central)
+18:13:15.227 -> FTMS and Chars 'initialized'
+18:13:15.227 -> CPS and Chars 'initialized'
+18:13:15.227 -> CSCS and Chars 'initialized'
+18:13:15.227 -> GA and Chars 'initialized'
+18:13:15.227 -> DIS and Chars 'initialized'
+18:13:15.227 -> Start Scanning for CPS, CSC and FTMS!
+18:13:15.460 -> Found advertising Peripheral with FTMS service!, see the Raw Data packet:
+18:13:15.460 -> Timestamp MAC Address          Rssi Data
+18:13:15.460 -> 000000533 ##:##:##:##:##:## -66 03-19-85-04-02-01-06-05-02-26-18-18-18-06-16-26-18-01-20-00-0A-09-44-49-52-45-54-4F-20-58-52
+18:13:15.647 -> Feather nRF52 (Central) connected to Trainer (Peripheral) device: [DIRETO XR] MAC Address: ##:##:##:##:##:##
+18:13:15.647 -> Now checking mandatory Client Services and Characteristics!
+18:13:15.647 -> Discovering Client Cycling Power (CP) Service ... Found it! CPS Max Payload: 20 Data Length: 27
+18:13:15.741 -> Discovering Client CP Measurement characteristic ... Found it!
+18:13:15.835 -> Discovering Client CP Control Point characteristic ... Found it!
+18:13:15.928 -> Discovering Client CP Feature characteristic ... Found it!
+18:13:16.069 -> -> Client Reads Raw CP Feature bytes: [4] [ 0D 02 00 00 ]
+18:13:16.069 -> Pedal power balance supported
+18:13:16.117 -> Wheel revolution data supported
+18:13:16.117 -> Crank revolution data supported
+18:13:16.117 -> Offset compensation supported
+18:13:16.117 -> Discovering Client CP Sensor Location characteristic ... Found it!
+18:13:16.255 -> -> Client Reads CP Location Sensor: Loc#: 0 Other
+18:13:16.255 -> Discovering Cycling Speed and Cadence (CSC) Service ... Found it! CSCS Max Payload: 20 Data Length: 27
+18:13:16.303 -> Discovering Client CSC Measurement CHR ... Found it!
+18:13:16.397 -> Discovering Client CSC Location CHR ... Found it!
+18:13:16.489 -> -> Client Reads CSC Location Sensor: Loc#: 0 Other
+18:13:16.489 -> Discovering Client CSC Feature CHR ... Found it!
+18:13:16.583 -> -> Client Reads Raw CSC Feature bytes: [2] [ 03 00 ]
+18:13:16.583 -> Wheel rev supported
+18:13:16.583 -> Crank rev supported
+18:13:16.583 -> Found Client Generic Access
+18:13:16.721 -> -> Client Reads Device Name: [DIRETO XR]
+18:13:16.769 -> -> Client Reads Appearance: [1157]
+18:13:16.816 -> Found Client Device Information
+18:13:16.957 -> -> Client Reads Manufacturer: [Elite]
+18:13:17.142 -> -> Client Reads Serial Number: [52687]
+18:13:17.186 -> Discovering Client Fitness Machine (FTM) Service ... Found it! FTMS Max Payload: 20 Data Length: 27
+18:13:17.232 -> Discovering Client FTM Feature Characteristic ... Found it!
+18:13:17.323 -> -> Client Reads Raw FTM Feature bytes: [8] [ 86 50 00 00 0C E0 00 00 ]
+18:13:17.323 -> Discovering Client FTM Training Status Characteristic ... Found it!
+18:13:17.370 -> Discovering Client FTM Supported Resistance Level Range Characteristic ... Found it!
+18:13:17.510 -> -> Client Reads Raw FTM Supported Resistance Level Range bytes: [6] [ 00 00 C8 00 01 00 ]
+18:13:17.556 -> Discovering Client FTM Supported Power Range Characteristic ... Found it!
+18:13:17.744 -> -> Client Reads Raw FTM Supported Power Range bytes: [6] [ 00 00 A0 0F 01 00 ]
+18:13:17.744 -> Discovering Client FTM Indoor Bike Data Characteristic ... Found it!
+18:13:17.790 -> Discovering Client FTM Control Point Characteristic ... Found it!
+18:13:18.050 -> Discovering Client FTM Status Characteristic ... Ready to receive Client CP Measurement values
+18:13:18.103 -> Ready to receive Client CP Control Point Responses
+18:13:18.145 -> Found it!
+18:13:18.145 -> Ready to receive Client CSC Measurement values
+18:13:18.145 -> Ready to receive Client FTM Training Status values
+18:13:18.187 -> Ready to receive Client FTM Indoor Bike Data values
+18:13:18.226 -> Ready to receive Client FTM Control Point Response Messages
+18:13:18.226 -> Ready to receive Client FTM Status values
+18:13:18.226 -> Client (Central) is Up and Running!
+18:13:18.489 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 00 00 ]
+18:13:18.489 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 0 s
+18:13:19.472 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 00 00 ]
+18:13:19.472 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 0 s
+18:13:20.220 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 00 00 00 00 00 00 00 00 ]
+18:13:20.266 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 00 01 ]
+18:13:20.266 -> -> Client Rec'd Raw FTM Machine Status Data: [1] [ 04 ]
+18:13:20.453 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 00 00 ]
+18:13:20.453 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 0 s
+18:13:21.438 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 01 00 ]
+18:13:21.438 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 1 s
+18:13:22.276 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 00 00 00 00 00 00 00 00 ]
+18:13:22.322 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 00 01 ]
+18:13:22.416 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 02 00 ]
+18:13:22.416 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 2 s
+18:13:23.401 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 03 00 ]
+18:13:23.401 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 3 s
+18:13:24.291 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 07 00 00 00 00 00 00 00 ]
+18:13:24.386 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 07 01 ]
+18:13:24.386 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 04 00 ]
+18:13:24.386 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 4 s
+18:13:25.369 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 05 00 ]
+18:13:25.369 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 5 s
+18:13:26.353 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 06 00 ]
+18:13:26.353 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 6 s
+18:13:26.353 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 22 01 28 33 00 ]
+18:13:26.400 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:26.400 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:13:26.400 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 22 01 28 33 ]
+18:13:26.400 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 09 ]
+18:13:27.293 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 07 00 ]
+18:13:27.293 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 7 s
+18:13:28.277 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 08 00 ]
+18:13:28.277 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 8 s
+18:13:28.419 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 09 00 28 33 00 ]
+18:13:28.465 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:28.465 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 09 00 28 33 ]
+18:13:29.264 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 09 00 ]
+18:13:29.264 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 9 s
+18:13:30.245 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0A 00 ]
+18:13:30.245 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 10 s
+18:13:30.433 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:13:30.480 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:30.480 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:13:30.995 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:13:31.229 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 FA 00 00 00 00 00 00 00 00 0B 00 ]
+18:13:31.229 -> Speed: 2 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 11 s
+18:13:31.789 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 09 ]
+18:13:32.212 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0C 00 ]
+18:13:32.212 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 12 s
+18:13:32.493 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 14 00 28 33 00 ]
+18:13:32.539 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:32.539 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 14 00 28 33 ]
+18:13:33.192 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0D 00 ]
+18:13:33.192 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 13 s
+18:13:33.566 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:13:34.173 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 0C 02 00 00 01 00 00 00 00 0E 00 ]
+18:13:34.173 -> Speed: 5 KPH Instantaneous Cadence: 0 RPM Total Distance: 1 m Instantaneous Power: 0 Watt Elapsed time: 14 s
+18:13:34.550 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 22 00 28 33 00 ]
+18:13:34.550 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:34.550 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 22 00 28 33 ]
+18:13:35.158 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 B2 02 00 00 02 00 00 00 00 0F 00 ]
+18:13:35.158 -> Speed: 6 KPH Instantaneous Cadence: 0 RPM Total Distance: 2 m Instantaneous Power: 0 Watt Elapsed time: 15 s
+18:13:35.815 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 09 ]
+18:13:36.095 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 B4 02 00 00 04 00 00 03 00 10 00 ]
+18:13:36.095 -> Speed: 6 KPH Instantaneous Cadence: 0 RPM Total Distance: 4 m Instantaneous Power: 3 Watt Elapsed time: 16 s
+18:13:36.565 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 25 00 28 33 00 ]
+18:13:36.613 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:36.658 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 25 00 28 33 ]
+18:13:37.078 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 01 03 00 00 06 00 00 09 00 11 00 ]
+18:13:37.078 -> Speed: 7 KPH Instantaneous Cadence: 0 RPM Total Distance: 6 m Instantaneous Power: 9 Watt Elapsed time: 17 s
+18:13:37.078 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:13:38.110 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 88 03 00 00 09 00 00 09 00 12 00 ]
+18:13:38.110 -> Speed: 9 KPH Instantaneous Cadence: 0 RPM Total Distance: 9 m Instantaneous Power: 9 Watt Elapsed time: 18 s
+18:13:38.251 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 0A ]
+18:13:38.627 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 23 00 28 33 00 ]
+18:13:38.674 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:38.674 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 23 00 28 33 ]
+18:13:39.090 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 34 04 00 00 0C 00 00 15 00 13 00 ]
+18:13:39.090 -> Speed: 10 KPH Instantaneous Cadence: 0 RPM Total Distance: 12 m Instantaneous Power: 21 Watt Elapsed time: 19 s
+18:13:40.031 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 59 04 0E 00 0F 00 00 21 00 14 00 ]
+18:13:40.031 -> Speed: 11 KPH Instantaneous Cadence: 7 RPM Total Distance: 15 m Instantaneous Power: 33 Watt Elapsed time: 20 s
+18:13:40.640 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 1C 00 28 33 00 ]
+18:13:40.733 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:40.733 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 1C 00 28 33 ]
+18:13:41.016 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 B0 04 1E 00 12 00 00 27 00 15 00 ]
+18:13:41.016 -> Speed: 12 KPH Instantaneous Cadence: 15 RPM Total Distance: 18 m Instantaneous Power: 39 Watt Elapsed time: 21 s
+18:13:42.002 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 E8 04 1E 00 15 00 00 25 00 16 00 ]
+18:13:42.002 -> Speed: 12 KPH Instantaneous Cadence: 15 RPM Total Distance: 21 m Instantaneous Power: 37 Watt Elapsed time: 22 s
+18:13:42.704 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 0F 00 28 33 00 ]
+18:13:42.751 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:42.751 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 0F 00 28 33 ]
+18:13:42.983 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 54 05 34 00 19 00 00 22 00 17 00 ]
+18:13:42.983 -> Speed: 13 KPH Instantaneous Cadence: 26 RPM Total Distance: 25 m Instantaneous Power: 34 Watt Elapsed time: 23 s
+18:13:43.971 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 DA 05 4C 00 1D 00 00 2D 00 18 00 ]
+18:13:43.971 -> Speed: 14 KPH Instantaneous Cadence: 38 RPM Total Distance: 29 m Instantaneous Power: 45 Watt Elapsed time: 24 s
+18:13:44.768 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:13:44.768 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:44.768 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:13:44.957 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 0A 06 5E 00 21 00 00 35 00 19 00 ]
+18:13:44.957 -> Speed: 15 KPH Instantaneous Cadence: 47 RPM Total Distance: 33 m Instantaneous Power: 53 Watt Elapsed time: 25 s
+18:13:45.945 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 2A 06 6C 00 25 00 00 35 00 1A 00 ]
+18:13:45.945 -> Speed: 15 KPH Instantaneous Cadence: 54 RPM Total Distance: 37 m Instantaneous Power: 53 Watt Elapsed time: 26 s
+18:13:46.785 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 F5 FF 28 33 00 ]
+18:13:46.832 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:46.832 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 F5 FF 28 33 ]
+18:13:46.879 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 36 06 78 00 29 00 00 34 00 1B 00 ]
+18:13:46.879 -> Speed: 15 KPH Instantaneous Cadence: 60 RPM Total Distance: 41 m Instantaneous Power: 52 Watt Elapsed time: 27 s
+18:13:47.861 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 53 06 80 00 2E 00 00 32 00 1C 00 ]
+18:13:47.861 -> Speed: 16 KPH Instantaneous Cadence: 64 RPM Total Distance: 46 m Instantaneous Power: 50 Watt Elapsed time: 28 s
+18:13:48.841 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 68 06 86 00 32 00 00 30 00 1D 00 ]
+18:13:48.841 -> Speed: 16 KPH Instantaneous Cadence: 67 RPM Total Distance: 50 m Instantaneous Power: 48 Watt Elapsed time: 29 s
+18:13:48.841 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 E4 FF 28 33 00 ]
+18:13:48.889 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:48.889 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 E4 FF 28 33 ]
+18:13:49.822 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 64 06 88 00 37 00 00 31 00 1E 00 ]
+18:13:49.822 -> Speed: 16 KPH Instantaneous Cadence: 68 RPM Total Distance: 55 m Instantaneous Power: 49 Watt Elapsed time: 30 s
+18:13:50.804 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 68 06 8A 00 3B 00 00 32 00 1F 00 ]
+18:13:50.804 -> Speed: 16 KPH Instantaneous Cadence: 69 RPM Total Distance: 59 m Instantaneous Power: 50 Watt Elapsed time: 31 s
+18:13:50.899 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 CF FF 28 33 00 ]
+18:13:50.944 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:50.944 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 CF FF 28 33 ]
+18:13:51.789 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 7E 06 8A 00 40 00 00 33 00 20 00 ]
+18:13:51.789 -> Speed: 16 KPH Instantaneous Cadence: 69 RPM Total Distance: 64 m Instantaneous Power: 51 Watt Elapsed time: 32 s
+18:13:52.767 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 5F 06 8A 00 44 00 00 33 00 21 00 ]
+18:13:52.767 -> Speed: 16 KPH Instantaneous Cadence: 69 RPM Total Distance: 68 m Instantaneous Power: 51 Watt Elapsed time: 33 s
+18:13:52.955 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 A8 FF 28 33 00 ]
+18:13:53.002 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:53.002 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 A8 FF 28 33 ]
+18:13:53.753 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 42 06 8C 00 48 00 00 2D 00 22 00 ]
+18:13:53.753 -> Speed: 16 KPH Instantaneous Cadence: 70 RPM Total Distance: 72 m Instantaneous Power: 45 Watt Elapsed time: 34 s
+18:13:54.737 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 46 06 8A 00 4D 00 00 2C 00 23 00 ]
+18:13:54.737 -> Speed: 16 KPH Instantaneous Cadence: 69 RPM Total Distance: 77 m Instantaneous Power: 44 Watt Elapsed time: 35 s
+18:13:54.971 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 84 FF 28 33 00 ]
+18:13:55.018 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:55.018 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 84 FF 28 33 ]
+18:13:55.714 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 57 06 88 00 51 00 00 2C 00 24 00 ]
+18:13:55.714 -> Speed: 16 KPH Instantaneous Cadence: 68 RPM Total Distance: 81 m Instantaneous Power: 44 Watt Elapsed time: 36 s
+18:13:56.654 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 57 06 88 00 56 00 00 2E 00 25 00 ]
+18:13:56.654 -> Speed: 16 KPH Instantaneous Cadence: 68 RPM Total Distance: 86 m Instantaneous Power: 46 Watt Elapsed time: 37 s
+18:13:57.029 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 67 FF 28 33 00 ]
+18:13:57.076 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:57.076 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 67 FF 28 33 ]
+18:13:57.683 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 4A 06 88 00 5A 00 00 2F 00 26 00 ]
+18:13:57.683 -> Speed: 16 KPH Instantaneous Cadence: 68 RPM Total Distance: 90 m Instantaneous Power: 47 Watt Elapsed time: 38 s
+18:13:58.617 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 46 06 8A 00 5E 00 00 2F 00 27 00 ]
+18:13:58.617 -> Speed: 16 KPH Instantaneous Cadence: 69 RPM Total Distance: 94 m Instantaneous Power: 47 Watt Elapsed time: 39 s
+18:13:59.086 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 5D FF 28 33 00 ]
+18:13:59.180 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:13:59.180 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 5D FF 28 33 ]
+18:13:59.597 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 57 06 88 00 63 00 00 2F 00 28 00 ]
+18:13:59.597 -> Speed: 16 KPH Instantaneous Cadence: 68 RPM Total Distance: 99 m Instantaneous Power: 47 Watt Elapsed time: 40 s
+18:14:00.579 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 53 06 86 00 67 00 00 2E 00 29 00 ]
+18:14:00.579 -> Speed: 16 KPH Instantaneous Cadence: 67 RPM Total Distance: 103 m Instantaneous Power: 46 Watt Elapsed time: 41 s
+18:14:01.188 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 5E FF 28 33 00 ]
+18:14:01.234 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:01.234 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 5E FF 28 33 ]
+18:14:01.561 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 4E 06 8A 00 6C 00 00 2F 00 2A 00 ]
+18:14:01.561 -> Speed: 16 KPH Instantaneous Cadence: 69 RPM Total Distance: 108 m Instantaneous Power: 47 Watt Elapsed time: 42 s
+18:14:02.544 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 46 06 88 00 70 00 00 30 00 2B 00 ]
+18:14:02.544 -> Speed: 16 KPH Instantaneous Cadence: 68 RPM Total Distance: 112 m Instantaneous Power: 48 Watt Elapsed time: 43 s
+18:14:03.243 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 6F FF 28 33 00 ]
+18:14:03.291 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:03.291 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 6F FF 28 33 ]
+18:14:03.524 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 57 06 88 00 74 00 00 2C 00 2C 00 ]
+18:14:03.524 -> Speed: 16 KPH Instantaneous Cadence: 68 RPM Total Distance: 116 m Instantaneous Power: 44 Watt Elapsed time: 44 s
+18:14:04.503 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 57 06 8A 00 79 00 00 2D 00 2D 00 ]
+18:14:04.503 -> Speed: 16 KPH Instantaneous Cadence: 69 RPM Total Distance: 121 m Instantaneous Power: 45 Watt Elapsed time: 45 s
+18:14:05.246 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 8A FF 28 33 00 ]
+18:14:05.294 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:05.294 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 8A FF 28 33 ]
+18:14:05.483 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 4A 06 86 00 7D 00 00 2F 00 2E 00 ]
+18:14:05.483 -> Speed: 16 KPH Instantaneous Cadence: 67 RPM Total Distance: 125 m Instantaneous Power: 47 Watt Elapsed time: 46 s
+18:14:06.471 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 46 06 8A 00 81 00 00 2E 00 2F 00 ]
+18:14:06.471 -> Speed: 16 KPH Instantaneous Cadence: 69 RPM Total Distance: 129 m Instantaneous Power: 46 Watt Elapsed time: 47 s
+18:14:07.314 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 B8 FF 28 33 00 ]
+18:14:07.360 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:07.360 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 B8 FF 28 33 ]
+18:14:07.454 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 64 06 88 00 86 00 00 2F 00 30 00 ]
+18:14:07.454 -> Speed: 16 KPH Instantaneous Cadence: 68 RPM Total Distance: 134 m Instantaneous Power: 47 Watt Elapsed time: 48 s
+18:14:08.436 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 68 06 8A 00 8A 00 00 32 00 31 00 ]
+18:14:08.436 -> Speed: 16 KPH Instantaneous Cadence: 69 RPM Total Distance: 138 m Instantaneous Power: 50 Watt Elapsed time: 49 s
+18:14:09.324 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:14:09.371 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:09.371 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:14:09.417 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 5F 06 8A 00 8F 00 00 33 00 32 00 ]
+18:14:09.417 -> Speed: 16 KPH Instantaneous Cadence: 69 RPM Total Distance: 143 m Instantaneous Power: 51 Watt Elapsed time: 50 s
+18:14:10.397 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 75 06 88 00 93 00 00 32 00 33 00 ]
+18:14:10.397 -> Speed: 16 KPH Instantaneous Cadence: 68 RPM Total Distance: 147 m Instantaneous Power: 50 Watt Elapsed time: 51 s
+18:14:11.333 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 87 06 8A 00 98 00 00 31 00 34 00 ]
+18:14:11.333 -> Speed: 16 KPH Instantaneous Cadence: 69 RPM Total Distance: 152 m Instantaneous Power: 49 Watt Elapsed time: 52 s
+18:14:11.378 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 A2 00 28 33 00 ]
+18:14:11.423 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:11.423 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 A2 00 28 33 ]
+18:14:11.423 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:14:12.357 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 32 06 8C 00 9C 00 00 30 00 35 00 ]
+18:14:12.357 -> Speed: 15 KPH Instantaneous Cadence: 70 RPM Total Distance: 156 m Instantaneous Power: 48 Watt Elapsed time: 53 s
+18:14:13.335 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 0A 06 8C 00 A0 00 00 3B 00 36 00 ]
+18:14:13.335 -> Speed: 15 KPH Instantaneous Cadence: 70 RPM Total Distance: 160 m Instantaneous Power: 59 Watt Elapsed time: 54 s
+18:14:13.429 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 09 01 28 33 00 ]
+18:14:13.476 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:13.476 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 09 01 28 33 ]
+18:14:14.317 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 26 06 88 00 A5 00 00 5E 00 37 00 ]
+18:14:14.317 -> Speed: 15 KPH Instantaneous Cadence: 68 RPM Total Distance: 165 m Instantaneous Power: 94 Watt Elapsed time: 55 s
+18:14:15.297 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 2A 06 86 00 A9 00 00 7A 00 38 00 ]
+18:14:15.297 -> Speed: 15 KPH Instantaneous Cadence: 67 RPM Total Distance: 169 m Instantaneous Power: 122 Watt Elapsed time: 56 s
+18:14:15.484 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 4F 01 28 33 00 ]
+18:14:15.532 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:15.532 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 4F 01 28 33 ]
+18:14:16.237 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 E9 05 84 00 AD 00 00 82 00 39 00 ]
+18:14:16.237 -> Speed: 15 KPH Instantaneous Cadence: 66 RPM Total Distance: 173 m Instantaneous Power: 130 Watt Elapsed time: 57 s
+18:14:17.221 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 B7 05 82 00 B1 00 00 8B 00 3A 00 ]
+18:14:17.221 -> Speed: 14 KPH Instantaneous Cadence: 65 RPM Total Distance: 177 m Instantaneous Power: 139 Watt Elapsed time: 58 s
+18:14:17.503 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 67 01 28 33 00 ]
+18:14:17.551 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:17.551 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 67 01 28 33 ]
+18:14:18.203 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 92 05 80 00 B5 00 00 99 00 3B 00 ]
+18:14:18.203 -> Speed: 14 KPH Instantaneous Cadence: 64 RPM Total Distance: 181 m Instantaneous Power: 153 Watt Elapsed time: 59 s
+18:14:19.234 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 99 05 7C 00 B9 00 00 A8 00 3C 00 ]
+18:14:19.234 -> Speed: 14 KPH Instantaneous Cadence: 62 RPM Total Distance: 185 m Instantaneous Power: 168 Watt Elapsed time: 60 s
+18:14:19.560 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 57 FF 28 33 00 ]
+18:14:19.607 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:19.607 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 57 FF 28 33 ]
+18:14:19.702 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 0A ]
+18:14:20.172 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 E5 05 7A 00 BD 00 00 B2 00 3D 00 ]
+18:14:20.172 -> Speed: 15 KPH Instantaneous Cadence: 61 RPM Total Distance: 189 m Instantaneous Power: 178 Watt Elapsed time: 61 s
+18:14:21.159 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 B9 06 7A 00 C1 00 00 AF 00 3E 00 ]
+18:14:21.159 -> Speed: 17 KPH Instantaneous Cadence: 61 RPM Total Distance: 193 m Instantaneous Power: 175 Watt Elapsed time: 62 s
+18:14:21.627 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 08 00 00 00 00 00 00 00 ]
+18:14:21.673 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 08 01 ]
+18:14:21.673 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 01 ]
+18:14:21.673 -> -> Client Rec'd Raw FTM Machine Status Data: [2] [ 02 01 ]
+18:14:22.140 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 1E 07 7E 00 C6 00 00 6E 00 3E 00 ]
+18:14:22.140 -> Speed: 18 KPH Instantaneous Cadence: 63 RPM Total Distance: 198 m Instantaneous Power: 110 Watt Elapsed time: 62 s
+18:14:23.123 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 24 07 88 00 CB 00 00 4B 00 3E 00 ]
+18:14:23.123 -> Speed: 18 KPH Instantaneous Cadence: 68 RPM Total Distance: 203 m Instantaneous Power: 75 Watt Elapsed time: 62 s
+18:14:23.639 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 01 00 00 00 00 00 00 00 ]
+18:14:23.687 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 01 01 ]
+18:14:24.111 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 3F 07 98 00 02 00 00 3C 00 00 00 ]
+18:14:24.111 -> Speed: 18 KPH Instantaneous Cadence: 76 RPM Total Distance: 2 m Instantaneous Power: 60 Watt Elapsed time: 0 s
+18:14:25.096 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 1E 07 9A 00 07 00 00 3D 00 00 00 ]
+18:14:25.096 -> Speed: 18 KPH Instantaneous Cadence: 77 RPM Total Distance: 7 m Instantaneous Power: 61 Watt Elapsed time: 0 s
+18:14:25.706 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 00 00 00 00 00 00 00 00 ]
+18:14:25.753 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 00 01 ]
+18:14:25.753 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:14:25.753 -> -> Client Rec'd Raw FTM Machine Status Data: [1] [ 04 ]
+18:14:26.033 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 04 07 9C 00 0B 00 00 2E 00 00 00 ]
+18:14:26.033 -> Speed: 17 KPH Instantaneous Cadence: 78 RPM Total Distance: 11 m Instantaneous Power: 46 Watt Elapsed time: 0 s
+18:14:27.019 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 FF 06 9A 00 10 00 00 2E 00 01 00 ]
+18:14:27.019 -> Speed: 17 KPH Instantaneous Cadence: 77 RPM Total Distance: 16 m Instantaneous Power: 46 Watt Elapsed time: 1 s
+18:14:27.770 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 00 00 00 00 00 00 00 00 ]
+18:14:27.817 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 00 01 ]
+18:14:28.003 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 0E 07 98 00 15 00 00 3B 00 02 00 ]
+18:14:28.003 -> Speed: 18 KPH Instantaneous Cadence: 76 RPM Total Distance: 21 m Instantaneous Power: 59 Watt Elapsed time: 2 s
+18:14:28.987 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 FA 06 94 00 1A 00 00 3A 00 03 00 ]
+18:14:28.987 -> Speed: 17 KPH Instantaneous Cadence: 74 RPM Total Distance: 26 m Instantaneous Power: 58 Watt Elapsed time: 3 s
+18:14:29.830 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 07 00 00 00 00 00 00 00 ]
+18:14:29.877 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 07 01 ]
+18:14:29.971 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 24 07 9A 00 1F 00 00 3A 00 04 00 ]
+18:14:29.971 -> Speed: 18 KPH Instantaneous Cadence: 77 RPM Total Distance: 31 m Instantaneous Power: 58 Watt Elapsed time: 4 s
+18:14:30.954 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 1E 07 9A 00 24 00 00 3D 00 05 00 ]
+18:14:30.954 -> Speed: 18 KPH Instantaneous Cadence: 77 RPM Total Distance: 36 m Instantaneous Power: 61 Watt Elapsed time: 5 s
+18:14:31.845 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 22 01 28 33 00 ]
+18:14:31.938 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:31.938 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 22 01 28 33 ]
+18:14:31.938 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 29 07 9C 00 29 00 00 3C 00 06 00 ]
+18:14:31.938 -> Speed: 18 KPH Instantaneous Cadence: 78 RPM Total Distance: 41 m Instantaneous Power: 60 Watt Elapsed time: 6 s
+18:14:32.923 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 A7 06 98 00 2E 00 00 38 00 07 00 ]
+18:14:32.923 -> Speed: 17 KPH Instantaneous Cadence: 76 RPM Total Distance: 46 m Instantaneous Power: 56 Watt Elapsed time: 7 s
+18:14:33.858 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 4A 06 98 00 32 00 00 47 00 08 00 ]
+18:14:33.858 -> Speed: 16 KPH Instantaneous Cadence: 76 RPM Total Distance: 50 m Instantaneous Power: 71 Watt Elapsed time: 8 s
+18:14:33.905 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 09 00 28 33 00 ]
+18:14:33.952 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:33.952 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 09 00 28 33 ]
+18:14:33.952 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 0A ]
+18:14:34.885 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 B0 06 94 00 37 00 00 70 00 09 00 ]
+18:14:34.885 -> Speed: 17 KPH Instantaneous Cadence: 74 RPM Total Distance: 55 m Instantaneous Power: 112 Watt Elapsed time: 9 s
+18:14:35.820 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 EF 06 92 00 3B 00 00 79 00 0A 00 ]
+18:14:35.820 -> Speed: 17 KPH Instantaneous Cadence: 73 RPM Total Distance: 59 m Instantaneous Power: 121 Watt Elapsed time: 10 s
+18:14:35.962 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:14:36.008 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:36.008 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:14:36.798 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 14 07 8E 00 40 00 00 49 00 0B 00 ]
+18:14:36.798 -> Speed: 18 KPH Instantaneous Cadence: 71 RPM Total Distance: 64 m Instantaneous Power: 73 Watt Elapsed time: 11 s
+18:14:37.781 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 09 07 92 00 45 00 00 3E 00 0C 00 ]
+18:14:37.781 -> Speed: 18 KPH Instantaneous Cadence: 73 RPM Total Distance: 69 m Instantaneous Power: 62 Watt Elapsed time: 12 s
+18:14:37.968 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 14 00 28 33 00 ]
+18:14:38.061 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:38.061 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 14 00 28 33 ]
+18:14:38.811 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 1E 07 96 00 4A 00 00 3A 00 0D 00 ]
+18:14:38.811 -> Speed: 18 KPH Instantaneous Cadence: 75 RPM Total Distance: 74 m Instantaneous Power: 58 Watt Elapsed time: 13 s
+18:14:39.744 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 09 07 9A 00 4F 00 00 38 00 0E 00 ]
+18:14:39.744 -> Speed: 18 KPH Instantaneous Cadence: 77 RPM Total Distance: 79 m Instantaneous Power: 56 Watt Elapsed time: 14 s
+18:14:40.027 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 22 00 28 33 00 ]
+18:14:40.120 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:40.120 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 22 00 28 33 ]
+18:14:40.120 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:14:40.727 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 24 07 9A 00 54 00 00 3A 00 0F 00 ]
+18:14:40.727 -> Speed: 18 KPH Instantaneous Cadence: 77 RPM Total Distance: 84 m Instantaneous Power: 58 Watt Elapsed time: 15 s
+18:14:41.713 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 0E 07 9A 00 59 00 00 3B 00 10 00 ]
+18:14:41.713 -> Speed: 18 KPH Instantaneous Cadence: 77 RPM Total Distance: 89 m Instantaneous Power: 59 Watt Elapsed time: 16 s
+18:14:42.090 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 25 00 28 33 00 ]
+18:14:42.137 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:42.137 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 25 00 28 33 ]
+18:14:42.698 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 29 07 98 00 5E 00 00 3A 00 11 00 ]
+18:14:42.698 -> Speed: 18 KPH Instantaneous Cadence: 76 RPM Total Distance: 94 m Instantaneous Power: 58 Watt Elapsed time: 17 s
+18:14:43.682 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 24 07 98 00 63 00 00 3D 00 12 00 ]
+18:14:43.682 -> Speed: 18 KPH Instantaneous Cadence: 76 RPM Total Distance: 99 m Instantaneous Power: 61 Watt Elapsed time: 18 s
+18:14:44.151 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 23 00 28 33 00 ]
+18:14:44.198 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:44.198 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 23 00 28 33 ]
+18:14:44.666 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 3F 07 9A 00 68 00 00 41 00 13 00 ]
+18:14:44.666 -> Speed: 18 KPH Instantaneous Cadence: 77 RPM Total Distance: 104 m Instantaneous Power: 65 Watt Elapsed time: 19 s
+18:14:45.652 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 29 07 9C 00 6D 00 00 3B 00 14 00 ]
+18:14:45.652 -> Speed: 18 KPH Instantaneous Cadence: 78 RPM Total Distance: 109 m Instantaneous Power: 59 Watt Elapsed time: 20 s
+18:14:46.215 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 1C 00 28 33 00 ]
+18:14:46.260 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:46.260 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 1C 00 28 33 ]
+18:14:46.307 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 0A ]
+18:14:46.635 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 2E 07 9E 00 72 00 00 39 00 15 00 ]
+18:14:46.635 -> Speed: 18 KPH Instantaneous Cadence: 79 RPM Total Distance: 114 m Instantaneous Power: 57 Watt Elapsed time: 21 s
+18:14:47.623 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 44 07 9E 00 77 00 00 3F 00 16 00 ]
+18:14:47.623 -> Speed: 18 KPH Instantaneous Cadence: 79 RPM Total Distance: 119 m Instantaneous Power: 63 Watt Elapsed time: 22 s
+18:14:48.233 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 0F 00 28 33 00 ]
+18:14:48.279 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:48.279 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 0F 00 28 33 ]
+18:14:48.563 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 24 07 9C 00 7C 00 00 3E 00 17 00 ]
+18:14:48.563 -> Speed: 18 KPH Instantaneous Cadence: 78 RPM Total Distance: 124 m Instantaneous Power: 62 Watt Elapsed time: 23 s
+18:14:49.546 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 3F 07 9C 00 81 00 00 36 00 18 00 ]
+18:14:49.546 -> Speed: 18 KPH Instantaneous Cadence: 78 RPM Total Distance: 129 m Instantaneous Power: 54 Watt Elapsed time: 24 s
+18:14:50.292 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:14:50.339 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:50.339 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:14:50.527 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 39 07 9C 00 86 00 00 3F 00 19 00 ]
+18:14:50.527 -> Speed: 18 KPH Instantaneous Cadence: 78 RPM Total Distance: 134 m Instantaneous Power: 63 Watt Elapsed time: 25 s
+18:14:51.509 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 4A 07 9C 00 8B 00 00 3F 00 1A 00 ]
+18:14:51.509 -> Speed: 18 KPH Instantaneous Cadence: 78 RPM Total Distance: 139 m Instantaneous Power: 63 Watt Elapsed time: 26 s
+18:14:52.353 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 F5 FF 28 33 00 ]
+18:14:52.400 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:52.400 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 F5 FF 28 33 ]
+18:14:52.493 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 66 07 9E 00 90 00 00 3F 00 1B 00 ]
+18:14:52.493 -> Speed: 18 KPH Instantaneous Cadence: 79 RPM Total Distance: 144 m Instantaneous Power: 63 Watt Elapsed time: 27 s
+18:14:53.473 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 5B 07 9E 00 95 00 00 41 00 1C 00 ]
+18:14:53.473 -> Speed: 18 KPH Instantaneous Cadence: 79 RPM Total Distance: 149 m Instantaneous Power: 65 Watt Elapsed time: 28 s
+18:14:54.411 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 E4 FF 28 33 00 ]
+18:14:54.458 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:54.458 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 E4 FF 28 33 ]
+18:14:54.458 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 6C 07 A0 00 9A 00 00 3D 00 1D 00 ]
+18:14:54.458 -> Speed: 19 KPH Instantaneous Cadence: 80 RPM Total Distance: 154 m Instantaneous Power: 61 Watt Elapsed time: 29 s
+18:14:55.398 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 66 07 9E 00 A0 00 00 3E 00 1E 00 ]
+18:14:55.398 -> Speed: 18 KPH Instantaneous Cadence: 79 RPM Total Distance: 160 m Instantaneous Power: 62 Watt Elapsed time: 30 s
+18:14:56.387 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 60 07 A0 00 A5 00 00 3E 00 1F 00 ]
+18:14:56.387 -> Speed: 18 KPH Instantaneous Cadence: 80 RPM Total Distance: 165 m Instantaneous Power: 62 Watt Elapsed time: 31 s
+18:14:56.433 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 CF FF 28 33 00 ]
+18:14:56.479 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:56.479 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 CF FF 28 33 ]
+18:14:57.376 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 6C 07 A0 00 AA 00 00 3B 00 20 00 ]
+18:14:57.376 -> Speed: 19 KPH Instantaneous Cadence: 80 RPM Total Distance: 170 m Instantaneous Power: 59 Watt Elapsed time: 32 s
+18:14:58.355 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 6C 07 A0 00 AF 00 00 42 00 21 00 ]
+18:14:58.355 -> Speed: 19 KPH Instantaneous Cadence: 80 RPM Total Distance: 175 m Instantaneous Power: 66 Watt Elapsed time: 33 s
+18:14:58.449 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 A8 FF 28 33 00 ]
+18:14:58.542 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:14:58.542 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 A8 FF 28 33 ]
+18:14:59.337 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 66 07 A2 00 B4 00 00 40 00 22 00 ]
+18:14:59.337 -> Speed: 18 KPH Instantaneous Cadence: 81 RPM Total Distance: 180 m Instantaneous Power: 64 Watt Elapsed time: 34 s
+18:15:00.324 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 72 07 A0 00 B9 00 00 3A 00 23 00 ]
+18:15:00.324 -> Speed: 19 KPH Instantaneous Cadence: 80 RPM Total Distance: 185 m Instantaneous Power: 58 Watt Elapsed time: 35 s
+18:15:00.508 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 84 FF 28 33 00 ]
+18:15:00.601 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:00.601 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 84 FF 28 33 ]
+18:15:01.299 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 66 07 A0 00 BF 00 00 42 00 24 00 ]
+18:15:01.299 -> Speed: 18 KPH Instantaneous Cadence: 80 RPM Total Distance: 191 m Instantaneous Power: 66 Watt Elapsed time: 36 s
+18:15:02.281 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 66 07 A0 00 C4 00 00 3B 00 25 00 ]
+18:15:02.281 -> Speed: 18 KPH Instantaneous Cadence: 80 RPM Total Distance: 196 m Instantaneous Power: 59 Watt Elapsed time: 37 s
+18:15:02.609 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 67 FF 28 33 00 ]
+18:15:02.609 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:02.609 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 67 FF 28 33 ]
+18:15:03.265 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 78 07 A2 00 C9 00 00 3E 00 26 00 ]
+18:15:03.265 -> Speed: 19 KPH Instantaneous Cadence: 81 RPM Total Distance: 201 m Instantaneous Power: 62 Watt Elapsed time: 38 s
+18:15:04.251 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 78 07 A0 00 CE 00 00 44 00 27 00 ]
+18:15:04.251 -> Speed: 19 KPH Instantaneous Cadence: 80 RPM Total Distance: 206 m Instantaneous Power: 68 Watt Elapsed time: 39 s
+18:15:04.625 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 5D FF 28 33 00 ]
+18:15:04.673 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:04.673 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 5D FF 28 33 ]
+18:15:05.235 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 7E 07 9E 00 D3 00 00 3D 00 28 00 ]
+18:15:05.235 -> Speed: 19 KPH Instantaneous Cadence: 79 RPM Total Distance: 211 m Instantaneous Power: 61 Watt Elapsed time: 40 s
+18:15:06.222 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 78 07 A2 00 D8 00 00 3D 00 29 00 ]
+18:15:06.222 -> Speed: 19 KPH Instantaneous Cadence: 81 RPM Total Distance: 216 m Instantaneous Power: 61 Watt Elapsed time: 41 s
+18:15:06.646 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 5E FF 28 33 00 ]
+18:15:06.739 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:06.739 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 5E FF 28 33 ]
+18:15:07.159 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 72 07 A2 00 DE 00 00 40 00 2A 00 ]
+18:15:07.159 -> Speed: 19 KPH Instantaneous Cadence: 81 RPM Total Distance: 222 m Instantaneous Power: 64 Watt Elapsed time: 42 s
+18:15:08.144 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 78 07 A4 00 E3 00 00 3F 00 2B 00 ]
+18:15:08.144 -> Speed: 19 KPH Instantaneous Cadence: 82 RPM Total Distance: 227 m Instantaneous Power: 63 Watt Elapsed time: 43 s
+18:15:08.711 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 6F FF 28 33 00 ]
+18:15:08.758 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:08.758 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 6F FF 28 33 ]
+18:15:09.134 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 7E 07 A2 00 E8 00 00 3E 00 2C 00 ]
+18:15:09.134 -> Speed: 19 KPH Instantaneous Cadence: 81 RPM Total Distance: 232 m Instantaneous Power: 62 Watt Elapsed time: 44 s
+18:15:10.118 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 7E 07 A2 00 ED 00 00 43 00 2D 00 ]
+18:15:10.118 -> Speed: 19 KPH Instantaneous Cadence: 81 RPM Total Distance: 237 m Instantaneous Power: 67 Watt Elapsed time: 45 s
+18:15:10.775 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 8A FF 28 33 00 ]
+18:15:10.822 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:10.822 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 8A FF 28 33 ]
+18:15:11.106 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 89 07 A2 00 F2 00 00 3E 00 2E 00 ]
+18:15:11.106 -> Speed: 19 KPH Instantaneous Cadence: 81 RPM Total Distance: 242 m Instantaneous Power: 62 Watt Elapsed time: 46 s
+18:15:12.095 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 72 07 A0 00 F8 00 00 3B 00 2F 00 ]
+18:15:12.095 -> Speed: 19 KPH Instantaneous Cadence: 80 RPM Total Distance: 248 m Instantaneous Power: 59 Watt Elapsed time: 47 s
+18:15:12.844 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 B8 FF 28 33 00 ]
+18:15:12.891 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:12.891 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 B8 FF 28 33 ]
+18:15:13.080 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 66 07 A4 00 FD 00 00 3D 00 30 00 ]
+18:15:13.080 -> Speed: 18 KPH Instantaneous Cadence: 82 RPM Total Distance: 253 m Instantaneous Power: 61 Watt Elapsed time: 48 s
+18:15:14.019 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 95 07 A2 00 02 01 00 3E 00 31 00 ]
+18:15:14.019 -> Speed: 19 KPH Instantaneous Cadence: 81 RPM Total Distance: 258 m Instantaneous Power: 62 Watt Elapsed time: 49 s
+18:15:14.862 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:15:14.910 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:14.910 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:15:15.004 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 89 07 A2 00 07 01 00 44 00 32 00 ]
+18:15:15.004 -> Speed: 19 KPH Instantaneous Cadence: 81 RPM Total Distance: 263 m Instantaneous Power: 68 Watt Elapsed time: 50 s
+18:15:15.979 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 6C 07 A0 00 0C 01 00 42 00 33 00 ]
+18:15:15.979 -> Speed: 19 KPH Instantaneous Cadence: 80 RPM Total Distance: 268 m Instantaneous Power: 66 Watt Elapsed time: 51 s
+18:15:16.916 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 A2 00 28 33 00 ]
+18:15:16.963 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:16.963 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 A2 00 28 33 ]
+18:15:16.963 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 95 07 A4 00 12 01 00 3B 00 34 00 ]
+18:15:16.963 -> Speed: 19 KPH Instantaneous Cadence: 82 RPM Total Distance: 274 m Instantaneous Power: 59 Watt Elapsed time: 52 s
+18:15:16.963 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:15:17.946 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 34 07 A2 00 17 01 00 44 00 35 00 ]
+18:15:17.946 -> Speed: 18 KPH Instantaneous Cadence: 81 RPM Total Distance: 279 m Instantaneous Power: 68 Watt Elapsed time: 53 s
+18:15:18.930 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 CD 06 A0 00 1C 01 00 46 00 36 00 ]
+18:15:18.930 -> Speed: 17 KPH Instantaneous Cadence: 80 RPM Total Distance: 284 m Instantaneous Power: 70 Watt Elapsed time: 54 s
+18:15:18.930 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 09 01 28 33 00 ]
+18:15:19.023 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:19.023 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 09 01 28 33 ]
+18:15:19.871 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 A2 06 9A 00 20 01 00 55 00 37 00 ]
+18:15:19.871 -> Speed: 16 KPH Instantaneous Cadence: 77 RPM Total Distance: 288 m Instantaneous Power: 85 Watt Elapsed time: 55 s
+18:15:20.858 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 AB 06 92 00 25 01 00 8A 00 38 00 ]
+18:15:20.858 -> Speed: 17 KPH Instantaneous Cadence: 73 RPM Total Distance: 293 m Instantaneous Power: 138 Watt Elapsed time: 56 s
+18:15:20.998 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 4F 01 28 33 00 ]
+18:15:21.045 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:21.045 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 4F 01 28 33 ]
+18:15:21.891 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 64 06 8C 00 2A 01 00 9A 00 39 00 ]
+18:15:21.891 -> Speed: 16 KPH Instantaneous Cadence: 70 RPM Total Distance: 298 m Instantaneous Power: 154 Watt Elapsed time: 57 s
+18:15:22.825 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 42 06 84 00 2E 01 00 A1 00 3A 00 ]
+18:15:22.825 -> Speed: 16 KPH Instantaneous Cadence: 66 RPM Total Distance: 302 m Instantaneous Power: 161 Watt Elapsed time: 58 s
+18:15:23.058 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 67 01 28 33 00 ]
+18:15:23.105 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:23.105 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 67 01 28 33 ]
+18:15:23.808 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 53 06 80 00 32 01 00 BD 00 3B 00 ]
+18:15:23.808 -> Speed: 16 KPH Instantaneous Cadence: 64 RPM Total Distance: 306 m Instantaneous Power: 189 Watt Elapsed time: 59 s
+18:15:24.794 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 4A 06 7E 00 37 01 00 D3 00 3C 00 ]
+18:15:24.794 -> Speed: 16 KPH Instantaneous Cadence: 63 RPM Total Distance: 311 m Instantaneous Power: 211 Watt Elapsed time: 60 s
+18:15:25.075 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 57 FF 28 33 00 ]
+18:15:25.122 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:25.122 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 57 FF 28 33 ]
+18:15:25.215 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 0A ]
+18:15:25.777 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 C3 06 7C 00 3B 01 00 CE 00 3D 00 ]
+18:15:25.777 -> Speed: 17 KPH Instantaneous Cadence: 62 RPM Total Distance: 315 m Instantaneous Power: 206 Watt Elapsed time: 61 s
+18:15:26.761 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 95 07 7C 00 40 01 00 B8 00 3E 00 ]
+18:15:26.761 -> Speed: 19 KPH Instantaneous Cadence: 62 RPM Total Distance: 320 m Instantaneous Power: 184 Watt Elapsed time: 62 s
+18:15:27.134 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 08 00 00 00 00 00 00 00 ]
+18:15:27.181 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 08 01 ]
+18:15:27.181 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 01 ]
+18:15:27.181 -> -> Client Rec'd Raw FTM Machine Status Data: [2] [ 02 01 ]
+18:15:27.746 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 C1 07 80 00 46 01 00 86 00 3E 00 ]
+18:15:27.746 -> Speed: 19 KPH Instantaneous Cadence: 64 RPM Total Distance: 326 m Instantaneous Power: 134 Watt Elapsed time: 62 s
+18:15:28.730 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 F5 07 8E 00 4B 01 00 52 00 3E 00 ]
+18:15:28.730 -> Speed: 20 KPH Instantaneous Cadence: 71 RPM Total Distance: 331 m Instantaneous Power: 82 Watt Elapsed time: 62 s
+18:15:29.153 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 01 00 00 00 00 00 00 00 ]
+18:15:29.199 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 01 01 ]
+18:15:29.717 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 FB 07 94 00 02 00 00 50 00 00 00 ]
+18:15:29.717 -> Speed: 20 KPH Instantaneous Cadence: 74 RPM Total Distance: 2 m Instantaneous Power: 80 Watt Elapsed time: 0 s
+18:15:30.654 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 10 08 9A 00 08 00 00 49 00 00 00 ]
+18:15:30.654 -> Speed: 20 KPH Instantaneous Cadence: 77 RPM Total Distance: 8 m Instantaneous Power: 73 Watt Elapsed time: 0 s
+18:15:31.215 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 00 00 00 00 00 00 00 00 ]
+18:15:31.261 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 00 01 ]
+18:15:31.261 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:15:31.261 -> -> Client Rec'd Raw FTM Machine Status Data: [1] [ 04 ]
+18:15:31.681 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 FB 07 9C 00 0D 00 00 44 00 00 00 ]
+18:15:31.681 -> Speed: 20 KPH Instantaneous Cadence: 78 RPM Total Distance: 13 m Instantaneous Power: 68 Watt Elapsed time: 0 s
+18:15:32.616 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 02 08 9A 00 13 00 00 46 00 01 00 ]
+18:15:32.616 -> Speed: 20 KPH Instantaneous Cadence: 77 RPM Total Distance: 19 m Instantaneous Power: 70 Watt Elapsed time: 1 s
+18:15:33.268 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 00 00 00 00 00 00 00 00 ]
+18:15:33.315 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 00 01 ]
+18:15:33.597 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 EE 07 9C 00 18 00 00 43 00 02 00 ]
+18:15:33.597 -> Speed: 20 KPH Instantaneous Cadence: 78 RPM Total Distance: 24 m Instantaneous Power: 67 Watt Elapsed time: 2 s
+18:15:34.582 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 02 08 9C 00 1E 00 00 42 00 03 00 ]
+18:15:34.582 -> Speed: 20 KPH Instantaneous Cadence: 78 RPM Total Distance: 30 m Instantaneous Power: 66 Watt Elapsed time: 3 s
+18:15:35.288 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 07 00 00 00 00 00 00 00 ]
+18:15:35.336 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 07 01 ]
+18:15:35.567 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 FB 07 9A 00 24 00 00 48 00 04 00 ]
+18:15:35.567 -> Speed: 20 KPH Instantaneous Cadence: 77 RPM Total Distance: 36 m Instantaneous Power: 72 Watt Elapsed time: 4 s
+18:15:36.550 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 FB 07 9A 00 29 00 00 45 00 05 00 ]
+18:15:36.550 -> Speed: 20 KPH Instantaneous Cadence: 77 RPM Total Distance: 41 m Instantaneous Power: 69 Watt Elapsed time: 5 s
+18:15:37.344 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 22 01 28 33 00 ]
+18:15:37.389 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:37.389 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 22 01 28 33 ]
+18:15:37.530 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 24 08 9A 00 2F 00 00 4B 00 06 00 ]
+18:15:37.530 -> Speed: 20 KPH Instantaneous Cadence: 77 RPM Total Distance: 47 m Instantaneous Power: 75 Watt Elapsed time: 6 s
+18:15:38.516 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 89 07 9E 00 34 00 00 4A 00 07 00 ]
+18:15:38.516 -> Speed: 19 KPH Instantaneous Cadence: 79 RPM Total Distance: 52 m Instantaneous Power: 74 Watt Elapsed time: 7 s
+18:15:39.405 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 09 00 28 33 00 ]
+18:15:39.405 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:39.405 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 09 00 28 33 ]
+18:15:39.501 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 29 07 98 00 39 00 00 5D 00 08 00 ]
+18:15:39.501 -> Speed: 18 KPH Instantaneous Cadence: 76 RPM Total Distance: 57 m Instantaneous Power: 93 Watt Elapsed time: 8 s
+18:15:39.501 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 0A ]
+18:15:40.440 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 83 07 96 00 3E 00 00 88 00 09 00 ]
+18:15:40.440 -> Speed: 19 KPH Instantaneous Cadence: 75 RPM Total Distance: 62 m Instantaneous Power: 136 Watt Elapsed time: 9 s
+18:15:41.424 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 A2 07 90 00 44 00 00 74 00 0A 00 ]
+18:15:41.424 -> Speed: 19 KPH Instantaneous Cadence: 72 RPM Total Distance: 68 m Instantaneous Power: 116 Watt Elapsed time: 10 s
+18:15:41.424 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:15:41.471 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:41.471 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:15:42.405 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 E1 07 8E 00 49 00 00 52 00 0B 00 ]
+18:15:42.405 -> Speed: 20 KPH Instantaneous Cadence: 71 RPM Total Distance: 73 m Instantaneous Power: 82 Watt Elapsed time: 11 s
+18:15:43.386 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 E1 07 90 00 4E 00 00 4B 00 0C 00 ]
+18:15:43.386 -> Speed: 20 KPH Instantaneous Cadence: 72 RPM Total Distance: 78 m Instantaneous Power: 75 Watt Elapsed time: 12 s
+18:15:43.479 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 14 00 28 33 00 ]
+18:15:43.525 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:43.525 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 14 00 28 33 ]
+18:15:43.619 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:15:44.370 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 FB 07 96 00 54 00 00 4C 00 0D 00 ]
+18:15:44.370 -> Speed: 20 KPH Instantaneous Cadence: 75 RPM Total Distance: 84 m Instantaneous Power: 76 Watt Elapsed time: 13 s
+18:15:45.352 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 02 08 98 00 5A 00 00 4D 00 0E 00 ]
+18:15:45.352 -> Speed: 20 KPH Instantaneous Cadence: 76 RPM Total Distance: 90 m Instantaneous Power: 77 Watt Elapsed time: 14 s
+18:15:45.541 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 22 00 28 33 00 ]
+18:15:45.588 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:45.588 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 22 00 28 33 ]
+18:15:46.334 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 2B 08 9A 00 5F 00 00 4F 00 0F 00 ]
+18:15:46.334 -> Speed: 20 KPH Instantaneous Cadence: 77 RPM Total Distance: 95 m Instantaneous Power: 79 Watt Elapsed time: 15 s
+18:15:47.322 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 1D 08 9C 00 65 00 00 4D 00 10 00 ]
+18:15:47.322 -> Speed: 20 KPH Instantaneous Cadence: 78 RPM Total Distance: 101 m Instantaneous Power: 77 Watt Elapsed time: 16 s
+18:15:47.602 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 25 00 28 33 00 ]
+18:15:47.649 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:47.649 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 25 00 28 33 ]
+18:15:48.305 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 02 08 9E 00 6A 00 00 4A 00 11 00 ]
+18:15:48.305 -> Speed: 20 KPH Instantaneous Cadence: 79 RPM Total Distance: 106 m Instantaneous Power: 74 Watt Elapsed time: 17 s
+18:15:49.285 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 10 08 A0 00 70 00 00 47 00 12 00 ]
+18:15:49.285 -> Speed: 20 KPH Instantaneous Cadence: 80 RPM Total Distance: 112 m Instantaneous Power: 71 Watt Elapsed time: 18 s
+18:15:49.659 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 23 00 28 33 00 ]
+18:15:49.751 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:49.751 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 23 00 28 33 ]
+18:15:50.269 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 F5 07 9E 00 75 00 00 48 00 13 00 ]
+18:15:50.269 -> Speed: 20 KPH Instantaneous Cadence: 79 RPM Total Distance: 117 m Instantaneous Power: 72 Watt Elapsed time: 19 s
+18:15:51.251 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 EE 07 9A 00 7B 00 00 4B 00 14 00 ]
+18:15:51.251 -> Speed: 20 KPH Instantaneous Cadence: 77 RPM Total Distance: 123 m Instantaneous Power: 75 Watt Elapsed time: 20 s
+18:15:51.720 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 1C 00 28 33 00 ]
+18:15:51.766 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:51.766 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 1C 00 28 33 ]
+18:15:52.236 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 E7 07 9A 00 81 00 00 4D 00 15 00 ]
+18:15:52.236 -> Speed: 20 KPH Instantaneous Cadence: 77 RPM Total Distance: 129 m Instantaneous Power: 77 Watt Elapsed time: 21 s
+18:15:53.221 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 24 08 9A 00 86 00 00 56 00 16 00 ]
+18:15:53.221 -> Speed: 20 KPH Instantaneous Cadence: 77 RPM Total Distance: 134 m Instantaneous Power: 86 Watt Elapsed time: 22 s
+18:15:53.787 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 0F 00 28 33 00 ]
+18:15:53.881 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:53.881 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 0F 00 28 33 ]
+18:15:53.881 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 0A ]
+18:15:54.160 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 10 08 9A 00 8C 00 00 53 00 17 00 ]
+18:15:54.160 -> Speed: 20 KPH Instantaneous Cadence: 77 RPM Total Distance: 140 m Instantaneous Power: 83 Watt Elapsed time: 23 s
+18:15:55.143 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 24 08 9A 00 91 00 00 4F 00 18 00 ]
+18:15:55.143 -> Speed: 20 KPH Instantaneous Cadence: 77 RPM Total Distance: 145 m Instantaneous Power: 79 Watt Elapsed time: 24 s
+18:15:55.331 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:15:55.705 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 0A ]
+18:15:55.845 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:15:55.893 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:55.893 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:15:56.127 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 1D 08 9C 00 97 00 00 48 00 19 00 ]
+18:15:56.127 -> Speed: 20 KPH Instantaneous Cadence: 78 RPM Total Distance: 151 m Instantaneous Power: 72 Watt Elapsed time: 25 s
+18:15:57.112 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 41 08 9C 00 9D 00 00 4C 00 1A 00 ]
+18:15:57.112 -> Speed: 21 KPH Instantaneous Cadence: 78 RPM Total Distance: 157 m Instantaneous Power: 76 Watt Elapsed time: 26 s
+18:15:57.907 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 F5 FF 28 33 00 ]
+18:15:57.953 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:15:57.953 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 F5 FF 28 33 ]
+18:15:58.092 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 3A 08 A0 00 A2 00 00 4E 00 1B 00 ]
+18:15:58.092 -> Speed: 21 KPH Instantaneous Cadence: 80 RPM Total Distance: 162 m Instantaneous Power: 78 Watt Elapsed time: 27 s
+18:15:59.075 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 1D 08 9E 00 A8 00 00 43 00 1C 00 ]
+18:15:59.075 -> Speed: 20 KPH Instantaneous Cadence: 79 RPM Total Distance: 168 m Instantaneous Power: 67 Watt Elapsed time: 28 s
+18:15:59.969 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 E4 FF 28 33 00 ]
+18:16:00.015 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:00.015 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 E4 FF 28 33 ]
+18:16:00.062 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 3A 08 9E 00 AE 00 00 45 00 1D 00 ]
+18:16:00.062 -> Speed: 21 KPH Instantaneous Cadence: 79 RPM Total Distance: 174 m Instantaneous Power: 69 Watt Elapsed time: 29 s
+18:16:01.042 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 2B 08 9C 00 B3 00 00 46 00 1E 00 ]
+18:16:01.042 -> Speed: 20 KPH Instantaneous Cadence: 78 RPM Total Distance: 179 m Instantaneous Power: 70 Watt Elapsed time: 30 s
+18:16:02.029 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 17 08 9C 00 B9 00 00 48 00 1F 00 ]
+18:16:02.029 -> Speed: 20 KPH Instantaneous Cadence: 78 RPM Total Distance: 185 m Instantaneous Power: 72 Watt Elapsed time: 31 s
+18:16:02.029 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 CF FF 28 33 00 ]
+18:16:02.076 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:02.076 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 CF FF 28 33 ]
+18:16:02.965 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 56 08 A0 00 BF 00 00 4A 00 20 00 ]
+18:16:02.965 -> Speed: 21 KPH Instantaneous Cadence: 80 RPM Total Distance: 191 m Instantaneous Power: 74 Watt Elapsed time: 32 s
+18:16:03.948 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 32 08 A0 00 C5 00 00 4D 00 21 00 ]
+18:16:03.948 -> Speed: 20 KPH Instantaneous Cadence: 80 RPM Total Distance: 197 m Instantaneous Power: 77 Watt Elapsed time: 33 s
+18:16:04.087 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 A8 FF 28 33 00 ]
+18:16:04.087 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:04.087 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 A8 FF 28 33 ]
+18:16:04.929 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 24 08 A0 00 CA 00 00 46 00 22 00 ]
+18:16:04.929 -> Speed: 20 KPH Instantaneous Cadence: 80 RPM Total Distance: 202 m Instantaneous Power: 70 Watt Elapsed time: 34 s
+18:16:05.915 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 2B 08 9E 00 D0 00 00 43 00 23 00 ]
+18:16:05.915 -> Speed: 20 KPH Instantaneous Cadence: 79 RPM Total Distance: 208 m Instantaneous Power: 67 Watt Elapsed time: 35 s
+18:16:06.104 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 84 FF 28 33 00 ]
+18:16:06.151 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:06.151 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 84 FF 28 33 ]
+18:16:06.901 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 24 08 9E 00 D6 00 00 47 00 24 00 ]
+18:16:06.901 -> Speed: 20 KPH Instantaneous Cadence: 79 RPM Total Distance: 214 m Instantaneous Power: 71 Watt Elapsed time: 36 s
+18:16:07.882 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 2B 08 9E 00 DB 00 00 48 00 25 00 ]
+18:16:07.882 -> Speed: 20 KPH Instantaneous Cadence: 79 RPM Total Distance: 219 m Instantaneous Power: 72 Watt Elapsed time: 37 s
+18:16:08.161 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 67 FF 28 33 00 ]
+18:16:08.209 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:08.209 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 67 FF 28 33 ]
+18:16:08.862 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 1D 08 9E 00 E1 00 00 48 00 26 00 ]
+18:16:08.862 -> Speed: 20 KPH Instantaneous Cadence: 79 RPM Total Distance: 225 m Instantaneous Power: 72 Watt Elapsed time: 38 s
+18:16:09.848 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 41 08 9E 00 E7 00 00 4B 00 27 00 ]
+18:16:09.848 -> Speed: 21 KPH Instantaneous Cadence: 79 RPM Total Distance: 231 m Instantaneous Power: 75 Watt Elapsed time: 39 s
+18:16:10.220 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 5D FF 28 33 00 ]
+18:16:10.268 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:10.268 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 5D FF 28 33 ]
+18:16:10.829 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 4F 08 A0 00 EC 00 00 4E 00 28 00 ]
+18:16:10.829 -> Speed: 21 KPH Instantaneous Cadence: 80 RPM Total Distance: 236 m Instantaneous Power: 78 Watt Elapsed time: 40 s
+18:16:11.812 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 41 08 9E 00 F2 00 00 4E 00 29 00 ]
+18:16:11.812 -> Speed: 21 KPH Instantaneous Cadence: 79 RPM Total Distance: 242 m Instantaneous Power: 78 Watt Elapsed time: 41 s
+18:16:12.280 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 5E FF 28 33 00 ]
+18:16:12.280 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:12.327 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 5E FF 28 33 ]
+18:16:12.794 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 5E 08 A0 00 F8 00 00 4B 00 2A 00 ]
+18:16:12.794 -> Speed: 21 KPH Instantaneous Cadence: 80 RPM Total Distance: 248 m Instantaneous Power: 75 Watt Elapsed time: 42 s
+18:16:13.733 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 5E 08 A0 00 FE 00 00 4F 00 2B 00 ]
+18:16:13.733 -> Speed: 21 KPH Instantaneous Cadence: 80 RPM Total Distance: 254 m Instantaneous Power: 79 Watt Elapsed time: 43 s
+18:16:14.298 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 6F FF 28 33 00 ]
+18:16:14.345 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:14.345 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 6F FF 28 33 ]
+18:16:14.767 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 65 08 A2 00 04 01 00 50 00 2C 00 ]
+18:16:14.767 -> Speed: 21 KPH Instantaneous Cadence: 81 RPM Total Distance: 260 m Instantaneous Power: 80 Watt Elapsed time: 44 s
+18:16:15.702 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 8B 08 A2 00 09 01 00 51 00 2D 00 ]
+18:16:15.702 -> Speed: 21 KPH Instantaneous Cadence: 81 RPM Total Distance: 265 m Instantaneous Power: 81 Watt Elapsed time: 45 s
+18:16:16.357 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 8A FF 28 33 00 ]
+18:16:16.406 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:16.406 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 8A FF 28 33 ]
+18:16:16.733 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 74 08 A4 00 0F 01 00 4C 00 2E 00 ]
+18:16:16.733 -> Speed: 21 KPH Instantaneous Cadence: 82 RPM Total Distance: 271 m Instantaneous Power: 76 Watt Elapsed time: 46 s
+18:16:17.672 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 4F 08 A2 00 15 01 00 46 00 2F 00 ]
+18:16:17.672 -> Speed: 21 KPH Instantaneous Cadence: 81 RPM Total Distance: 277 m Instantaneous Power: 70 Watt Elapsed time: 47 s
+18:16:18.373 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 B8 FF 28 33 00 ]
+18:16:18.419 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:18.419 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 B8 FF 28 33 ]
+18:16:18.652 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 6D 08 A2 00 1B 01 00 46 00 30 00 ]
+18:16:18.652 -> Speed: 21 KPH Instantaneous Cadence: 81 RPM Total Distance: 283 m Instantaneous Power: 70 Watt Elapsed time: 48 s
+18:16:19.629 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 65 08 A2 00 21 01 00 4F 00 31 00 ]
+18:16:19.629 -> Speed: 21 KPH Instantaneous Cadence: 81 RPM Total Distance: 289 m Instantaneous Power: 79 Watt Elapsed time: 49 s
+18:16:20.425 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:16:20.472 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:20.472 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:16:20.610 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 3A 08 A4 00 27 01 00 44 00 32 00 ]
+18:16:20.610 -> Speed: 21 KPH Instantaneous Cadence: 82 RPM Total Distance: 295 m Instantaneous Power: 68 Watt Elapsed time: 50 s
+18:16:21.590 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 5E 08 A2 00 2C 01 00 43 00 33 00 ]
+18:16:21.590 -> Speed: 21 KPH Instantaneous Cadence: 81 RPM Total Distance: 300 m Instantaneous Power: 67 Watt Elapsed time: 51 s
+18:16:22.481 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 A2 00 28 33 00 ]
+18:16:22.528 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:22.528 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 A2 00 28 33 ]
+18:16:22.573 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 56 08 A2 00 32 01 00 4D 00 34 00 ]
+18:16:22.573 -> Speed: 21 KPH Instantaneous Cadence: 81 RPM Total Distance: 306 m Instantaneous Power: 77 Watt Elapsed time: 52 s
+18:16:22.573 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:16:23.547 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 4F 08 A0 00 38 01 00 4F 00 35 00 ]
+18:16:23.547 -> Speed: 21 KPH Instantaneous Cadence: 80 RPM Total Distance: 312 m Instantaneous Power: 79 Watt Elapsed time: 53 s
+18:16:24.529 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 83 08 A2 00 3E 01 00 4B 00 36 00 ]
+18:16:24.529 -> Speed: 21 KPH Instantaneous Cadence: 81 RPM Total Distance: 318 m Instantaneous Power: 75 Watt Elapsed time: 54 s
+18:16:24.529 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 09 01 28 33 00 ]
+18:16:24.623 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:24.623 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 09 01 28 33 ]
+18:16:25.509 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 6D 08 A2 00 44 01 00 4B 00 37 00 ]
+18:16:25.509 -> Speed: 21 KPH Instantaneous Cadence: 81 RPM Total Distance: 324 m Instantaneous Power: 75 Watt Elapsed time: 55 s
+18:16:26.495 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 7E 07 A2 00 49 01 00 4B 00 38 00 ]
+18:16:26.495 -> Speed: 19 KPH Instantaneous Cadence: 81 RPM Total Distance: 329 m Instantaneous Power: 75 Watt Elapsed time: 56 s
+18:16:26.589 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 4F 01 28 33 00 ]
+18:16:26.635 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:26.635 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 4F 01 28 33 ]
+18:16:27.431 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 EF 06 A0 00 4E 01 00 6E 00 39 00 ]
+18:16:27.431 -> Speed: 17 KPH Instantaneous Cadence: 80 RPM Total Distance: 334 m Instantaneous Power: 110 Watt Elapsed time: 57 s
+18:16:28.462 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 7E 06 98 00 53 01 00 8C 00 3A 00 ]
+18:16:28.462 -> Speed: 16 KPH Instantaneous Cadence: 76 RPM Total Distance: 339 m Instantaneous Power: 140 Watt Elapsed time: 58 s
+18:16:28.647 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 67 01 28 33 00 ]
+18:16:28.695 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:28.695 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 67 01 28 33 ]
+18:16:29.394 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 32 06 8E 00 57 01 00 97 00 3B 00 ]
+18:16:29.394 -> Speed: 15 KPH Instantaneous Cadence: 71 RPM Total Distance: 343 m Instantaneous Power: 151 Watt Elapsed time: 59 s
+18:16:30.420 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 EC 05 84 00 5C 01 00 9D 00 3C 00 ]
+18:16:30.420 -> Speed: 15 KPH Instantaneous Cadence: 66 RPM Total Distance: 348 m Instantaneous Power: 157 Watt Elapsed time: 60 s
+18:16:30.701 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 57 FF 28 33 00 ]
+18:16:30.747 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:30.747 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 57 FF 28 33 ]
+18:16:30.794 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 0A ]
+18:16:31.356 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 2E 06 7C 00 60 01 00 A8 00 3D 00 ]
+18:16:31.356 -> Speed: 15 KPH Instantaneous Cadence: 62 RPM Total Distance: 352 m Instantaneous Power: 168 Watt Elapsed time: 61 s
+18:16:32.388 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 E1 06 78 00 64 01 00 A4 00 3E 00 ]
+18:16:32.388 -> Speed: 17 KPH Instantaneous Cadence: 60 RPM Total Distance: 356 m Instantaneous Power: 164 Watt Elapsed time: 62 s
+18:16:32.761 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 08 00 00 00 00 00 00 00 ]
+18:16:32.808 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 08 01 ]
+18:16:32.808 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 01 ]
+18:16:32.808 -> -> Client Rec'd Raw FTM Machine Status Data: [2] [ 02 01 ]
+18:16:33.369 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 B5 06 78 00 69 01 00 6A 00 3E 00 ]
+18:16:33.369 -> Speed: 17 KPH Instantaneous Cadence: 60 RPM Total Distance: 361 m Instantaneous Power: 106 Watt Elapsed time: 62 s
+18:16:34.299 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 22 06 78 00 6E 01 00 6A 00 3E 00 ]
+18:16:34.299 -> Speed: 15 KPH Instantaneous Cadence: 60 RPM Total Distance: 366 m Instantaneous Power: 106 Watt Elapsed time: 62 s
+18:16:34.811 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 01 00 00 00 00 00 00 00 ]
+18:16:34.858 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 01 01 ]
+18:16:35.277 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 95 05 78 00 01 00 00 6A 00 00 00 ]
+18:16:35.277 -> Speed: 14 KPH Instantaneous Cadence: 60 RPM Total Distance: 1 m Instantaneous Power: 106 Watt Elapsed time: 0 s
+18:16:36.258 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 0D 05 78 00 05 00 00 25 00 00 00 ]
+18:16:36.258 -> Speed: 12 KPH Instantaneous Cadence: 60 RPM Total Distance: 5 m Instantaneous Power: 37 Watt Elapsed time: 0 s
+18:16:36.866 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 00 00 00 00 00 00 00 00 ]
+18:16:36.915 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 00 01 ]
+18:16:36.915 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:16:36.915 -> -> Client Rec'd Raw FTM Machine Status Data: [1] [ 04 ]
+18:16:37.244 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 8C 04 78 00 08 00 00 25 00 00 00 ]
+18:16:37.244 -> Speed: 11 KPH Instantaneous Cadence: 60 RPM Total Distance: 8 m Instantaneous Power: 37 Watt Elapsed time: 0 s
+18:16:38.228 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 0E 04 00 00 0B 00 00 25 00 01 00 ]
+18:16:38.228 -> Speed: 10 KPH Instantaneous Cadence: 0 RPM Total Distance: 11 m Instantaneous Power: 37 Watt Elapsed time: 1 s
+18:16:38.889 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 00 00 00 00 00 00 00 00 ]
+18:16:38.982 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 00 01 ]
+18:16:39.216 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 94 03 00 00 0E 00 00 13 00 02 00 ]
+18:16:39.216 -> Speed: 9 KPH Instantaneous Cadence: 0 RPM Total Distance: 14 m Instantaneous Power: 19 Watt Elapsed time: 2 s
+18:16:40.200 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 21 03 00 00 10 00 00 13 00 03 00 ]
+18:16:40.200 -> Speed: 8 KPH Instantaneous Cadence: 0 RPM Total Distance: 16 m Instantaneous Power: 19 Watt Elapsed time: 3 s
+18:16:40.947 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 07 00 00 00 00 00 00 00 ]
+18:16:40.993 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 07 01 ]
+18:16:41.179 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 B4 02 00 00 12 00 00 09 00 04 00 ]
+18:16:41.179 -> Speed: 6 KPH Instantaneous Cadence: 0 RPM Total Distance: 18 m Instantaneous Power: 9 Watt Elapsed time: 4 s
+18:16:42.155 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 49 02 00 00 14 00 00 09 00 05 00 ]
+18:16:42.155 -> Speed: 5 KPH Instantaneous Cadence: 0 RPM Total Distance: 20 m Instantaneous Power: 9 Watt Elapsed time: 5 s
+18:16:42.998 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 22 01 28 33 00 ]
+18:16:43.043 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:43.043 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 22 01 28 33 ]
+18:16:43.137 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 E9 01 00 00 15 00 00 09 00 06 00 ]
+18:16:43.137 -> Speed: 4 KPH Instantaneous Cadence: 0 RPM Total Distance: 21 m Instantaneous Power: 9 Watt Elapsed time: 6 s
+18:16:44.125 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 7B 01 00 00 16 00 00 09 00 07 00 ]
+18:16:44.125 -> Speed: 3 KPH Instantaneous Cadence: 0 RPM Total Distance: 22 m Instantaneous Power: 9 Watt Elapsed time: 7 s
+18:16:45.064 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 09 00 28 33 00 ]
+18:16:45.112 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 02 01 00 00 17 00 00 09 00 08 00 ]
+18:16:45.112 -> Speed: 2 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 9 Watt Elapsed time: 8 s
+18:16:45.112 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:45.112 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 09 00 28 33 ]
+18:16:45.159 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 0A ]
+18:16:45.437 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:16:45.764 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 09 ]
+18:16:46.092 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 09 00 ]
+18:16:46.092 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 9 s
+18:16:47.072 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 0A 00 ]
+18:16:47.072 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 10 s
+18:16:47.119 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:16:47.165 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:47.165 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:16:48.002 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 0B 00 ]
+18:16:48.002 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 11 s
+18:16:48.979 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 0C 00 ]
+18:16:48.979 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 12 s
+18:16:49.168 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 14 00 28 33 00 ]
+18:16:49.214 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:49.214 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 14 00 28 33 ]
+18:16:49.962 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 0D 00 ]
+18:16:49.962 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 13 s
+18:16:50.951 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 0E 00 ]
+18:16:50.951 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 14 s
+18:16:51.230 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 22 00 28 33 00 ]
+18:16:51.277 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:51.277 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 22 00 28 33 ]
+18:16:51.930 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 0F 00 ]
+18:16:51.930 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 15 s
+18:16:52.910 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 10 00 ]
+18:16:52.910 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 16 s
+18:16:53.284 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 25 00 28 33 00 ]
+18:16:53.284 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:53.284 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 25 00 28 33 ]
+18:16:53.894 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 11 00 ]
+18:16:53.894 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 17 s
+18:16:54.880 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 12 00 ]
+18:16:54.880 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 18 s
+18:16:55.299 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 23 00 28 33 00 ]
+18:16:55.345 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:55.345 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 23 00 28 33 ]
+18:16:55.860 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 13 00 ]
+18:16:55.860 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 19 s
+18:16:56.840 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 14 00 ]
+18:16:56.840 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 20 s
+18:16:57.352 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 1C 00 28 33 00 ]
+18:16:57.397 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:57.397 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 1C 00 28 33 ]
+18:16:57.821 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 15 00 ]
+18:16:57.821 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 21 s
+18:16:58.802 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 16 00 ]
+18:16:58.802 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 22 s
+18:16:59.364 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 0F 00 28 33 00 ]
+18:16:59.459 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:16:59.459 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 0F 00 28 33 ]
+18:16:59.788 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 17 00 ]
+18:16:59.788 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 23 s
+18:17:00.771 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 18 00 ]
+18:17:00.771 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 24 s
+18:17:01.423 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:17:01.469 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:01.469 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:17:01.750 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 19 00 ]
+18:17:01.750 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 25 s
+18:17:02.734 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 1A 00 ]
+18:17:02.734 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 26 s
+18:17:03.484 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 F5 FF 28 33 00 ]
+18:17:03.530 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:03.530 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 F5 FF 28 33 ]
+18:17:03.718 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 1B 00 ]
+18:17:03.718 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 27 s
+18:17:04.650 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 1C 00 ]
+18:17:04.650 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 28 s
+18:17:05.539 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 E4 FF 28 33 00 ]
+18:17:05.586 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:05.586 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 E4 FF 28 33 ]
+18:17:05.632 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 1D 00 ]
+18:17:05.632 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 29 s
+18:17:06.614 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 1E 00 ]
+18:17:06.614 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 30 s
+18:17:07.549 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 CF FF 28 33 00 ]
+18:17:07.595 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:07.642 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 1F 00 ]
+18:17:07.642 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 31 s
+18:17:07.642 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 CF FF 28 33 ]
+18:17:08.572 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 20 00 ]
+18:17:08.572 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 32 s
+18:17:09.552 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 21 00 ]
+18:17:09.552 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 33 s
+18:17:09.599 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 A8 FF 28 33 00 ]
+18:17:09.645 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:09.645 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 A8 FF 28 33 ]
+18:17:10.532 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 22 00 ]
+18:17:10.532 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 34 s
+18:17:11.520 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 23 00 ]
+18:17:11.520 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 35 s
+18:17:11.660 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 84 FF 28 33 00 ]
+18:17:11.707 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:11.707 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 84 FF 28 33 ]
+18:17:12.505 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 24 00 ]
+18:17:12.505 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 36 s
+18:17:13.487 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 25 00 ]
+18:17:13.487 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 37 s
+18:17:13.722 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 67 FF 28 33 00 ]
+18:17:13.769 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:13.769 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 67 FF 28 33 ]
+18:17:14.471 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 26 00 ]
+18:17:14.471 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 38 s
+18:17:15.450 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 27 00 ]
+18:17:15.450 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 39 s
+18:17:15.777 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 5D FF 28 33 00 ]
+18:17:15.823 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:15.823 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 5D FF 28 33 ]
+18:17:16.430 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 28 00 ]
+18:17:16.430 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 40 s
+18:17:17.419 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 29 00 ]
+18:17:17.419 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 41 s
+18:17:17.794 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 5E FF 28 33 00 ]
+18:17:17.839 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:17.839 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 5E FF 28 33 ]
+18:17:18.351 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 2A 00 ]
+18:17:18.351 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 42 s
+18:17:19.386 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 2B 00 ]
+18:17:19.386 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 43 s
+18:17:19.851 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 6F FF 28 33 00 ]
+18:17:19.897 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:19.897 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 6F FF 28 33 ]
+18:17:20.316 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 2C 00 ]
+18:17:20.316 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 44 s
+18:17:21.307 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 2D 00 ]
+18:17:21.307 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 45 s
+18:17:21.913 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 8A FF 28 33 00 ]
+18:17:21.960 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:21.960 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 8A FF 28 33 ]
+18:17:22.283 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 2E 00 ]
+18:17:22.283 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 46 s
+18:17:23.268 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 2F 00 ]
+18:17:23.268 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 47 s
+18:17:23.970 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 B8 FF 28 33 00 ]
+18:17:24.018 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:24.018 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 B8 FF 28 33 ]
+18:17:24.252 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 30 00 ]
+18:17:24.252 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 48 s
+18:17:25.237 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 31 00 ]
+18:17:25.237 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 49 s
+18:17:25.989 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:17:26.037 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:26.037 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:17:26.222 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 32 00 ]
+18:17:26.222 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 50 s
+18:17:27.197 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 33 00 ]
+18:17:27.197 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 51 s
+18:17:28.042 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 A2 00 28 33 00 ]
+18:17:28.088 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:28.088 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 A2 00 28 33 ]
+18:17:28.183 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 34 00 ]
+18:17:28.183 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 52 s
+18:17:29.168 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 35 00 ]
+18:17:29.168 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 53 s
+18:17:30.105 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 09 01 28 33 00 ]
+18:17:30.152 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:30.152 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 36 00 ]
+18:17:30.152 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 54 s
+18:17:30.152 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 09 01 28 33 ]
+18:17:31.129 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 37 00 ]
+18:17:31.129 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 55 s
+18:17:32.113 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 38 00 ]
+18:17:32.113 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 56 s
+18:17:32.159 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 4F 01 28 33 00 ]
+18:17:32.207 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:32.207 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 4F 01 28 33 ]
+18:17:33.048 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 39 00 ]
+18:17:33.048 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 57 s
+18:17:34.033 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 3A 00 ]
+18:17:34.033 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 58 s
+18:17:34.216 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 67 01 28 33 00 ]
+18:17:34.263 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:34.263 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 67 01 28 33 ]
+18:17:35.014 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 3B 00 ]
+18:17:35.014 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 59 s
+18:17:35.999 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 3C 00 ]
+18:17:35.999 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 60 s
+18:17:36.231 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 57 FF 28 33 00 ]
+18:17:36.278 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:36.278 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 57 FF 28 33 ]
+18:17:36.981 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 3D 00 ]
+18:17:36.981 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 61 s
+18:17:37.966 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 3E 00 ]
+18:17:37.966 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 62 s
+18:17:38.292 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 08 00 00 00 00 00 00 00 ]
+18:17:38.339 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 08 01 ]
+18:17:38.339 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 01 ]
+18:17:38.339 -> -> Client Rec'd Raw FTM Machine Status Data: [2] [ 02 01 ]
+18:17:38.945 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 3E 00 ]
+18:17:38.945 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 62 s
+18:17:39.934 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 17 00 00 00 00 3E 00 ]
+18:17:39.934 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 23 m Instantaneous Power: 0 Watt Elapsed time: 62 s
+18:17:40.311 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 01 00 00 00 00 00 00 00 ]
+18:17:40.358 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 01 01 ]
+18:17:40.869 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 00 00 ]
+18:17:40.869 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 0 s
+18:17:41.894 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 00 00 ]
+18:17:41.894 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 0 s
+18:17:42.362 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 00 00 00 00 00 00 00 00 ]
+18:17:42.456 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 00 01 ]
+18:17:42.456 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:17:42.456 -> -> Client Rec'd Raw FTM Machine Status Data: [1] [ 04 ]
+18:17:42.877 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 00 00 ]
+18:17:42.877 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 0 s
+18:17:43.812 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 01 00 ]
+18:17:43.812 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 1 s
+18:17:44.422 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 00 00 00 00 00 00 00 00 ]
+18:17:44.468 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 00 01 ]
+18:17:44.794 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 02 00 ]
+18:17:44.794 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 2 s
+18:17:45.777 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 03 00 ]
+18:17:45.777 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 3 s
+18:17:46.477 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 07 00 00 00 00 00 00 00 ]
+18:17:46.525 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 07 01 ]
+18:17:46.762 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 04 00 ]
+18:17:46.762 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 4 s
+18:17:47.748 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 05 00 ]
+18:17:47.748 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 5 s
+18:17:48.543 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 22 01 28 33 00 ]
+18:17:48.543 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:48.543 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 22 01 28 33 ]
+18:17:48.635 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 09 ]
+18:17:48.776 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 06 00 ]
+18:17:48.776 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 6 s
+18:17:49.711 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 07 00 ]
+18:17:49.711 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 7 s
+18:17:50.554 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 09 00 28 33 00 ]
+18:17:50.605 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:50.605 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 09 00 28 33 ]
+18:17:50.694 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 08 00 ]
+18:17:50.694 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 8 s
+18:17:51.674 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 09 00 ]
+18:17:51.674 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 9 s
+18:17:52.613 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:17:52.660 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0A 00 ]
+18:17:52.660 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 10 s
+18:17:52.660 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:52.660 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:17:53.642 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0B 00 ]
+18:17:53.642 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 11 s
+18:17:54.629 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0C 00 ]
+18:17:54.629 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 12 s
+18:17:54.675 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 14 00 28 33 00 ]
+18:17:54.721 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:54.721 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 14 00 28 33 ]
+18:17:55.609 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0D 00 ]
+18:17:55.609 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 13 s
+18:17:56.590 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0E 00 ]
+18:17:56.590 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 14 s
+18:17:56.731 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 22 00 28 33 00 ]
+18:17:56.777 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:56.777 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 22 00 28 33 ]
+18:17:57.572 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0F 00 ]
+18:17:57.572 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 15 s
+18:17:58.511 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 10 00 ]
+18:17:58.511 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 16 s
+18:17:58.745 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 25 00 28 33 00 ]
+18:17:58.839 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:17:58.839 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 25 00 28 33 ]
+18:17:59.491 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 11 00 ]
+18:17:59.491 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 17 s
+18:18:00.474 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 12 00 ]
+18:18:00.474 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 18 s
+18:18:00.802 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 23 00 28 33 00 ]
+18:18:00.896 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:00.896 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 23 00 28 33 ]
+18:18:01.462 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 13 00 ]
+18:18:01.462 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 19 s
+18:18:02.448 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 14 00 ]
+18:18:02.448 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 20 s
+18:18:02.869 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 1C 00 28 33 00 ]
+18:18:02.963 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:02.963 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 1C 00 28 33 ]
+18:18:03.431 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 15 00 ]
+18:18:03.431 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 21 s
+18:18:04.367 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 16 00 ]
+18:18:04.367 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 22 s
+18:18:04.928 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 0F 00 28 33 00 ]
+18:18:05.022 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:05.022 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 0F 00 28 33 ]
+18:18:05.393 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 17 00 ]
+18:18:05.393 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 23 s
+18:18:06.329 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 18 00 ]
+18:18:06.329 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 24 s
+18:18:06.979 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:18:07.072 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:07.072 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:18:07.350 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 19 00 ]
+18:18:07.350 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 25 s
+18:18:08.333 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 1A 00 ]
+18:18:08.333 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 26 s
+18:18:09.083 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 F5 FF 28 33 00 ]
+18:18:09.083 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:09.083 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 F5 FF 28 33 ]
+18:18:09.267 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 1B 00 ]
+18:18:09.267 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 27 s
+18:18:10.251 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 1C 00 ]
+18:18:10.251 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 28 s
+18:18:11.091 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 E4 FF 28 33 00 ]
+18:18:11.138 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:11.138 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 E4 FF 28 33 ]
+18:18:11.230 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 1D 00 ]
+18:18:11.230 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 29 s
+18:18:12.209 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 1E 00 ]
+18:18:12.209 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 30 s
+18:18:13.147 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 CF FF 28 33 00 ]
+18:18:13.195 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:13.195 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 CF FF 28 33 ]
+18:18:13.195 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 1F 00 ]
+18:18:13.195 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 31 s
+18:18:14.177 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 20 00 ]
+18:18:14.177 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 32 s
+18:18:15.164 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 21 00 ]
+18:18:15.164 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 33 s
+18:18:15.164 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 A8 FF 28 33 00 ]
+18:18:15.209 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:15.209 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 A8 FF 28 33 ]
+18:18:16.195 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 22 00 ]
+18:18:16.195 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 34 s
+18:18:17.129 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 23 00 ]
+18:18:17.129 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 35 s
+18:18:17.222 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 84 FF 28 33 00 ]
+18:18:17.270 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:17.270 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 84 FF 28 33 ]
+18:18:18.116 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 24 00 ]
+18:18:18.116 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 36 s
+18:18:19.099 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 25 00 ]
+18:18:19.099 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 37 s
+18:18:19.286 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 67 FF 28 33 00 ]
+18:18:19.333 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:19.333 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 67 FF 28 33 ]
+18:18:20.085 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 26 00 ]
+18:18:20.085 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 38 s
+18:18:21.071 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 27 00 ]
+18:18:21.071 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 39 s
+18:18:21.305 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 5D FF 28 33 00 ]
+18:18:21.400 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:21.400 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 5D FF 28 33 ]
+18:18:22.010 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 28 00 ]
+18:18:22.010 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 40 s
+18:18:22.992 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 29 00 ]
+18:18:22.992 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 41 s
+18:18:23.365 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 5E FF 28 33 00 ]
+18:18:23.459 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:23.459 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 5E FF 28 33 ]
+18:18:23.973 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 2A 00 ]
+18:18:23.973 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 42 s
+18:18:24.960 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 2B 00 ]
+18:18:24.960 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 43 s
+18:18:25.425 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 6F FF 28 33 00 ]
+18:18:25.471 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:25.471 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 6F FF 28 33 ]
+18:18:25.939 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 2C 00 ]
+18:18:25.939 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 44 s
+18:18:26.919 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 2D 00 ]
+18:18:26.919 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 45 s
+18:18:27.481 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 8A FF 28 33 00 ]
+18:18:27.575 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:27.575 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 8A FF 28 33 ]
+18:18:27.903 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 2E 00 ]
+18:18:27.903 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 46 s
+18:18:28.888 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 2F 00 ]
+18:18:28.888 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 47 s
+18:18:29.541 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 B8 FF 28 33 00 ]
+18:18:29.589 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:29.589 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 B8 FF 28 33 ]
+18:18:29.866 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 30 00 ]
+18:18:29.866 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 48 s
+18:18:30.852 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 31 00 ]
+18:18:30.852 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 49 s
+18:18:31.604 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:18:31.651 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:31.651 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:18:31.792 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 32 00 ]
+18:18:31.792 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 50 s
+18:18:32.773 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 33 00 ]
+18:18:32.773 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 51 s
+18:18:33.660 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 A2 00 28 33 00 ]
+18:18:33.707 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:33.707 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 A2 00 28 33 ]
+18:18:33.752 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 34 00 ]
+18:18:33.752 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 52 s
+18:18:34.732 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 35 00 ]
+18:18:34.732 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 53 s
+18:18:35.754 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 36 00 ]
+18:18:35.754 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 54 s
+18:18:35.754 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 09 01 28 33 00 ]
+18:18:35.801 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:35.801 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 09 01 28 33 ]
+18:18:36.689 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 37 00 ]
+18:18:36.689 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 55 s
+18:18:37.673 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 38 00 ]
+18:18:37.673 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 56 s
+18:18:37.768 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 4F 01 28 33 00 ]
+18:18:37.814 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:37.814 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 4F 01 28 33 ]
+18:18:38.660 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 39 00 ]
+18:18:38.660 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 57 s
+18:18:39.643 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 3A 00 ]
+18:18:39.643 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 58 s
+18:18:39.831 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 67 01 28 33 00 ]
+18:18:39.878 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:39.878 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 67 01 28 33 ]
+18:18:40.628 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 3B 00 ]
+18:18:40.628 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 59 s
+18:18:41.608 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 3C 00 ]
+18:18:41.608 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 60 s
+18:18:41.842 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 57 FF 28 33 00 ]
+18:18:41.890 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:41.890 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 57 FF 28 33 ]
+18:18:42.588 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 3D 00 ]
+18:18:42.588 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 61 s
+18:18:43.567 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 3E 00 ]
+18:18:43.567 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 62 s
+18:18:43.897 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 08 00 00 00 00 00 00 00 ]
+18:18:43.990 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 08 01 ]
+18:18:43.990 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 01 ]
+18:18:43.990 -> -> Client Rec'd Raw FTM Machine Status Data: [2] [ 02 01 ]
+18:18:44.547 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 3E 00 ]
+18:18:44.547 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 62 s
+18:18:45.572 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 3E 00 ]
+18:18:45.572 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 62 s
+18:18:45.947 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 01 00 00 00 00 00 00 00 ]
+18:18:45.995 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 01 01 ]
+18:18:46.510 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 00 00 ]
+18:18:46.510 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 0 s
+18:18:47.491 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 00 00 ]
+18:18:47.491 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 0 s
+18:18:48.002 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 00 00 00 00 00 00 00 00 ]
+18:18:48.050 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 00 01 ]
+18:18:48.050 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 00 ]
+18:18:48.050 -> -> Client Rec'd Raw FTM Machine Status Data: [1] [ 04 ]
+18:18:48.472 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 00 00 ]
+18:18:48.472 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 0 s
+18:18:49.458 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 01 00 ]
+18:18:49.458 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 1 s
+18:18:50.063 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 00 00 00 00 00 00 00 00 ]
+18:18:50.110 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 00 01 ]
+18:18:50.391 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 02 00 ]
+18:18:50.391 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 2 s
+18:18:51.378 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 03 00 ]
+18:18:51.378 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 3 s
+18:18:52.126 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 07 00 00 00 00 00 00 00 ]
+18:18:52.173 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 07 01 ]
+18:18:52.359 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 04 00 ]
+18:18:52.359 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 4 s
+18:18:53.338 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 05 00 ]
+18:18:53.338 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 5 s
+18:18:54.179 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 22 01 28 33 00 ]
+18:18:54.225 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:54.225 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 22 01 28 33 ]
+18:18:54.225 -> -> Client Rec'd Raw FTM Training Status Data: [2] [ 00 09 ]
+18:18:54.319 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 06 00 ]
+18:18:54.319 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 6 s
+18:18:55.298 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 07 00 ]
+18:18:55.298 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 7 s
+18:18:56.186 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 09 00 28 33 00 ]
+18:18:56.232 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:56.232 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 09 00 28 33 ]
+18:18:56.278 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 08 00 ]
+18:18:56.278 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 8 s
+18:18:57.309 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 09 00 ]
+18:18:57.309 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 9 s
+18:18:58.247 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0A 00 ]
+18:18:58.247 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 10 s
+18:18:58.247 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:18:58.339 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:18:58.339 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:18:59.227 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0B 00 ]
+18:18:59.227 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 11 s
+18:19:00.214 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0C 00 ]
+18:19:00.214 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 12 s
+18:19:00.307 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 14 00 28 33 00 ]
+18:19:00.401 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:00.401 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 14 00 28 33 ]
+18:19:01.193 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0D 00 ]
+18:19:01.193 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 13 s
+18:19:02.175 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0E 00 ]
+18:19:02.175 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 14 s
+18:19:02.360 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 22 00 28 33 00 ]
+18:19:02.453 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:02.453 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 22 00 28 33 ]
+18:19:03.151 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 0F 00 ]
+18:19:03.151 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 15 s
+18:19:04.134 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 10 00 ]
+18:19:04.134 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 16 s
+18:19:04.463 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 25 00 28 33 00 ]
+18:19:04.510 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:04.510 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 25 00 28 33 ]
+18:19:05.113 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 11 00 ]
+18:19:05.113 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 17 s
+18:19:06.098 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 12 00 ]
+18:19:06.098 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 18 s
+18:19:06.519 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 23 00 28 33 00 ]
+18:19:06.566 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:06.566 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 23 00 28 33 ]
+18:19:07.080 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 13 00 ]
+18:19:07.080 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 19 s
+18:19:08.060 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 14 00 ]
+18:19:08.060 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 20 s
+18:19:08.574 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 1C 00 28 33 00 ]
+18:19:08.621 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:08.621 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 1C 00 28 33 ]
+18:19:09.041 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 15 00 ]
+18:19:09.041 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 21 s
+18:19:10.038 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 16 00 ]
+18:19:10.038 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 22 s
+18:19:10.596 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 0F 00 28 33 00 ]
+18:19:10.688 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:10.688 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 0F 00 28 33 ]
+18:19:10.969 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 17 00 ]
+18:19:10.969 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 23 s
+18:19:11.948 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 18 00 ]
+18:19:11.948 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 24 s
+18:19:12.697 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 00 00 28 33 00 ]
+18:19:12.743 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:12.743 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 00 00 28 33 ]
+18:19:12.932 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 19 00 ]
+18:19:12.932 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 25 s
+18:19:13.912 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 1A 00 ]
+18:19:13.912 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 26 s
+18:19:14.709 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 F5 FF 28 33 00 ]
+18:19:14.803 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:14.803 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 F5 FF 28 33 ]
+18:19:14.896 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 1B 00 ]
+18:19:14.896 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 27 s
+18:19:15.867 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 1C 00 ]
+18:19:15.867 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 28 s
+18:19:16.796 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 E4 FF 28 33 00 ]
+18:19:16.844 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:16.844 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 E4 FF 28 33 ]
+18:19:16.891 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 1D 00 ]
+18:19:16.891 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 29 s
+18:19:17.819 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 1E 00 ]
+18:19:17.819 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 30 s
+18:19:18.790 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 1F 00 ]
+18:19:18.790 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 31 s
+18:19:18.831 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 CF FF 28 33 00 ]
+18:19:18.871 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:18.871 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 CF FF 28 33 ]
+18:19:19.786 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 20 00 ]
+18:19:19.786 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 32 s
+18:19:20.755 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 21 00 ]
+18:19:20.755 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 33 s
+18:19:20.874 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 A8 FF 28 33 00 ]
+18:19:20.914 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:20.914 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 A8 FF 28 33 ]
+18:19:21.755 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 22 00 ]
+18:19:21.755 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 34 s
+18:19:22.753 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 23 00 ]
+18:19:22.753 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 35 s
+18:19:22.914 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 84 FF 28 33 00 ]
+18:19:22.955 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:22.955 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 84 FF 28 33 ]
+18:19:23.695 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 24 00 ]
+18:19:23.695 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 36 s
+18:19:24.703 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 25 00 ]
+18:19:24.703 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 37 s
+18:19:24.980 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 67 FF 28 33 00 ]
+18:19:25.027 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:25.027 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 67 FF 28 33 ]
+18:19:25.679 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 26 00 ]
+18:19:25.679 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 38 s
+18:19:26.662 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 27 00 ]
+18:19:26.662 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 39 s
+18:19:27.036 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 5D FF 28 33 00 ]
+18:19:27.083 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:27.083 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 5D FF 28 33 ]
+18:19:27.648 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 28 00 ]
+18:19:27.648 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 40 s
+18:19:28.625 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 29 00 ]
+18:19:28.625 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 41 s
+18:19:29.043 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 5E FF 28 33 00 ]
+18:19:29.090 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:29.090 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 5E FF 28 33 ]
+18:19:29.605 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 2A 00 ]
+18:19:29.605 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 42 s
+18:19:30.588 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 2B 00 ]
+18:19:30.588 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 43 s
+18:19:31.104 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 6F FF 28 33 00 ]
+18:19:31.104 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:31.104 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 6F FF 28 33 ]
+18:19:31.529 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 2C 00 ]
+18:19:31.529 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 44 s
+18:19:32.510 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 2D 00 ]
+18:19:32.510 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 45 s
+18:19:33.120 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 8A FF 28 33 00 ]
+18:19:33.167 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:33.167 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 8A FF 28 33 ]
+18:19:33.492 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 2E 00 ]
+18:19:33.492 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 46 s
+18:19:34.478 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 2F 00 ]
+18:19:34.478 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 47 s
+18:19:35.183 -> Client sends Indoor Bike Simulation Parameters to Trainer's FTM Control Point: [ 11 00 00 B8 FF 28 33 00 ]
+18:19:35.230 -> -> Client Rec'd Raw FTM Control Point Response Data: [ 80 11 01 ]
+18:19:35.230 -> -> Client Rec'd Raw FTM Machine Status Data: [7] [ 12 00 00 B8 FF 28 33 ]
+18:19:35.465 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 30 00 ]
+18:19:35.465 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 48 s
+18:19:36.449 -> -> Client Rec'd Raw FTM Indoor Bike Data: [13] [ 54 08 00 00 00 00 00 00 00 00 00 31 00 ]
+18:19:36.449 -> Speed: 0 KPH Instantaneous Cadence: 0 RPM Total Distance: 0 m Instantaneous Power: 0 Watt Elapsed time: 49 s
