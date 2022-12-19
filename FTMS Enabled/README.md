@@ -187,12 +187,12 @@ The two precise device addresses are critical to assure a reliable test run! You
 When you are ready for testing a trainer brand/type that is <b>NOT</b> yet shown in the above list: Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... 
 Please supply me with detailed info about the trainer and your setup, preferably with screen shots of the [nRF Connect by Nordic](https://play.google.com/store/apps/details?id=no.nordicsemi.android.mcp&hl=en&gl=US&pli=1) showing which Services and Characteristics your trainer is exposing. If you have collected all trainer and setup detailing information: Open [Issues](https://github.com/Berg0162/simcline/issues), click the green button: <b>New issue</b> and paste the relevant info in your <b>Issues</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!<br>
 # Zwift Hub users<br>
-[DCRainmaker Zwift Hub review](https://www.dcrainmaker.com/2022/10/zwift-hub-smart-trainer-in-depth-review-the-best-bang-for-your-buck.html)
+There is an excellent review available [DCRainmaker Zwift Hub review](https://www.dcrainmaker.com/2022/10/zwift-hub-smart-trainer-in-depth-review-the-best-bang-for-your-buck.html), that describes o.a. a special goodie that comes with the Zwift Hub:
 >**– Protocol Compatibility:** ANT+ FE-C, ANT+ Power, Bluetooth Smart Trainer Control, Bluetooth Smart Power (everything you need)<br>
 **– Unique Party Trick:** Can rebroadcast your heart rate sensor within a single channel, ideal for Apple TV Zwift users (who are Bluetooth channel limited)<br>
 **– App Compatibility:** Every app out there basically (Zwift, TrainerRoad, Rouvy, RGT, The Sufferfest, Kinomap, etc…)<br>
 
-The present code versions do **NOT** support the rebroadcast function of your heart rate sensor. In the Zwift Companion app you’ll see a new option for Zwift hardware and you must switch that function **OFF**, otherwise you will experience unwanted results!
+The present code versions do **NOT** support the rebroadcast function of your heart rate sensor. In the Zwift Companion app you’ll see a new option for Zwift hardware and you must switch that function **OFF**, otherwise you will experience unwanted results! Use your heart rate band like everybody else and pair it directly to the controlling app (like Zwift) without any intervention!
 
 # Cleanup Zwift devices from the past<br>
 Zwift can sometimes hang onto the wrong info, such as trainers or sensors that were paired to the game in the past. Zwift uses Mac Addresses from previous connections to identify devices. So when device names change Zwift hangs on to the unique Mac Addresses rather than the names that you see in the pairing screens! This can be rather confusing and lead to misunderstandings when you connect devices having only their original names shown and not the actual names....<br>
