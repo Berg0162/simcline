@@ -10,7 +10,7 @@
 14:46:22.161 -> Start Scanning for CPS, CSC and FTMS!
 14:46:22.161 -> Found advertising Peripheral with FTMS service!, see the Raw Data packet:
 14:46:22.161 -> Timestamp MAC Address Rssi Data
-14:46:22.161 -> 000001328 F8:9C:FC:53:5E:49 -59 09-02-16-18-26-18-18-18-0A-18
+14:46:22.161 -> 000001328 ##:##:##:##:##:## -59 09-02-16-18-26-18-18-18-0A-18
 14:46:22.161 -> Feather nRF52 (Central) connected to Trainer (Peripheral) device: [Zwift Hub] MAC Address: ##:##:##:##:##:##
 14:46:22.161 -> Now checking all Client Services and Characteristics!
 14:46:22.161 -> If Mandatory Services Fail --> the Client will disconnect!
