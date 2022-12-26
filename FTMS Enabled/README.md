@@ -105,20 +105,20 @@ Please follow <b>ALWAYS</b> the different usage instructions at the first part o
  *  It allows to connect to Cycling apps like Zwift (aka Client or Central)!
  *  It simulates a connected Cycling Trainer and in BLE terms it is a Server or 
  *  or in BlueFruit BLE library terms it is a Peripheral
- *
  *  Requirements: Zwift app or alike and Feather nRF52 board
- *  1) Start Zwift and wait for the Devices Pairing Screen
- *  2) Unpair all previously paired devices
- *  3) Upload and Run this code on the Feather nRF52
- *  4) Start the Serial Monitor to catch debugging info
+ *  1) Upload and Run this code on the Feather nRF52
+ *  2) Start the Serial Monitor to catch debugging info
+ *  3) Start Zwift and wait for the Devices Pairing Screen
+ *  4) Unpair all previously paired devices
  *  5) Search on Zwift pairing screens for the Feather nRF52: "Sim nRF52"
- *  6) Pair all three "simulated" devices: Power, Cadence and Controllable
+ *  6) Pair all four "simulated" devices: Power, Cadence, Heart Rate and Controllable
  *  7) Start a default Zwift ride or any ride you wish
  *     No need for you to do work on the trainer!
  *  8) Make Serial Monitor visible on top of the Zwift window 
  *  9) Inspect the info presented by Serial Monitor
  * 10) Notice how your avatar is riding the route all by itself...
- */
+ *  
+ *
 ```
 + After two smoothly runs of the FTMS Client and Server, it is time to test the FTMS bridge!<br>
 The <b>FTMS_Zwift_Bridge_v024</b> code needs the "hardware" addresses to unmistakingly establish a BLE connection with the targeted devices. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera.<br>
