@@ -456,17 +456,40 @@ void setup()
   while ( !Serial ) delay(10);   // for nrf52840 with native usb, milliseconds
   DEBUG_PRINTLN(" Feather nRF52 Server/Peripheral: CPS, CSC, HBM and FTMS");
   DEBUG_PRINTLN("--------------------  Version 3.0 ----------------------");
-#if defined(ARDUINO_NRF52840_FEATHER) 
-  DEBUG_PRINTLN("Processor: Feather nRF52840");
+// ------------------------------------------------------
+#if defined(ARDUINO_NRF52840_FEATHER)
+// Allow for extra memory usage the nRF52840 has plenty!
+    DEBUG_PRINTLN("Setting NRF52840 BLE configuration parameters!");
+  Bluefruit.configUuid128Count(3); // 1 Service and 2 NUS Char's
+//    Bluefruit.configCentralBandwidth(BANDWIDTH_HIGH);
+//  Bluefruit.configCentralConn(BLE_GATT_ATT_MTU_DEFAULT, BLE_GAP_EVENT_LENGTH_DEFAULT * 2, BLE_GATTS_HVN_TX_QUEUE_SIZE_DEFAULT * 2, BLE_GATTC_WRITE_CMD_TX_QUEUE_SIZE_DEFAULT);
+//    Bluefruit.configPrphBandwidth(BANDWIDTH_HIGH);
+  Bluefruit.configPrphConn(BLE_GATT_ATT_MTU_DEFAULT, BLE_GAP_EVENT_LENGTH_DEFAULT * 2, BLE_GATTS_HVN_TX_QUEUE_SIZE_DEFAULT * 2, BLE_GATTC_WRITE_CMD_TX_QUEUE_SIZE_DEFAULT);
 #endif
-#if defined(ARDUINO_NRF52832_FEATHER) 
-  DEBUG_PRINTLN("Processor: Feather nRF52832");
+// -----------------------------------------------------------
+#if defined(ARDUINO_NRF52832_FEATHER)
+// Squeeze the memory to a minimum... to avoid nRF52832 out off memory errors
+  Bluefruit.configUuid128Count(3); // 1 Service and 2 NUS Char's 
+  Bluefruit.configPrphBandwidth(BANDWIDTH_LOW); 
+//  Bluefruit.configCentralBandwidth(BANDWIDTH_LOW);
+//    Bluefruit.configAttrTableSize(1024); // 1024
 #endif
+// -----------------------------------------------------------
+
   // Initialise the Bluefruit module
   DEBUG_PRINTLN("Initialise the Bluefruit nRF52 module: Server (Peripheral)");
 #endif
   // begin (Peripheral = 1, Central = 0)
   Bluefruit.begin(1, 0);
+  char name[32];
+  memclr(name, sizeof(name));
+  Bluefruit.getName(name, sizeof(name));
+  DEBUG_PRINTF("Board name: [%s]\n", name);
+  // Supported tx_power values depending on mcu:
+  // - nRF52832: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +3dBm and +4dBm.
+  // - nRF52840: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +2dBm, +3dBm, +4dBm, +5dBm, +6dBm, +7dBm and +8dBm.
+  Bluefruit.setTxPower(4); // See above for supported values: +4dBm
+  // --------------------------------------------------------------
   // Configure and Start the Device Information Service
   DEBUG_PRINTLN("Configuring the Server Device Information Service");
   server_setupDIS();
@@ -579,10 +602,6 @@ void server_startADV(void)
 // Setup and start advertising
 //  if (Bluefruit.Advertising.isRunning()) 
 //    { Bluefruit.Advertising.stop(); }
-  // Supported tx_power values depending on mcu:
-  // - nRF52832: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +3dBm and +4dBm.
-  // - nRF52840: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +2dBm, +3dBm, +4dBm, +5dBm, +6dBm, +7dBm and +8dBm.
-  Bluefruit.setTxPower(4); // See above for supported values: +4dBm
   // Set blink rate in advertising mode
   Bluefruit.setConnLedInterval(250);
   Construct_Dev_Name();
@@ -993,10 +1012,11 @@ void server_connect_callback(uint16_t conn_handle)
   ble_gap_addr_t peer_address = connection->getPeerAddr();
   memcpy(peer_addr, peer_address.addr, 6);
 #ifdef DEBUG
+  Bluefruit.printInfo();
   DEBUG_PRINTF("Feather nRF52 (Peripheral) connected to (Central) device: [%s] MAC Address: ", peer_name);
   PrintPeerAddress(peer_addr);
   DEBUG_PRINTLN();
-  DEBUG_PRINTLN("Waiting for Central Device to set 'Notify' enabled for relevant Characteristics...");
+  DEBUG_PRINTLN("Waiting for Central Device to set 'Notify/Indicate' enabled for relevant Characteristics...");
 #endif
 }
 
@@ -1094,6 +1114,13 @@ void server_cccd_callback(uint16_t conn_handle, BLECharacteristic* chr, uint16_t
           DEBUG_PRINT("Server CSC: Measurement 'Notify' enabled");
         } else {
           DEBUG_PRINT("Server CSC: Measurement 'Notify' disabled");
+        }
+    }
+     if (chr->uuid == server_FTM_ControlPoint_Chr.uuid) { 
+        if (chr->indicateEnabled(conn_handle)) { 
+          DEBUG_PRINT("Server FTM: ControlPoint 'Indicate' enabled");
+        } else {
+          DEBUG_PRINT("Server FTM: ControlPoint 'Indicate' disabled");
         }
     }
     if (chr->uuid == server_FTM_IndoorBikeData_Chr.uuid) { 
