@@ -66,7 +66,7 @@ The experience should not differ from a normal direct one-to-one connection, Zwi
 All FTMS enabled indoor trainers expose your efforts on the bike in 2 additional BLE services: Cyling Power (CPS) and Speed & Cadence (CSC). These services are detected and applied by many training app's and are therefore an integral part of the present design of the MITM bridge. Training app's simply expect, when they connect to the FTMS enabled trainer, that the CPS and CSC services are available in one go! The Zwift pairing screen is a good example: it expects Power (CPS), Cadence (CSC) and a "Controllable" (with FTMS) to be connected...
 + The client-side (Feather nRF52) scans for (a trainer) and connects with <b>FTMS, CPS and CSC</b> and collects cyling power, speed and cadence data like Zwift would do! The code with the name: <b>FTMS_Client_v03</b> is doing just that at the left side of the "bridge"!
 + The Server-side (Feather nRF52) advertises and enables connection with training/cycling/game apps like Zwift and collects relevant resistance data, it simulates as if an active <b>FTMS</b> enabled trainer is connected to Zwift or alike! Notice that the Server-side also exposes active <b>CPS</b> and <b>CSC</b> services. The code with the name: <b>FTMS_Server_v03</b> is doing just at the right side of the "bridge"!
-+ The <b>MITM</b> code is connecting both sides at the same time: a full-blown working bridge, <b>FTMS_Zwift_Bridge_v024</b><br clear="left">
++ The <b>MITM</b> code is connecting both sides at the same time: a full-blown working bridge, <b>FTMS_Zwift_Bridge_v03</b><br clear="left">
 
 <i>The test programs (FTMS Client, FTMS Server and FTMS-Zwift-Bridge) are only using Serial Monitor (screen output) to show what is happening!</i><br>
 ```
@@ -121,7 +121,7 @@ Please follow <b>ALWAYS</b> the different usage instructions at the first part o
  *
 ```
 + After two smoothly runs of the FTMS Client and Server, it is time to test the FTMS bridge!<br>
-The <b>FTMS_Zwift_Bridge_v024</b> code needs the "hardware" addresses to unmistakingly establish a BLE connection with the targeted devices. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera.<br>
+The <b>FTMS_Zwift_Bridge_v03</b> code needs the "hardware" addresses to unmistakingly establish a BLE connection with the targeted devices. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera.<br>
 ```
 /* -----------------------------------------------------------------------------------------------------
  *             This code should work with all indoor cycling trainers that fully support,
@@ -192,7 +192,7 @@ There is an excellent review available [DCRainmaker Zwift Hub review](https://ww
 **– Unique Party Trick: Can rebroadcast your heart rate sensor within a single channel, ideal for Apple TV Zwift users (who are Bluetooth channel limited)**<br>
 **– App Compatibility:** Every app out there basically (Zwift, TrainerRoad, Rouvy, RGT, The Sufferfest, Kinomap, etc…)<br>
 
-The present code versions for FTMS enabled trainers do not now, but will in the near future **fully** support this proprietary Zwift function for your heart rate sensor connection. The Simcline code will support the same features as you would have had with only Zwift App connected to Zwift Hub trainer! Use your heart rate band the way you are used too before the Simcline came in between your Zwift Hub trainer and the Zwift App! It should and will be fully transparent with respect to this feature!
+The latest code versions for FTMS enabled trainers **fully** support this proprietary Zwift function for your heart rate sensor connection. The Simcline code supports the same features as you would have had with only Zwift App connected to Zwift Hub trainer! Use your heart rate band the way you are used too before the Simcline came in between your Zwift Hub trainer and the Zwift App! It should be fully transparent with respect to this feature! Please test yourself!
 
 # Cleanup Zwift devices from the past<br>
 Zwift can sometimes hang onto the wrong info, such as trainers or sensors that were paired to the game in the past. Zwift uses Mac Addresses from previous connections to identify devices. So when device names change Zwift hangs on to the unique Mac Addresses rather than the names that you see in the pairing screens! This can be rather confusing and lead to misunderstandings when you connect devices having only their original names shown and not the actual names....<br>
