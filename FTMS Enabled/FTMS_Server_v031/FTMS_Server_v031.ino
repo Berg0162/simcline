@@ -447,26 +447,6 @@ unsigned long HRMtimeInterval = 0;
 unsigned long SIMtimeInterval = 0;
 // ----------------------------------------------
 
-/*
- * Version 2.2
- * Process FTM Control Point responses AT ONCE in the code
- * TIME_SPAN_TO_SETTLE 2500 --> to avoid DEBUG_PRINT to be delayed!
- * yield() added in several loops
- * Introduced low cost NUS service for Smartphone connection
- * Timeinterval set (IBD_TIME_SPAN) for sending IBD 
- * Timeinterval set for sending CP and CSC
- * Construct_Dev_Name(void) -> "Sim nRF52"
- * Version 3.0
- * Inserted full HBM support to simulate Zwift Hub
- * inserted DebugUtils support
- * inserted BLE config settings before bluefruit.begin()
- * inserted TXPower and boardname after Bluefruit.begin()
- * inserted printinfo after connect
- * 3.1
- * inserted missing (!) FTM ControlPoint set cccd callback
- * Deleted Wait timing in setup() after scanning!
- */
-
 void setup()
 {
 #ifdef DEBUG
