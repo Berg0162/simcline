@@ -10,7 +10,7 @@
  All text must be included in any redistribution
 *********************************************************************/
 
-/* 
+/*  
  *  This Feather nRF52840 tested code advertises and enables the relevant 
  *  Cycling Trainer Services: CPS, CSC and FTMS.
  *  It allows to connect to Cycling apps like Zwift (aka Client or Central)!
