@@ -54,8 +54,6 @@ uint16_t client_Connection_Handle = BLE_CONN_HANDLE_INVALID;
 // exposed SVC/Char's and empty (zero) readings of Char values! Result: connection fails!
 // - Zwift Hub will NOT pass 100%-error-free with a value of poll_delay lower than 250 ms !!
 const unsigned long poll_delay = 0;   // Unit is milliseconds
-// - Zwift Hub experimental setting of 50 ms..... test and adapt! (50 ms is enough to avoid BLE stack congestion)
-const unsigned long fetch_delay = 50; // Unit is milliseconds
 //---------------------------------------------------------------------------------------------------
 
 /* Generic Access
@@ -230,7 +228,7 @@ uint8_t client_HR_Location_Value = 1; //Chest
 #define HRM_MEASUREMENT_DATALEN 4
 
 // Total time to wait for client_connect_callback to finish properly, taken into account all delay's
-const unsigned long TimeSpan = (poll_delay*30 + fetch_delay*12 + 3000);  // Unit in millis, default = 3 seconds
+const unsigned long TimeSpan = (poll_delay*30 + 3000);  // Unit in millis, default = 3 seconds
 #define CONTROL_POINT_TIME_SPAN 2000    // Time span for sending Control Point data
 unsigned long TimeInterval = 0;
 
@@ -279,7 +277,7 @@ void setup()
   while ( !Serial ) delay(10);   // for nrf52840 with native usb
   DEBUG_PRINTLN(" Feather nRF52 Client/Central: CPS, CSC, HBM and FTMS");
   DEBUG_PRINTLN("------------------- Version 03.4 --------------------");
-  DEBUG_PRINTF("Poll and fetch delay settings: [%d]ms [%d]ms\n", poll_delay, fetch_delay);
+  DEBUG_PRINTF("Poll delay settings: [%d] ms\n", poll_delay);
 #endif
 // ------------------------------------------------------
 #if defined(ARDUINO_NRF52840_FEATHER)
@@ -939,13 +937,11 @@ bool client_GA_connect_callback(uint16_t conn_handle)
   }
   delay(poll_delay);
   if ( client_GA_DeviceName_Chr.discover() ) {
-     delay(fetch_delay);
      client_GA_DeviceName_Chr.read(client_GA_DeviceName_Data, sizeof(client_GA_DeviceName_Data));
      DEBUG_PRINTF(" -> Client Reads Device Name:   [%s]\n", client_GA_DeviceName_Data);
   } 
   delay(poll_delay);   
   if ( client_GA_Appearance_Chr.discover() ) {
-      delay(fetch_delay);
       client_GA_Appearance_Value = client_GA_Appearance_Chr.read16();
       DEBUG_PRINTF(" -> Client Reads Appearance:    [%d]\n", client_GA_Appearance_Value);
   }     
@@ -974,7 +970,6 @@ bool client_DIS_connect_callback(uint16_t conn_handle)
   //  2
   if ( client_DIS_ModelNumber_Chr.discover() ) {
     // read and print out Model Number
-    delay(fetch_delay);
     if ( client_DIS_ModelNumber_Chr.read(client_DIS_ModelNumber_Str, sizeof(client_DIS_ModelNumber_Str)) ) { 
       DEBUG_PRINTF(" -> Client Reads Model Number:  [%s]\n", client_DIS_ModelNumber_Str);
      }
@@ -983,7 +978,6 @@ bool client_DIS_connect_callback(uint16_t conn_handle)
   //  3
   if ( client_DIS_SerialNumber_Chr.discover() ) {
     // read and print out Serial Number
-    delay(fetch_delay);
     if ( client_DIS_SerialNumber_Chr.read(client_DIS_SerialNumber_Str, sizeof(client_DIS_SerialNumber_Str)) ) {
       DEBUG_PRINTF(" -> Client Reads Serial Number: [%s]\n", client_DIS_SerialNumber_Str);
     }
@@ -1052,7 +1046,6 @@ bool client_FTM_connect_callback(uint16_t conn_handle)
   {
     DEBUG_PRINTLN("Found it!");
     // Read FTM Feature Data
-    delay(fetch_delay);
     client_FTM_Feature_Chr.read(client_FTM_Feature_Data, 8);
 #ifdef DEBUG
     DEBUG_PRINT(" -> Client Reads Raw FTM Feature bytes: [8] [ ");
@@ -1101,7 +1094,6 @@ bool client_FTM_connect_callback(uint16_t conn_handle)
   {
     DEBUG_PRINTLN("Found it!");
     // Read Supported Resistance Level Range Data
-    delay(fetch_delay);
     client_FTM_SupportedResistanceLevelRange_Chr.read(client_FTM_SupportedResistanceLevelRange_Data, 6);
 #ifdef DEBUG
     DEBUG_PRINT(" -> Client Reads Raw FTM Supported Resistance Level Range bytes: [6] [ ");
@@ -1120,7 +1112,6 @@ bool client_FTM_connect_callback(uint16_t conn_handle)
   {
     DEBUG_PRINTLN("Found it!");
     // Read Supported Resistance Level Range values
-    delay(fetch_delay);
     client_FTM_SupportedPowerRange_Chr.read(client_FTM_SupportedPowerRange_Data, 6);
 #ifdef DEBUG
     DEBUG_PRINT(" -> Client Reads Raw FTM Supported Power Range bytes: [6] [ ");
@@ -1202,7 +1193,6 @@ bool client_CP_connect_callback(uint16_t conn_handle)
 //   b22:32   = Reserved
   
   // Read 32-bit client_CP_Feature_Chr value
-  delay(fetch_delay);
   client_CP_Feature_Flags = client_CP_Feature_Chr.read32();
 #ifdef DEBUG
   const uint8_t CPFC_FIXED_DATALEN = 4;
@@ -1247,7 +1237,6 @@ bool client_CP_connect_callback(uint16_t conn_handle)
   // Max Len    = 1
   //  B0:1      = UINT8 - Sensor Location
     // Read 8-bit client CP sensor location value
-    delay(fetch_delay);
     client_CP_Location_Value = client_CP_Location_Chr.read8();   
     DEBUG_PRINT(" -> Client Reads CP Location Sensor: ");
     DEBUG_PRINTF("Loc#: %d %s\n", client_CP_Location_Value, client_Sensor_Location_Str[client_CP_Location_Value]);
@@ -1294,7 +1283,6 @@ bool client_CSC_connect_callback(uint16_t conn_handle)
   {
     DEBUG_PRINTLN("Found it!");
     // Read sensor CSC Feature value in 16 bit
-    delay(fetch_delay);
     client_CSC_Feature_Flags = client_CSC_Feature_Chr.read16();
 #ifdef DEBUG
     uint8_t cscfcData[CSC_FEATURE_FIXED_DATALEN] = { (uint8_t)(client_CSC_Feature_Flags & 0xff), (uint8_t)(client_CSC_Feature_Flags >> 8) }; //  Little Endian Representation
@@ -1321,7 +1309,6 @@ bool client_CSC_connect_callback(uint16_t conn_handle)
   {
     DEBUG_PRINTLN("Found it!");
     // Read 16-bit client CSC sensor location value
-    delay(fetch_delay);
     client_CSC_Location_Value = client_CSC_Location_Chr.read8();
     DEBUG_PRINT(" -> Client Reads CSC Location Sensor: ");
     DEBUG_PRINTF("Loc#: %d %s\n", client_CSC_Location_Value, client_Sensor_Location_Str[client_CSC_Location_Value]);
@@ -1366,7 +1353,6 @@ bool client_HR_connect_callback(uint16_t conn_handle)
   if ( client_HR_Location_Chr.discover() )
     {
      // Read 8-bit client_HR_Location_Chr value from peripheral
-     delay(fetch_delay);
      client_HR_Location_Value = client_HR_Location_Chr.read8();
 #ifdef DEBUG
     DEBUG_PRINTLN("Found it!");
