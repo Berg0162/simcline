@@ -182,7 +182,7 @@ The two precise device addresses are critical to assure a reliable test run! You
 |Trainer brand/type  |Testing parter|FTMS_Client|FTMS_Server|FTMS_Zwift_Bridge|Simcline_FTMS|
 |--------------------|--------------|-----------|-----------|-----------------|-------------|
 |Elite Direto XR |[cherryphilip74](https://github.com/cherryphilip74)|Working|Working|Working|Working|
-|Zwift Hub |[le-joebar](https://github.com/le-joebar)|Working|Working|Working|to be tested|
+|Zwift Hub |[le-joebar](https://github.com/le-joebar)|Working|Working|Working|Working|
 
 When you are ready for testing a trainer brand/type that is <b>NOT</b> yet shown in the above list: Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... 
 Please supply me with detailed info about the trainer and your setup, preferably with screen shots of the [nRF Connect by Nordic](https://play.google.com/store/apps/details?id=no.nordicsemi.android.mcp&hl=en&gl=US&pli=1) showing which Services and Characteristics your trainer is exposing. If you have collected all trainer and setup detailing information: Open [Issues](https://github.com/Berg0162/simcline/issues), click the green button: <b>New issue</b> and paste the relevant info in your <b>Issues</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!<br>
