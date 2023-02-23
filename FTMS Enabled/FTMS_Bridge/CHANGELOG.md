@@ -1,4 +1,4 @@
-# Changelog nRF52
+# Changelog nRF52 FTMS_Bridge
 
 ## v1.0.0
 
@@ -8,7 +8,7 @@
 ### Removed
 - Some older versions
 
-# Changelog ESP32
+# Changelog ESP32 FTMS_Brigde
 
 ## v1.0.0
 
