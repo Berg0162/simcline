@@ -42,6 +42,10 @@ If this case, unfortunately and undesirebly, happens with your equipment setup t
 <b>Man-In-The-Middle</b> is a powerful software engineering pattern that is applied in many software designs. Unfortunately it is also known for a negative application in communication traffic: MITM is a common type of cybersecurity attack that allows attackers to eavesdrop on the communication between two targets.
 We have applied the very principle: the Simcline is strategicly positioned in between the BLE communication of the FTMS enabled Trainer and the training App (like Zwift) running on the PC/Laptop, all communication traffic can be inspected in that MITM position, when it is passed on from one to the other, in both directions. When Zwift sends resistance information (like the road inclination) to the FTMS enabled trainer, this information can be intercepted and applied to determine the up/down positioning of the Simcline. <br>
 
+# Choose a Development board<br>
+Until early 2023 the Simcline project (a.o.) solely worked with the Feather nRF52840 Express developement board and the Bluefruit/Adafruit libraries. This is a very stable platform and gave reliable results during development and what's more during several indoor seasons of weekly operation! However, the MITM application and actuator control is reaching the capacity limits of the nRF52 processor.
+So the question was raised why not use the ESP32, a series of low-cost and low-power System on a Chip (SoC) microcontrollers developed by Espressif that include Wi-Fi and Bluetooth wireless capabilities and dual-core processor? See [Random Nerds Tutorials](https://randomnerdtutorials.com/getting-started-with-esp32/#:~:text=The%20ESP32%20is%20a%20series,with%20lots%20of%20new%20features)
+
 # How to start?<br>
 + Install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) and all the libraries on a PC/Mac.
 + Download all the code from [Github](https://github.com/Berg0162/simcline/tree/master/FTMS%20Enabled) and install. <br>
