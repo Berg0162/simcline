@@ -47,7 +47,8 @@ Until early 2023 the Simcline project (a.o.) solely worked with the <b>Feather n
 See for a reliable and proven solution: [Adafruit Feather nRF52840 Express](https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather) <br>
 
 So the question was raised why not use the <b>ESP32</b>, a series of low-cost and low-power System on a Chip (SoC) microcontrollers developed by Espressif that include Wi-Fi and Bluetooth wireless capabilities and dual-core processor? See for an introduction: [Random Nerds Tutorials](https://randomnerdtutorials.com/getting-started-with-esp32/). Particularly the multiprocessing capabilities of the dual-core processor make the ESP32 a very tempting option in this project!
-To benefit of the same formfactor (fit with the Simcline 2.0 component box!), I decided to (re)produce the Simcline code with the [Adafruit Feather ESP32 V2](https://learn.adafruit.com/adafruit-esp32-feather-v2) for the <b>ESP32</b> platform. In week 7 of 2023 the ESP32 code reached a stable level and became publicly available for testing with FTMS-enabled trainer brands.
+To benefit of the same formfactor (fit with the Simcline 2.0 component box!), I decided to (re)produce the Simcline code with the [Adafruit Feather ESP32 V2](https://learn.adafruit.com/adafruit-esp32-feather-v2) for the <b>ESP32</b> platform. The 'standard' ESP32 Arduino <b>Bluedroid</b> library (for BLE support) turned out to be buggy, fortunately [H2Zero](https://github.com/h2zero/NimBLE-Arduino) has created a more or less compatible replacement for Bluedroid, called <b>NimBLE-Arduino</b>! The application of <b>NimBLE</b> saved this porting project! 
+In week 7 of 2023 the ESP32 code reached a stable level and became publicly available for testing with FTMS-enabled trainer brands.
 
 # How to start?<br>
 + Install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) and all the libraries on a PC/Mac.
