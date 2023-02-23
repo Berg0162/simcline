@@ -56,7 +56,7 @@ I can understand and respect that you have some reserve: Is this really working 
 In the Github repository (see above) you will find the appropriate files with code: <b>FTMS_Client</b> and <b>FTMS_Server</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
 
 <b>What it does in short:</b><br>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/FTMS_Feather_Zwift_BLE_02.jpg" align="middle" width="950" height="700" alt="Simcline in the Middle"><br>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/FTMS_Feather_Zwift_BLE_02.jpg" align="middle" width="1000" height="500" alt="Simcline in the Middle"><br>
 A working <b>MITM</b> implementation links a bike trainer (BLE Server FTMS) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52/ESP32, like a <b>bridge</b> in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! The <b>MITM</b> code is fully ignorant of mechanical or electronic components that drive the Simcline construction.<br>
 ```
 It simply estabishes a virtual BLE bridge and allows you to ride the bike on the FTMS enabled Trainer and 
