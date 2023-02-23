@@ -8,7 +8,7 @@
 ### Removed
 - Some older versions
 
-# Changelog ESP32 FTMS_Brigde
+# Changelog ESP32 FTMS_Bridge
 
 ## v1.0.0
 
