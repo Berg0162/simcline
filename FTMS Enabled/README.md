@@ -44,10 +44,10 @@ We have applied the very principle: the Simcline is strategicly positioned in be
 
 # Choose a Development board: nRF52840 or ESP32?<br>
 Until early 2023 the Simcline project (a.o.) solely worked with the <b>Feather nRF52840 Express</b> developement board and the Bluefruit/Adafruit libraries. This is a very stable platform and gave reliable results during development and what's more during many indoor seasons of three times (5 hours in total) a week operation! However, the MITM application and actuator control (a.k.a. Simcline) is at the capacity limits of the nRF52840 processor. 
-See for a reliable and proven solution: [Feather nRF52840 Express](https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather) <br>
+See for a reliable and proven solution: [Adafruit Feather nRF52840 Express](https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather) <br>
 
 So the question was raised why not use the <b>ESP32</b>, a series of low-cost and low-power System on a Chip (SoC) microcontrollers developed by Espressif that include Wi-Fi and Bluetooth wireless capabilities and dual-core processor? See for an introduction: [Random Nerds Tutorials](https://randomnerdtutorials.com/getting-started-with-esp32/). Particularly the multiprocessing capabilities of the dual-core processor make the ESP32 a very tempting option in this project!
-see [Feather ESP32 V2](https://learn.adafruit.com/adafruit-esp32-feather-v2)
+To benefit of the same formfactor (-> no change in design of the Simcline 2.0 component box!), I decided to (re)develop the Simcline code with the [Adafruit Feather ESP32 V2](https://learn.adafruit.com/adafruit-esp32-feather-v2) for a second platform.
 
 # How to start?<br>
 + Install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) and all the libraries on a PC/Mac.
