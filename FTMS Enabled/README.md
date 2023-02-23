@@ -31,11 +31,11 @@ According to the smart trainer recommendations guide winter 2020-2021 of [DCRain
 
 # Sofar the good news!<br>
 + When a training app (like Zwift) has connected to your trainer using the FTMS protocol: is it possible to connect multiple devices via FTMS? As FTMS enables control of a physical device there can only be one <b>“controller”</b> to avoid safety issues. This means that you will not be able to connect multiple devices directly to the indoor bike trainer or treadmill using FTMS. If the trainer does not appear in an app’s (e.g. Zwift's) device list (on the Zwift pairing screen) it generally means the trainer is (still) connected to another controlling app or device. It is virtually impossible to connect the trainer to Zwift using FTMS, have a nice indoor ride and at the same time to connect for example the Simcline to the trainer or Zwift for simulating road incline..... A working solution is a Man-In-The-Middle (MITM)!
-+ Notice that a fully working Simcline (acting as a MITM), supporting all FTMS enabled Trainers, is still in the future. At this moment only test code is available and you are invited to test this code with your FTMS enabled Trainer (if you own one).
++ Notice that a fully working Simcline (acting as a MITM), supporting FTMS enabled Trainers, is up for grabs. Several trainers of very different brands have been tested successfuly by now, and you are invited to test the available code with your FTMS enabled Trainer.
 # What about ANT+ (FE-C) and FTMS at the same time<br>
 + When a training app (like Zwift) has connected to your trainer using the ANT+ protocol: is it possible to connect other devices via FTMS?<br>
 Since this ANT+ connection enables control of the physical device (trainer) there can NOT be connected another <b>“controller”</b> at the same time over FTMS to avoid safety issues. Only one (1) controlling app is allowed to connect and drive the Trainer at any time. You know, 2 captains on one ship is a recipe for disaster!
-If this unfortunately and undesirebly happens with your equipment setup the Feather nRF52 code will disconnect with an error message! So keep these worlds separated! If you intend to use devices with BLE and FTMS: mechanically disconnect the ANT+ dongle to avoid your controller App (like Zwift) to (auto)connect over ANT+.
+If this case, unfortunately and undesirebly, happens with your equipment setup the controlling Client-side code will not connect or disconnect with an error message! So keep these worlds separated! If you intend to use devices with BLE and FTMS: mechanically disconnect the ANT+ dongle to avoid your controller App (like Zwift) to (auto)connect over ANT+.
 # Man-In-The-Middle (MITM) software pattern<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/FTMS_Man_in_the_Middle.jpg" align="left" width="1000" height="500" alt="Man in the Middle"><br>
 <b>Man-In-The-Middle</b> is a powerful software engineering pattern that is applied in many software designs. Unfortunately it is also known for a negative application in communication traffic: MITM is a common type of cybersecurity attack that allows attackers to eavesdrop on the communication between two targets.
@@ -48,25 +48,25 @@ We have applied the very principle: the Simcline is strategicly positioned in be
 # How to make it work?<br>
 The requirements in this phase are simple: 
 + running Zwift app or alike, 
-+ working Feather nRF52840 board and 
++ working Feather nRF52840/ESP32-V2 development board and 
 + a FTMS enabled Trainer.<br>
 
 # Testing is Knowing!<br>
 I can understand and respect that you have some reserve: Is this really working in my situation? Better test if it is working, before buying all components and start building.
-In the Github repository (see above) you will find the appropriate files with code: <b>FTMS_Client_v03</b> and <b>FTMS_Server_v03</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
+In the Github repository (see above) you will find the appropriate files with code: <b>FTMS_Client</b> and <b>FTMS_Server</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
 
 <b>What it does in short:</b><br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/FTMS_Feather_Zwift_BLE.jpg" align="middle" width="950" height="700" alt="Simcline in the Middle"><br>
-A working <b>MITM</b> implementation links a bike trainer (BLE Server FTMS) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52840, like a <b>bridge</b> in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! The <b>MITM</b> code is fully ignorant of mechanical or electronic components that drive the Simcline construction.<br>
+A working <b>MITM</b> implementation links a bike trainer (BLE Server FTMS) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52/ESP32, like a <b>bridge</b> in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! The <b>MITM</b> code is fully ignorant of mechanical or electronic components that drive the Simcline construction.<br>
 ```
 It simply estabishes a virtual BLE bridge and allows you to ride the bike on the FTMS enabled Trainer and 
 feel the resistance that comes with the route you have choosen, thanks to Zwift.
 The experience should not differ from a normal direct one-to-one connection, Zwift - FTMS enabled Trainer!
 ```
 All FTMS enabled indoor trainers expose your efforts on the bike in 2 additional BLE services: Cyling Power (CPS) and Speed & Cadence (CSC). These services are detected and applied by many training app's and are therefore an integral part of the present design of the MITM bridge. Training app's simply expect, when they connect to the FTMS enabled trainer, that the CPS and CSC services are available in one go! The Zwift pairing screen is a good example: it expects Power (CPS), Cadence (CSC) and a "Controllable" (with FTMS) to be connected...
-+ The client-side (Feather nRF52) scans for (a trainer) and connects with <b>FTMS, CPS and CSC</b> and collects cyling power, speed and cadence data like Zwift would do! The code with the name: <b>FTMS_Client_v03</b> is doing just that at the left side of the "bridge"!
-+ The Server-side (Feather nRF52) advertises and enables connection with training/cycling/game apps like Zwift and collects relevant resistance data, it simulates as if an active <b>FTMS</b> enabled trainer is connected to Zwift or alike! Notice that the Server-side also exposes active <b>CPS</b> and <b>CSC</b> services. The code with the name: <b>FTMS_Server_v03</b> is doing just at the right side of the "bridge"!
-+ The <b>MITM</b> code is connecting both sides at the same time: a full-blown working bridge, <b>FTMS_Zwift_Bridge_v03</b><br clear="left">
++ The client-side (Feather nRF52/ESP32) scans for (a trainer) and connects with <b>FTMS, CPS and CSC</b> and collects cyling power, speed and cadence data like Zwift would do! The code with the name: <b>FTMS_Client</b> is doing just that at the left side of the "bridge"!
++ The Server-side (Feather nRF52/ESP32) advertises and enables connection with training/cycling/game apps like Zwift and collects relevant resistance data, it simulates as if an active <b>FTMS</b> enabled trainer is connected to Zwift or alike! Notice that the Server-side also exposes active <b>CPS</b> and <b>CSC</b> services. The code with the name: <b>FTMS_Server</b> is doing just at the right side of the "bridge"!
++ The <b>MITM</b> code is connecting both sides at the same time: a full-blown working bridge, <b>FTMS_Zwift_Bridge</b><br clear="left">
 
 <i>The test programs (FTMS Client, FTMS Server and FTMS-Zwift-Bridge) are only using Serial Monitor (screen output) to show what is happening!</i><br>
 ```
@@ -75,16 +75,16 @@ These are presented in the Serial Monitor log file when running the Client and S
 ```
 <b>Use the code for reconnaissance and testing!</b><br>
 Please follow <b>ALWAYS</b> the different usage instructions at the first part of the respective program codes!
-+ Start your reconnaissance with running <b>FTMS_Client_v03</b> and experience how the Feather is controlling the resistance of your FTMS enabled trainer. Notice that this piece of code is highly dependent on the type and brand of FTMS enabled Trainer and therefore most critical!
++ Start your reconnaissance with running <b>FTMS_Client</b> and experience how your development board is controlling the resistance of your FTMS enabled trainer. Notice that this piece of code is highly dependent on the type and brand of FTMS enabled Trainer and therefore most critical!
 + Be aware of undesirebly <b>autoconnect</b> with your standard equipment setup using ANT+ or FTMS. The FTMS Client (or FTMS-Zwift-Bridge) will reach an error state that does not help you getting representative results during the reconnaisance! Once again: 2 captains on one ship is a recipe for disaster!
 ```
 /* 
- *  This Feather-nRF52840 tested code scans for the CPS, CSC and FTMS
+ *  This Feather nRF52840/ESP32 tested code scans for the CPS, CSC and FTMS
  *  that the trainer is advertising, it tries to connect and then 
  *  enables .....
  *  
- *  Requirements: FTMS trainer and Feather nRF52 board
- *  1) Upload and Run this code on the Feather-nRF52
+ *  Requirements: FTMS trainer and Feather nRF52/ESP32 board
+ *  1) Upload and Run this code on the Feather nRF5/ESP322
  *  2) Start the Serial Monitor to catch verbose debugging and data info
  *  3) Power ON and Wake UP trainer -> do NOT connect with other devices
  *  4) Trainer and Feather should successfully pair or disconnect...
@@ -97,20 +97,20 @@ Please follow <b>ALWAYS</b> the different usage instructions at the first part o
  */
 
 ```
-+ Next step is running <b>FTMS_Server_v03</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the nRF52 Feather. Notice that this particular piece of code is tested intensively by the author with the Zwift app.<br>
++ Next step is running <b>FTMS_Server</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the Feather nRF52/ESP32. Notice that this particular piece of code is tested intensively by the author with the Zwift app.<br>
 ```
 /* 
- *  This Feather nRF52840 tested code advertises and enables the relevant 
+ *  This Feather nRF52/ESP32 tested code advertises and enables the relevant 
  *  Cycling Trainer Services: CPS, CSC and FTMS.
  *  It allows to connect to Cycling apps like Zwift (aka Client or Central)!
  *  It simulates a connected Cycling Trainer and in BLE terms it is a Server or 
  *  or in BlueFruit BLE library terms it is a Peripheral
- *  Requirements: Zwift app or alike and Feather nRF52 board
- *  1) Upload and Run this code on the Feather nRF52
+ *  Requirements: Zwift app or alike and Feather nRF52/ESP32 board
+ *  1) Upload and Run this code on the Feather nRF52/ESP32
  *  2) Start the Serial Monitor to catch debugging info
  *  3) Start Zwift and wait for the Devices Pairing Screen
  *  4) Unpair all previously paired devices
- *  5) Search on Zwift pairing screens for the Feather nRF52: "Sim nRF52"
+ *  5) Search on Zwift pairing screens for the Feather nRF52/ESP32: "Sim nRF52", resp. "Sim ESP32"
  *  6) Pair all four "simulated" devices: Power, Cadence, Heart Rate and Controllable
  *  7) Start a default Zwift ride or any ride you wish
  *     No need for you to do work on the trainer!
@@ -121,7 +121,7 @@ Please follow <b>ALWAYS</b> the different usage instructions at the first part o
  *
 ```
 + After two smoothly runs of the FTMS Client and Server, it is time to test the FTMS bridge!<br>
-The <b>FTMS_Zwift_Bridge_v03</b> code needs the "hardware" addresses to unmistakingly establish a BLE connection with the targeted devices. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera.<br>
+The <b>FTMS_Zwift_Bridge</b> code needs the "hardware" addresses to unmistakingly establish a BLE connection with the targeted devices. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera.<br>
 ```
 /* -----------------------------------------------------------------------------------------------------
  *             This code should work with all indoor cycling trainers that fully support,
@@ -129,7 +129,7 @@ The <b>FTMS_Zwift_Bridge_v03</b> code needs the "hardware" addresses to unmistak
  * ------------------------------------------------------------------------------------------------------
  *
  *  The code links a BLE Server (a peripheral to Zwift) and a BLE Client (a central to the Trainer) with a bridge 
- *  in between, the Feather nRF52 being man-in-the-middle (MITM). 
+ *  in between, the Feather nRF52/ESP32 being man-in-the-middle (MITM). 
  *  The nRF52-bridge can control, filter and alter the bi-directional interchanged data!
  *  The client-side (central) scans and connects with the trainer relevant services: FTMS, CPS and CSC. It collects 
  *  all cyling data of the services and passes these on to the server-side....  
@@ -140,13 +140,13 @@ The <b>FTMS_Zwift_Bridge_v03</b> code needs the "hardware" addresses to unmistak
  *  
  *  The client plus server (MITM) is transparent to the indoor trainer as well as to the training app Zwift or alike!
  *  
- *  Requirements: Zwift app or alike, Feather nRF52 board and a FTMS/CPS/CSC supporting indoor trainer
- *  1) Upload and Run this code on the Feather nRF52
+ *  Requirements: Zwift app or alike, Feather nRF52/ESP32 board and a FTMS/CPS/CSC supporting indoor trainer
+ *  1) Upload and Run this code on the Feather nRF52/ESP32
  *  2) Start the Serial Monitor to catch debugging info
  *  3) Start/Power On the indoor trainer  
- *  4) Feather nRF52 and trainer (with <name>) will pair as reported in the output
+ *  4) Feather nRF52/ESP32 and trainer (with <name>) will pair as reported in the output
  *  5) Start Zwift on your computer or tablet and wait....
- *  6) Search on the Zwift pairing screens for the Feather nRF52 a.k.a. "Sim <name>"
+ *  6) Search on the Zwift pairing screens for the Feather nRF52/ESP32 a.k.a. "Sim <name>"
  *  7) Pair: Power, Cadence and Controllable one after another with "Sim <name>"
  *  8) Optionally one can pair as well devices for heartrate and/or steering (Sterzo)
  *  9) Start the default Zwift ride or any ride you wish
@@ -175,14 +175,14 @@ Look in the Bridge code for the following snippet and fill in the required addre
 // -----------------------------------------------------------------
 .
 ```
-The two precise device addresses are critical to assure a reliable test run! You have to insert the values in the program code before uploading the code to the Feather nRF52!<br><br>
+The two precise device addresses are critical to assure a reliable test run! You have to insert the values in the program code before uploading the code to the Feather nRF52/ESP32!<br><br>
 
 # Become a testing partner<br>
 
-|Trainer brand/type  |Testing parter|FTMS_Client|FTMS_Server|FTMS_Zwift_Bridge|Simcline_FTMS|
-|--------------------|--------------|-----------|-----------|-----------------|-------------|
-|Elite Direto XR |[cherryphilip74](https://github.com/cherryphilip74)|Working|Working|Working|Working|
-|Zwift Hub |[le-joebar](https://github.com/le-joebar)|Working|Working|Working|to be tested|
+|Trainer brand/type  |Testing parter|FTMS_Client|FTMS_Server|FTMS_Zwift_Bridge|Simcline_FTMS|Dev.Board|
+|--------------------|--------------|-----------|-----------|-----------------|-------------|---------|
+|Elite Direto XR |[cherryphilip74](https://github.com/cherryphilip74)|Working|Working|Working|Working|nRF52840|
+|Zwift Hub |[le-joebar](https://github.com/le-joebar)|Working|Working|Working|Working|nRF52840|
 
 When you are ready for testing a trainer brand/type that is <b>NOT</b> yet shown in the above list: Please supply me with the Serial Monitor output (Copy-Paste) when pairing and/or connection processes are not successful or when error messages appear... 
 Please supply me with detailed info about the trainer and your setup, preferably with screen shots of the [nRF Connect by Nordic](https://play.google.com/store/apps/details?id=no.nordicsemi.android.mcp&hl=en&gl=US&pli=1) showing which Services and Characteristics your trainer is exposing. If you have collected all trainer and setup detailing information: Open [Issues](https://github.com/Berg0162/simcline/issues), click the green button: <b>New issue</b> and paste the relevant info in your <b>Issues</b> post to detail what went wrong! The community will be very gratefull with your help and feedback!<br>
