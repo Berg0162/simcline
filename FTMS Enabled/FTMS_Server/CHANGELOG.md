@@ -1,12 +1,18 @@
 # Changelog nRF52 FTMS_Server
 
-## v1.0.0
+## v0.3.1
 
 ### Added or Changed
-- Added this changelog :)
-
+- inserted missing (!) FTM ControlPoint set cccd callback
 ### Removed
-- Some older versions
+- Deleted Wait timing in setup() after scanning!
+
+## v0.3.2
+
+### Added or Changed
+- Added selective setting of preferred connection parameters before start of advertising
+- Added in DEBUG mode printout of connection parametes
+- Inserted selective use of requestConnectionParameter
 
 # Changelog ESP32 FTMS_Server
 
