@@ -140,7 +140,7 @@ The <b>FTMS_Bridge</b> code needs the "hardware" addresses to unmistakingly esta
  *
  *  The code links a BLE Server (a peripheral to Zwift) and a BLE Client (a central to the Trainer) with a bridge 
  *  in between, the Feather nRF52/ESP32 being man-in-the-middle (MITM). 
- *  The nRF52-bridge can control, filter and alter the bi-directional interchanged data!
+ *  The bridge can control, filter and alter the bi-directional interchanged data!
  *  The client-side (central) scans and connects with the trainer relevant services: FTMS, CPS and CSC. It collects 
  *  all cyling data of the services and passes these on to the server-side....  
  *  The client-side supplies the indoor trainer with target and resistance control data.
