@@ -216,4 +216,4 @@ For <b>PC/Mac</b> to reset all the Zwift stored devices on a PC or Mac, complete
 Next time you go for a Zwift ride:
 + Launch Zwift
 + Pair your devices
-
+ 
