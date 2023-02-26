@@ -43,7 +43,7 @@ If this case, unfortunately and undesirebly, happens with your equipment setup t
 We have applied the very principle: the Simcline is strategicly positioned in between the BLE communication of the FTMS enabled Trainer and the training App (like Zwift) running on the PC/Laptop, all communication traffic can be inspected in that MITM position, when it is passed on from one to the other, in both directions. When Zwift sends resistance information (like the road inclination) to the FTMS enabled trainer, this information can be intercepted and applied to determine the up/down positioning of the Simcline. <br>
 
 # Choose a Development board: nRF52840 or ESP32?<br>
-Until early 2023 the Simcline project (a.o.) solely worked with the <b>Feather nRF52840 Express</b> developement board and the Bluefruit/Adafruit libraries. This is a very stable platform and gave reliable results during development and what's more during many indoor seasons of 5 hours per week operation! However, the MITM application and actuator control (a.k.a. Simcline) is at the capacity limits of the nRF52840 processor. 
+Until early 2023 the Simcline project (a.o.) solely worked with the <b>Feather nRF52840 Express</b> development board and the Bluefruit/Adafruit libraries. This is a very stable platform and gave reliable results during development and what's more during many indoor seasons of 5 hours per week operation! However, the MITM application and actuator control (a.k.a. Simcline) is at the capacity limits of the nRF52840 processor. 
 See for a reliable and <b>proven</b> solution: [Adafruit Feather nRF52840 Express](https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather) <br>
 
 So the question was raised why not use the <b>ESP32</b>, a series of low-cost and low-power System on a Chip (SoC) microcontrollers developed by Espressif that include Wi-Fi and Bluetooth wireless capabilities and dual-core processor? See for an introduction: [Random Nerds Tutorials](https://randomnerdtutorials.com/getting-started-with-esp32/). Particularly the multiprocessing capabilities of the dual-core processor make the ESP32 a very tempting option in this project!
@@ -140,7 +140,7 @@ The <b>FTMS_Bridge</b> code needs the "hardware" addresses to unmistakingly esta
  *
  *  The code links a BLE Server (a peripheral to Zwift) and a BLE Client (a central to the Trainer) with a bridge 
  *  in between, the Feather nRF52/ESP32 being man-in-the-middle (MITM). 
- *  The nRF52-bridge can control, filter and alter the bi-directional interchanged data!
+ *  The bridge can control, filter and alter the bi-directional interchanged data!
  *  The client-side (central) scans and connects with the trainer relevant services: FTMS, CPS and CSC. It collects 
  *  all cyling data of the services and passes these on to the server-side....  
  *  The client-side supplies the indoor trainer with target and resistance control data.
