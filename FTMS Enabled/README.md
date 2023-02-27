@@ -220,6 +220,15 @@ Next time you go for a Zwift ride:
 # Dual Processor use with ESP32
 
 ```C++
+SemaphoreHandle_t xSemaphore = NULL;
+TaskHandle_t ControlTaskHandle = NULL;
+
+// ---------------------------------------------------------------------------------
+void xControlUpDownMovement(void *arg);
+
+```
+
+```C++
   if(IsBasicMotorFunctions) {  
     xSemaphoreTake(xSemaphore, portMAX_DELAY); 
     lift.SetTargetPosition(TargetPosition);
