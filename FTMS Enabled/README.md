@@ -217,3 +217,18 @@ Next time you go for a Zwift ride:
 + Launch Zwift
 + Pair your devices
  
+# Dual Processor use with ESP32
+
+```C++
+  if(IsBasicMotorFunctions) {  
+    xSemaphoreTake(xSemaphore, portMAX_DELAY); 
+    lift.SetTargetPosition(TargetPosition);
+    xSemaphoreGive(xSemaphore);
+#ifdef MOVEMENTDEBUG
+    DEBUG_PRINTF("RawgradeValue: %05d Grade percent: %03.1f%% ", RawgradeValue, gradePercentValue);
+    DEBUG_PRINTF("TargetPosition: %03d\n", TargetPosition, DEC);
+#endif
+  }  
+}
+
+```
