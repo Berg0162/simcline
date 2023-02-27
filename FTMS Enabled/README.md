@@ -218,9 +218,10 @@ Next time you go for a Zwift ride:
 + Pair your devices
  
 # Dual Processor use with ESP32
-One of the advantages of the ESP32 platform is the fact that the ESP32 WROOM processor has two cores. This makes it possible to precisely balance the load of a program over 2 processor cores. With the Simcline this is particular usefull for the motor control of the actuator. During operation Zwift sends from time to time new settings, and one of these is the grade value (road inclination in degrees). The program translates the grade to a level that should be reached by the actuator to simulate exactly the road grade that was received from Zwift. However, the actuator can only be switched to move up, move down or stop. After a having set the actuator to move (up or down), the program has to check continuously if the actuator has reached the desired level by reading its position with the help of the Time-Of-Flight sensor and act accordingly. Meanwhile the trainer sends your cycling data and the Zwift app has to confirm the receipt of these data. The data sent by Zwift has also to be tranferred to the trainer and also the trainer has to confirm the receipt. Being a MITM means handling a lot of BLE traffic and it does not allow for mistakes!
-The load of the Simcline program itself, the BLE handling and the time consuming control of the actuator is balanced over 2 processor cores on the ESP32 platform.
-The following code snippets show how this is achieved for controlling the actuator motor. To avoid conflicts during variable updates (i.c. TargetPosition) a Binary Semaphore scheme is applied to protect task shared variables during an update.
+One of the advantages of the ESP32 platform is the fact that the ESP32 WROOM processor has two cores. This makes it possible to precisely balance the load of a program over 2 processor cores. With the Simcline this is particular usefull for the motor control of the actuator. During operation Zwift sends from time to time new settings, and one of these is the grade value (road inclination in degrees). The program translates the grade to a level that should be reached by the actuator to simulate exactly the road grade that was received from Zwift. However, the actuator can only be switched to <b>move up</b>, <b>move down</b> or <b>stop</b>. After  having set the actuator to move (up or down), the program has to check continuously if the actuator has reached the desired level by reading its position with the help of the Time-Of-Flight sensor and act accordingly. Meanwhile the trainer sends your cycling data and the Zwift app has to confirm the receipt of these data. The data sent by Zwift has also to be tranferred to the trainer and also the trainer has to confirm the receipt. Being a MITM means handling a lot of BLE traffic and it does not allow for mistakes!
+The load of the Simcline program itself, the BLE handling and the critical control of the actuator is balanced over 2 processor cores on the ESP32 platform.
+The following code snippets show how this is achieved for controlling the actuator motor. To avoid conflicts during variable updates (i.c. TargetPosition) a Binary Semaphore scheme is applied to protect <b>task shared variables</b> during an update.<br>
+
 At the start the major players are defined
 ```C++
 .
@@ -229,7 +230,7 @@ TaskHandle_t ControlTaskHandle = NULL;
 void xControlUpDownMovement(void *arg);
 .
 ```
-In the setup() routine the variables are instantiated (after checking the mechanics of the motor function) and the <b>xControlUpDownMovement</b> task is pinned to processor core 1. Most of the Simcline program is running on core 0.
+In the setup() routine the variables are instantiated (after checking the mechanics of the motor function) and the <b>xControlUpDownMovement</b> task is pinned to processor <b>core 1</b>, with a priority of 10. Most of the Simcline program is running on <b>core 0</b>.
 ```C++
 .
   } else {
@@ -250,7 +251,7 @@ In the setup() routine the variables are instantiated (after checking the mechan
   }
 .
 ```
-Whenever new values for the road grade are received these are translated to a physical actuator position (level above ground) and the TargetPosition is set during Semaphore protection. When the new position is set protection is cancelled, and the control task can access the new setting.
+Whenever new values for the road grade are received these are translated to a physical actuator position (level above ground) and the <b>TargetPosition</b> is set during Semaphore protection. When the new position has been set, the protection is cancelled, and the motor control task can access the new setting.
 ```C++
 .
 void SetNewActuatorPosition(void) {
@@ -276,7 +277,7 @@ void SetNewActuatorPosition(void) {
 }
 .
 ```
-The motor control task regularly checks how far off the actuator position is from its target position and if it should be braked yet. However, it happens all the time that the road grade changed from upward to flat or to downward. The actuator should follow these changes and therefore the motor is switched many times to reverse its direction. When the motor control task is accessing the relevant variables the semaphore is protecting these against updates!
+The motor control task regularly checks how far off the actuator position is from its target position and if it should be braked yet. However, it happens all the time that the road grade changed from upward to flat or to downward. The actuator should follow these changes and therefore the motor is switched many times to brake or to reverse its movement. When the motor control task is accessing the relevant variables the semaphore is protecting these against updates!
 ```C++
 void xControlUpDownMovement(void *arg) {
   // Check "continuously" the Actuator Position and move Motor Up/Down until target position is reached
