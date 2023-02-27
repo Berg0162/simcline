@@ -222,13 +222,26 @@ Next time you go for a Zwift ride:
 ```C++
 SemaphoreHandle_t xSemaphore = NULL;
 TaskHandle_t ControlTaskHandle = NULL;
-
-// ---------------------------------------------------------------------------------
 void xControlUpDownMovement(void *arg);
 
 ```
 
 ```C++
+
+```
+
+```C++
+void SetNewActuatorPosition(void) {
+  // Handle mechanical movement i.e. wheel position in accordance with Road Inclination
+  // Map RawgradeValue ranging from 0 to 40.000 on the
+  // TargetPosition (between MINPOSITION and MAXPOSITION) of the Lifter
+  // Notice 22000 is equivalent to +20% incline and 19000 to -10% incline
+  RawgradeValue = constrain(RawgradeValue, RGVMIN, RGVMAX); // Keep values within the safe range
+  TargetPosition = map(RawgradeValue, RGVMIN, RGVMAX, MAXPOSITION, MINPOSITION);
+  // EMA filter for smoothing quickly fluctuating Target Position values see: Zwift Titan Grove
+#ifdef EMA_ALPHA
+  TargetPosition = EMA_TargetPositionFilter(TargetPosition);
+#endif
   if(IsBasicMotorFunctions) {  
     xSemaphoreTake(xSemaphore, portMAX_DELAY); 
     lift.SetTargetPosition(TargetPosition);
@@ -240,4 +253,45 @@ void xControlUpDownMovement(void *arg);
   }  
 }
 
+void xControlUpDownMovement(void *arg) {
+  // Check "continuously" the Actuator Position and move Motor Up/Down until target position is reached
+  int OnOffsetAction = 0;
+  while(1) {
+    if(xSemaphoreTake(xSemaphore, portMAX_DELAY)) {
+        // BLE channels can interrupt and consequently target position changes on-the-fly !!
+        // We do not want changes in TargetPosition during one of the following actions!!!
+        OnOffsetAction = lift.GetOffsetPosition(); // calculate offset to target and determine action
+        switch (OnOffsetAction)
+            {
+              case 0 :
+                lift.brakeActuator();
+                #ifdef MOVEMENTDEBUG
+                DEBUG_PRINTLN(F(" -> Brake"));
+                #endif
+                break;
+              case 1 :
+                lift.moveActuatorUp();
+                #ifdef MOVEMENTDEBUG
+                DEBUG_PRINTLN(F(" -> Upward"));
+                #endif
+                break;
+              case 2 :
+                lift.moveActuatorDown();
+                #ifdef MOVEMENTDEBUG
+                DEBUG_PRINTLN(F(" -> Downward"));
+                #endif
+                break;
+              case 3 :
+                // Timeout --> OffsetPosition is undetermined --> do nothing and brake
+                lift.brakeActuator();
+                #ifdef MOVEMENTDEBUG
+                DEBUG_PRINTLN(F(" -> Timeout"));
+                #endif
+                break;
+            } // switch 
+        xSemaphoreGive(xSemaphore);    
+    }      
+    vTaskDelay(10);
+  } // while
+} // end
 ```
