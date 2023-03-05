@@ -35,7 +35,7 @@ When I started the project in 2020 I did not have any practical experience with 
 
 # To see is to believe!<br>
 I can understand and respect that you have some reserve: Is this really working in my situation? Better test if it is working, before buying all components and start building.
-In the Github repository (see above) you will find the appropriate test code named: <b>Wahoo_Client</b>, <b>Wahoo_Server</b> and <b>Wahoo_Zwift_Bridge1</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
+In the Github repository (see above) you will find the appropriate test code named: <b>Wahoo_Client</b>, <b>Wahoo_Server</b> and <b>Wahoo_Zwift_Bridge</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
 
 <b>What it does in short:</b><br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Wahoo_Feather_Zwift_BLE.png" align="left" width="1000" height="500" alt="Simcline in the Middle"><br>
