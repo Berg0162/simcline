@@ -27,7 +27,7 @@ Meanwhile there is well documented (<b>FTMS</b>) FiTness Machine Service protoco
 A next generation of Simclines will hopefully be based on this FTMS, when all companies embrace its open standard, however, today we still have to open our box of tricks! <br>
 
 # ESP32 versions available --> Work in progress!
-In week #9 2023 I have added ESP32 Wahoo Kickr versions for Client, Server, Bridge and fully geared Sincline. These versions still need to be fully tested before they will as reliable as the nRF52840 Wahoo versions. <br>
+In week #9 of 2023 I have added ESP32 Wahoo Kickr versions for Client, Server, Bridge and a fully geared Simcline. These versions still need to be fully tested before they will be as reliable as the Feather nRF52840 Express versions. The ESP32 versions have been developed with the Adafruit ESP32 Feather V2 Development board (8MB Flash + 2 MB PSRAM - STEMMA QT). This board has the same formfactor and is more or less pin compatible with the hitherto applied Feather nRF52840 Express development board. [see: ESP32 Feather V2 for information.](https://www.adafruit.com/product/5400)<br>
 
 # How to start?<br>
 + Install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) and all the libraries on a PC/Mac.
