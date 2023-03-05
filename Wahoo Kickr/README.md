@@ -26,6 +26,9 @@ Meanwhile there is well documented (<b>FTMS</b>) FiTness Machine Service protoco
 
 A next generation of Simclines will hopefully be based on this FTMS, when all companies embrace its open standard, however, today we still have to open our box of tricks! <br>
 
+# ESP32 versions available --> Work in progress!
+In week #9 2023 I have added ESP32 Wahoo Kickr versions for Client, Server, Bridge and fully geared Sincline. These versions still need to be fully tested before they will as reliable as the nRF52840 Wahoo versions. <br>
+
 # How to start?<br>
 + Install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) and all the libraries on a PC/Mac.
 + Download all the code from [Github](https://github.com/Berg0162/simcline) and install.
