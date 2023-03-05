@@ -35,14 +35,14 @@ When I started the project in 2020 I did not have any practical experience with 
 
 # To see is to believe!<br>
 I can understand and respect that you have some reserve: Is this really working in my situation? Better test if it is working, before buying all components and start building.
-In the Github repository (see above) you will find the appropriate test code named: <b>Test_Wahoo_Client_v03</b>, <b>Test_Wahoo_Server_v03</b> and <b>Test_Wahoo_Zwift_Bridge_v031</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
+In the Github repository (see above) you will find the appropriate test code named: <b>Wahoo_Client</b>, <b>Wahoo_Server</b> and <b>Wahoo_Zwift_Bridge1</b>. It is coded with the only intention to check if the MITM solution is delivering in your specific situation.<br>
 
 <b>What it does in short:</b><br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Wahoo_Feather_Zwift_BLE.png" align="left" width="1000" height="500" alt="Simcline in the Middle"><br>
-The <b>Test_Wahoo_Zwift_Bridge</b> code links a bike trainer (BLE Server Wahoo KICKR) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52840/832, like a bridge in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! This test code is fully ignorant of the mechanical components that drive the Simcline. It simply estabishes a virtual BLE bridge and allows you to ride the bike on the Wahoo trainer and feel the resistance that comes with it, thanks to Zwift. The experience should not differ from a normal direct one-to-one connection, Zwift - Wahoo KICKR!<br>
-+ The client-side scans and connects with the Wahoo relevant Cycling Power Service (<b>CPS</b>) plus the additional Wahoo proprietary CPS characteristic and collects cyling power data like Zwift would do! The code with the name: <b>Test_Wahoo_Client_v03</b> is doing just that one side of the "bridge"!
-+ The Server-side advertises and enables connection with Cycling apps like Zwift and collects relevant resistance data, it simulates as if an active Wahoo trainer is connected to Zwift or alike! The code with the name: <b>Test_Wahoo_Server_v03</b> is doing just the other side of the "bridge"!
-+ The <b>Test_Wahoo_Zwift_Bridge_v031</b> code is connecting both sides at the same time: the full-blown bridge!<br clear="left">
+The <b>Wahoo_Zwift_Bridge</b> code links a bike trainer (BLE Server Wahoo KICKR) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52840/832, like a bridge in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! This test code is fully ignorant of the mechanical components that drive the Simcline. It simply estabishes a virtual BLE bridge and allows you to ride the bike on the Wahoo trainer and feel the resistance that comes with it, thanks to Zwift. The experience should not differ from a normal direct one-to-one connection, Zwift - Wahoo KICKR!<br>
++ The client-side scans and connects with the Wahoo relevant Cycling Power Service (<b>CPS</b>) plus the additional Wahoo proprietary CPS characteristic and collects cyling power data like Zwift would do! The code with the name: <b>Wahoo_Client</b> is doing just that one side of the "bridge"!
++ The Server-side advertises and enables connection with Cycling apps like Zwift and collects relevant resistance data, it simulates as if an active Wahoo trainer is connected to Zwift or alike! The code with the name: <b>Wahoo_Server</b> is doing just the other side of the "bridge"!
++ The <b>Wahoo_Zwift_Bridge</b> code is connecting both sides at the same time: the full-blown bridge!<br clear="left">
 
 <b>How to make it work?</b><br>
 The requirements are simple: 
@@ -52,14 +52,14 @@ The requirements are simple:
 
 <b>Use the test code for reconnaissance!</b><br>
 Please follow the instructions at the first part of the program code!
-+ Start your reconnaissance with running <b>Test_Wahoo_Client_v03</b> and experience how the Feather is controlling the resistance of your Wahoo trainer. 
-+ Next step is running <b>Test_Wahoo_Server_v03</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the Feather.<br>
++ Start your reconnaissance with running <b>Wahoo_Client</b> and experience how the Feather is controlling the resistance of your Wahoo trainer. 
++ Next step is running <b>Wahoo_Server</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the Feather.<br>
 
 <i>The 2 test programs (Client and Server) are NOT using a SSD1306 display, only Serial Monitor to show what is happening!</i><br>
 Please write down the MAC or Device Addresses of a) your Wahoo trainer and b) your Desktop/Laptop with Zwift. These are presented in the Serial Monitor log file when running the Client and Server test code.<br>
 
 <b>Now it is time to test the bridge!</b><br>
-The <b>Test_Wahoo_Zwift_Bridge_v031</b> code needs these "hardware" addresses to unmistakingly establish a BLE connection with the right device. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera. 
+The <b>Wahoo_Zwift_Bridge</b> code needs these "hardware" addresses to unmistakingly establish a BLE connection with the right device. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera. 
 ```C++
 .
 // -----------------------------------------------------------------
@@ -75,14 +75,14 @@ The <b>Test_Wahoo_Zwift_Bridge_v031</b> code needs these "hardware" addresses to
 ```
 The two precise device addresses are critical to assure a reliable test! You have to insert the values in the program code!<br> 
 
-1) First insert in the <b>Test_Wahoo_Zwift_Bridge_v031</b> code the two precise BLE MAC Addresses it has to connect with
+1) First insert in the <b>Wahoo_Zwift_Bridge</b> code the two precise BLE MAC Addresses it has to connect with
 2) Upload and Run this code on the Feather nRF52840
 2) Start the Serial Monitor to catch debugging info
 3) Start/Power-On the Wahoo trainer  
 4) Feather and Trainer will pair as reported on the Serial Monitor
 5) Start Zwift on your computer or tablet
-6) Search on Zwift pairing screen "<b>Power</b>" for the Feather nRF52 a.k.a. "<b>Wahoo Sim</b>"
-7) Pair <b>Power</b> and <b>Controllable</b> with "<b>Wahoo Sim</b>"
+6) Search on Zwift pairing screen "<b>Power</b>" for the Feather nRF52 a.k.a. "<b>Sim Wahoo</b>"
+7) Pair <b>Power</b> and <b>Controllable</b> with "<b>Sim Wahoo</b>"
 8) Notice Wahoo does NOT support Speed nor Cadence, optionally pair with alternative
 9) After successful pairing start the default Zwift ride or any ride you wish
 10) Make Serial Monitor visible on top of the Zwift window 
