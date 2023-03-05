@@ -28,6 +28,7 @@ A next generation of Simclines will hopefully be based on this FTMS, when all co
 
 # ESP32 versions available --> Work in progress!
 In week #9 of 2023 I have added ESP32 Wahoo Kickr versions for Client, Server, Bridge and a fully geared Simcline. These versions still need to be fully tested before they will be as reliable as the Feather nRF52840 Express versions. The ESP32 versions have been developed with the Adafruit ESP32 Feather V2 Development board (8MB Flash + 2 MB PSRAM - STEMMA QT). This board has the same formfactor and is more or less pin compatible with the hitherto applied Feather nRF52840 Express development board. [see: ESP32 Feather V2 for information.](https://www.adafruit.com/product/5400)<br>
+If you are using an ESP32 board then also download the ESP32 NimBLE library, see [Arduino Installation NimBLE](https://github.com/h2zero/NimBLE-Arduino#arduino-installation)<br>
 
 # How to start?<br>
 + Install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) and all the libraries on a PC/Mac.
@@ -50,8 +51,7 @@ The <b>Wahoo_Zwift_Bridge</b> code links a bike trainer (BLE Server Wahoo KICKR)
 <b>How to make it work?</b><br>
 The requirements are simple: 
 + running Zwift app or alike, 
-++ working Feather nRF52840/52832 board <u>plus</u> SSD1306 Oled display or
-++ if you are using an ESP32 board then also download the ESP32 NimBLE library, see [Arduino Installation NimBLE](https://github.com/h2zero/NimBLE-Arduino#arduino-installation) 
++ working Feather nRF52840/52832 board <u>plus</u> SSD1306 Oled display 
 + a Wahoo KICKR trainer.<br>
 
 <b>Use the test code for reconnaissance!</b><br>
