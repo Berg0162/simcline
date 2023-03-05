@@ -50,7 +50,8 @@ The <b>Wahoo_Zwift_Bridge</b> code links a bike trainer (BLE Server Wahoo KICKR)
 <b>How to make it work?</b><br>
 The requirements are simple: 
 + running Zwift app or alike, 
-+ working Feather nRF52840/52832 board <u>plus</u> SSD1306 Oled display and 
+++ working Feather nRF52840/52832 board <u>plus</u> SSD1306 Oled display or
+++ if you are using an ESP32 board then also download the ESP32 NimBLE library, see [Arduino Installation NimBLE](https://github.com/h2zero/NimBLE-Arduino#arduino-installation) 
 + a Wahoo KICKR trainer.<br>
 
 <b>Use the test code for reconnaissance!</b><br>
