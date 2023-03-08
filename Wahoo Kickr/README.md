@@ -59,7 +59,7 @@ Please follow the instructions at the first part of the program code!
 + Start your reconnaissance with running <b>Wahoo_Client</b> and experience how the Feather is controlling the resistance of your Wahoo trainer. 
 + Next step is running <b>Wahoo_Server</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the Feather.<br>
 
-<i>The 3 test programs (Client, Server and Bridge) are <b>ONLY</b> Serial Monitor to show what is happening!</i><br>
+<i>The 3 test programs (Client, Server and Bridge) are <b>ONLY</b> utilizing Serial Monitor to show what is happening!</i><br>
 Please write down the MAC or Device Addresses of a) your Wahoo trainer and b) your Desktop/Laptop with Zwift. These are presented in the Serial Monitor log file when running the Client, Server and Bridge test code.<br>
 
 <b>Now it is time to test the bridge!</b><br>
