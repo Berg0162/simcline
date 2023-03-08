@@ -1275,7 +1275,7 @@ void client_cpwt_indicate_callback(BLEClientCharacteristic* chr, uint8_t* data, 
 {   
   // The receipt of operation settings is acknowledged by the trainer: handle it
   // Send Client's (Wahoo) acknowldege message to the Server (Zwift)
-  server_cpwt.write(data, len); // Just pass on and process later!
+  server_cpwt.indicate(data, len); // Just pass on and process later!
   
 #if Serial_Monitor
   uint8_t RespBufferLen = (uint8_t)len;

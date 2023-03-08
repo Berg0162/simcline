@@ -30,8 +30,8 @@
  *  3) Start/Power On the Wahoo trainer  
  *  4) Feather and Trainer will pair as reported on the Serial Monitor
  *  5) Start Zwift on your computer or tablet
- *  6) Search on Zwift pairing screen for the Feather nRF52 a.k.a. "Wahoo Sim"
- *  7) Pair: Power and Controllable with "Wahoo Sim"
+ *  6) Search on Zwift pairing screen for the Feather nRF52 a.k.a. "Sim Wahoo"
+ *  7) Pair: Power and Controllable with "Sim Wahoo"
  *  8) Notice Wahoo does NOT support Speed nor Cadence, optionally pair with alternative
  *  9) Start the default Zwift ride or any ride you wish
  * 10) Make Serial Monitor visible on top of the Zwift window 
@@ -41,10 +41,18 @@
  */
 
 #include <bluefruit.h>
-
-// Compile toggle that determines Serial Monitor is switched ON (1) or OFF (0)
-#define Serial_Monitor 1
-#define Serial_Monitor_Movement 0
+// -------------------------------------------------------------------------------------------
+// COMPILER DIRECTIVE to allow/suppress DEBUG messages that help debugging...
+// Uncomment general "#define DEBUG" to activate
+#define DEBUG
+// Include these debug utility macros in all cases!
+#include "DebugUtils.h"
+#ifdef DEBUG
+//#define DEBUG_POWER             // Debug Cycling Power Values Received
+#define DEBUG_CPWT_RESPONSE     // Debug CP Wahoo Responses Received
+#define DEBUG_CPWT_CONTROLPOINT // Debug Received Control Point parameters
+//#define DEBUG_MOVEMENT          // Debug detailed Actuator movement control
+#endif
 
 // Libraries for use of I2C devices (Oled and VL6180X distance sensor)
 #include <SPI.h>
@@ -119,7 +127,7 @@ BLEClientCharacteristic client_cpmc(UUID16_CHR_CYCLING_POWER_MEASUREMENT);
 BLEClientCharacteristic client_cpfc(UUID16_CHR_CYCLING_POWER_FEATURE);
 uint32_t client_cpfcDef = 0;
 BLEClientCharacteristic client_cplc(UUID16_CHR_SENSOR_LOCATION);
-uint16_t client_cplc_loc_value = 0;
+uint8_t client_cplc_loc_value = 0;
 BLEClientCharacteristic client_cpcp(UUID16_CHR_CYCLING_POWER_CONTROL_POINT); // Indicate, write
 BLEClientCharacteristic client_cpwt(CYCLING_POWER_WAHOO_TRAINER_Uuid);
 
@@ -134,9 +142,9 @@ const uint8_t setSimWindResistance       = 69;
 const uint8_t setSimGrade                = 70;
 const uint8_t setSimWindSpeed            = 71;
 const uint8_t setWheelCircumference      = 72;
-const uint8_t UnlockCommandBuf[3]        = {unlock, 0xEE, 0xFC}; // Unlock codes
+const uint8_t unlockCommand[3]           = {unlock, 0xEE, 0xFC}; // Unlock codes
 
-#if Serial_Monitor
+#ifdef DEBUG
 const char* Feature_str[] = { 
       "Pedal power balance supported",
       "Accumulated torque supported",
@@ -315,20 +323,20 @@ void server_cccd_callback(uint16_t conn_handle, BLECharacteristic* chr, uint16_t
  
 void setup()
 {
-#if Serial_Monitor 
+#ifdef DEBUG 
   Serial.begin(115200);
   while ( !Serial ) delay(10);   // for nrf52 with native usb, milliseconds
-  Serial.println("                Simcline for Wahoo KICKR");
+  DEBUG_PRINTLN("                Simcline for Wahoo KICKR");
 #if defined(ARDUINO_NRF52840_FEATHER) 
-  Serial.print("Processor: Feather nRF52840");
+  DEBUG_PRINT("Processor: Feather nRF52840");
 #endif
 #if defined(ARDUINO_NRF52832_FEATHER) 
-  Serial.print("Processor: Feather nRF52832");
+  DEBUG_PRINT("Processor: Feather nRF52832");
 #endif
-  Serial.println();
-  Serial.println("---------------------  Version # 3.4.2 ----------------------");
+  DEBUG_PRINTLN();
+  DEBUG_PRINTLN("---------------------  Version # 3.4.3 ----------------------");
   // Initialise the Bluefruit module
-  Serial.println("Initialise the Bluefruit nRF52 module");
+  DEBUG_PRINTLN("Initialise the Bluefruit nRF52 module");
 #endif
 
   // LittleFS start the Littlefilesystem lib and see if we have persistent data ----
@@ -336,8 +344,8 @@ void setup()
   // WARNING --------- Uncomment only when strictly necessary!!! ---------
   /*
   InternalFS.format();
-  #if Serial_Monitor
-    Serial.println("Wipe out all persistent data, including file(s)....");
+  #ifdef DEBUG
+    DEBUG_PRINTLN("Wipe out all persistent data, including file(s)....");
   #endif
   */
   // WARNING --------- Uncomment only when strictly necessary!!! ---------
@@ -352,14 +360,10 @@ void setup()
   // Start the show for the Oled display
   if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_I2C_ADDRESS))
   {
-#if Serial_Monitor
-  Serial.println(F("OLED display allocation failed!"));
-#endif
+  DEBUG_PRINTLN(F("OLED display allocation failed!"));
   }
   else {
-#if Serial_Monitor
-    Serial.println(F("OLED display is running..."));
-#endif
+    DEBUG_PRINTLN(F("OLED display is running..."));
     // Load Oled with initial display buffer contents on the screen,
     // the SSD1306 library initializes with a Adafruit splash screen,
     // (respect or edit the splash.h in the library).
@@ -381,17 +385,13 @@ void setup()
   if (!lift.TestBasicMotorFunctions()) {
     ShowOnOledLarge("Testing", "Functions", "Failed!", 500);
     IsBasicMotorFunctions = false; // Not working properly
-#if Serial_Monitor  
-    Serial.println("Basic Motor Funtions are NOT working!!");
-#endif
+    DEBUG_PRINTLN("Basic Motor Funtions are NOT working!!");
     }
   else {
     ShowOnOledLarge("Testing", "Functions", "Done!", 500);
     // Is working properly
     IsBasicMotorFunctions = true;
-#if Serial_Monitor  
-    Serial.println("Basic Motor Funtions are working!!");
-#endif
+    DEBUG_PRINTLN("Basic Motor Funtions are working!!");
     // Put Simcline in neutral: flat road position
     // Init EMA filter at first call with flat road position as reference
     TargetPosition = EMA_TargetPositionFilter(TargetPosition); 
@@ -420,22 +420,18 @@ void setup()
   Bluefruit.begin(1, 1);
   
   // Set the device name (keep it short!) 
-#if Serial_Monitor
-  Serial.println("Setting Device Name to 'Wahoo Sim'");
-#endif
+  DEBUG_PRINTLN("Setting Device Name to 'Sim Wahoo'");
   // Supported tx_power values depending on mcu:
   // - nRF52832: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +3dBm and +4dBm.
   // - nRF52840: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +2dBm, +3dBm, +4dBm, +5dBm, +6dBm, +7dBm and +8dBm.
   Bluefruit.setTxPower(4); // See above for supported values: +4dBm
-  Bluefruit.setName("Wahoo Sim"); 
+  Bluefruit.setName("Sim Wahoo"); 
 
   Setup_Client_CPS();
   Client_Start_Scanning();
   while (Bluefruit.Scanner.isRunning()) { // do nothing else but scanning....
   }
-#if Serial_Monitor 
-  Serial.println("Scanning for Wahoo Cycle Power Service is stopped!");
-#endif  
+  DEBUG_PRINTLN("Scanning for Wahoo Cycle Power Service is stopped!");
   TimeInterval = millis() + TIME_SPAN; // ADD just enough delay
   // wait enough time or go on when client is connected and set!
   while ( (TimeInterval > millis()) || (!Trainer.IsConnected) ) {
@@ -448,18 +444,14 @@ void setup()
   
   while (Bluefruit.Advertising.isRunning()) { // ONLY advertise!
   }
-#if Serial_Monitor 
-  Serial.println("Wahoo Simulated Advertising stopped! Paired to Zwift?");
-#endif  
+  DEBUG_PRINTLN("Wahoo Simulated Advertising stopped! Paired to Zwift?");
   TimeInterval = millis() + TIME_SPAN; // ADD just enough DELAY
   // wait enough time or go on when server is connected and set!
   while ( (TimeInterval > millis()) || (!Laptop.IsConnected) ) { 
     }
   // Only now enable Client (Wahoo) data streams...
   Client_Enable_Notify_Indicate(); 
-#if Serial_Monitor   
-  Serial.println("Up and running!");
-#endif
+  DEBUG_PRINTLN("Up and running!");
   // Initialize BLE Uart functionality for connecting to smartphone No advertising!!
   bleuart.begin();
 } // End --------------------------------------------------------------------
@@ -554,9 +546,9 @@ void SetNewActuatorPosition(void)
   // EMA filter for smoothing quickly fluctuating Target Position values see: Zwift Titan Groove
   TargetPosition = EMA_TargetPositionFilter(TargetPosition); 
   lift.SetTargetPosition(TargetPosition);
-#if Serial_Monitor_Movement
-  Serial.printf("RawgradeValue: %05d Grade percent: %03.1f%% ", RawgradeValue, gradePercentValue);
-  Serial.printf("TargetPosition: %03d\n", TargetPosition, DEC);
+#ifdef DEBUG_MOVEMENT
+  DEBUG_PRINTF("RawgradeValue: %05d Grade percent: %03.1f%% ", RawgradeValue, gradePercentValue);
+  DEBUG_PRINTF("TargetPosition: %03d\n", TargetPosition, DEC);
 #endif
 }
  
@@ -574,27 +566,27 @@ do {
   {
     case 0 :
         lift.brakeActuator();
-#if Serial_Monitor_Movement
-      Serial.println(F(" -> Brake"));
+#ifdef DEBUG_MOVEMENT
+      DEBUG_PRINTLN(F(" -> Brake"));
 #endif
       break;
     case 1 :
       lift.moveActuatorUp();
-#if Serial_Monitor_Movement
-      Serial.println(F(" -> Upward"));
+#ifdef DEBUG_MOVEMENT
+      DEBUG_PRINTLN(F(" -> Upward"));
 #endif
       break;
     case 2 :
       lift.moveActuatorDown();
-#if Serial_Monitor_Movement
-      Serial.println(F(" -> Downward"));
+#ifdef DEBUG_MOVEMENT
+      DEBUG_PRINTLN(F(" -> Downward"));
 #endif
       break;
     case 3 :
       // Timeout --> OffsetPosition is undetermined --> do nothing and brake
       lift.brakeActuator();
-#if Serial_Monitor_Movement
-      Serial.println(F(" -> Timeout"));
+#ifdef DEBUG_MOVEMENT
+      DEBUG_PRINTLN(F(" -> Timeout"));
 #endif
       break;
   }
@@ -613,10 +605,8 @@ bool getPRSdata(void) { // aRGVmax, aRGVmin, GradeChangeFactor -> PRSdata
     readLen = file.read(buffer, sizeof(buffer));
     buffer[readLen] = 0; // set the values to the pointed by variables
     sscanf(buffer, "%d %d %d %d", &aRGVmax, &aRGVmin, &GradeChangeFactor, &OledDisplaySelection);
-#if Serial_Monitor
-    Serial.print(F("Get & Set PRSdata to "));
-    Serial.printf("Max: %d Min: %d Perc.: %d Displ.: %d\n", aRGVmax, aRGVmin, GradeChangeFactor, OledDisplaySelection);
-#endif
+    DEBUG_PRINT(F("Get & Set PRSdata to "));
+    DEBUG_PRINTF("Max: %d Min: %d Perc.: %d Displ.: %d\n", aRGVmax, aRGVmin, GradeChangeFactor, OledDisplaySelection);
     file.close();
     return true;
   }
@@ -630,20 +620,16 @@ void setPRSdata(void) { // aRGVmax, aRGVmin, GradeChangeFactor -> PRSdata
     file.seek(1); // always overwrite first record!!
     file.write(buffer, sizeof(buffer));
     file.close();
-#if Serial_Monitor
-    Serial.print(F("Set new values of PRSdata in persistent storage: "));
-    Serial.println(buffer);
-#endif
+    DEBUG_PRINT(F("Set new values of PRSdata in persistent storage: "));
+    DEBUG_PRINTLN(buffer);
   }
 }
 // LittleFS --------------------------------------------------
 
 void StartAdvBLEuart(void)
 {
-#if Serial_Monitor
-  Serial.println(F("Start Advertising Wahoo Simulated for Smartphone connection...")); 
-  Serial.println(F("RUN the Simcline Companion App on your Phone and connect to 'Wahoo Sim'!"));
-#endif
+  DEBUG_PRINTLN(F("Start Advertising Wahoo Simulated for Smartphone connection...")); 
+  DEBUG_PRINTLN(F("RUN the Simcline Companion App on your Phone and connect to 'Sim Wahoo'!"));
 
   if (Bluefruit.Advertising.isRunning())
     Bluefruit.Advertising.stop();
@@ -654,7 +640,7 @@ void StartAdvBLEuart(void)
     Bluefruit.ScanResponse.clearData();
     delay(100);
 */
-  Bluefruit.setName("Wahoo Sim");
+  Bluefruit.setName("Sim Wahoo");
   bleuart.setRxCallback(prph_bleuart_rx_callback);
   // Advertising packet construction
   Bluefruit.Advertising.addFlags(BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE);
@@ -683,9 +669,7 @@ void StartAdvBLEuart(void)
 }
 
 void Periph_adv_stop_callback(void) {
-#if Serial_Monitor
-  Serial.println(F("Advertising by peripheral is stopped after timeout..."));
-#endif
+  DEBUG_PRINTLN(F("Advertising by peripheral is stopped after timeout..."));
 }
 
 void prph_bleuart_rx_callback(uint16_t conn_handle) {
@@ -693,16 +677,12 @@ void prph_bleuart_rx_callback(uint16_t conn_handle) {
   // Read data received over BLE Uart from Mobile Phone
   char RXpacketBuffer[20 + 1] = { 0 };
   bleuart.read(RXpacketBuffer, 20);
-#if Serial_Monitor
-  Serial.print(F("[Prph] RX: "));
-  Serial.println(RXpacketBuffer);
-#endif
+  DEBUG_PRINT(F("[Prph] RX: "));
+  DEBUG_PRINTLN(RXpacketBuffer);
   // The following routines parse and process the incoming commands
   // Every RXpacket starts with a '!' otherwise corrupt/invalid
   if (RXpacketBuffer[0] != '!') {
-#if Serial_Monitor
-    Serial.println(F("[Prph] RX: packet does not start with a ! "));
-#endif
+    DEBUG_PRINTLN(F("[Prph] RX: packet does not start with a ! "));
     return; // invalid RXpacket: do not further parse and process
   }
   // RXpacket buffer has IdCode = "S"
@@ -729,11 +709,11 @@ void prph_bleuart_rx_callback(uint16_t conn_handle) {
     // LittleFS for persistent storage of these values
     setPRSdata();
     // LittleFS --------------------------------------
-#if Serial_Monitor
-    Serial.print(F("RX Settings Max: ")); Serial.print(iMax);
-    Serial.print(F(" Min: ")); Serial.print(iMin);
-    Serial.print(F(" Perc: ")); Serial.print(iPerc);
-    Serial.print(F(" Displ: ")); Serial.println(iDispl);
+#ifdef DEBUG
+    DEBUG_PRINT(F("RX Settings Max: ")); DEBUG_PRINT(iMax);
+    DEBUG_PRINT(F(" Min: ")); DEBUG_PRINT(iMin);
+    DEBUG_PRINT(F(" Perc: ")); DEBUG_PRINT(iPerc);
+    DEBUG_PRINT(F(" Displ: ")); DEBUG_PRINTLN(iDispl);
 #endif
     // Confirm to the PHONE: settings rcvd and set to persistent
     // send message to phone
@@ -744,9 +724,7 @@ void prph_bleuart_rx_callback(uint16_t conn_handle) {
   // ONLY when the Actuator plus sensor are working well!
   // i.e. low level up/down movement functions work !!
   if (RXpacketBuffer[1] == 'U' && IsBasicMotorFunctions) {
-#if Serial_Monitor
-    Serial.println("Set UPward moving!");
-#endif
+   DEBUG_PRINTLN("Set UPward moving!");
    RawgradeValue = RawgradeValue + 100;
    SetManualGradePercentValue();
    ShowSlopeTriangleOnOled();
@@ -760,9 +738,7 @@ void prph_bleuart_rx_callback(uint16_t conn_handle) {
     }
   }
   if (RXpacketBuffer[1] == 'D' && IsBasicMotorFunctions) {
-#if Serial_Monitor
-    Serial.println("Set DOWNward moving!");
-#endif
+    DEBUG_PRINTLN("Set DOWNward moving!");
     RawgradeValue = RawgradeValue - 100;
     SetManualGradePercentValue();
     ShowSlopeTriangleOnOled();
@@ -782,9 +758,7 @@ void prph_bleuart_rx_callback(uint16_t conn_handle) {
 
 void Setup_Client_CPS(void)
 {
-#if Serial_Monitor   
-  Serial.println("Configuring Client (Wahoo) Cycle Power Service");
-#endif
+  DEBUG_PRINTLN("Configuring Client (Wahoo) Cycle Power Service");
 
   // Initialize client_CPS client
   client_cps.begin();
@@ -826,9 +800,7 @@ void Setup_Client_CPS(void)
 
 void Client_Start_Scanning(void)
 {
-#if Serial_Monitor   
-  Serial.println("Scanning for Wahoo Cycle Power Service");
-#endif
+  DEBUG_PRINTLN("Scanning for Wahoo Cycle Power Service");
   /* Start Central Scanning
    * - Enable auto scan if disconnected
    * - Interval = 100 ms, window = 80 ms
@@ -863,17 +835,17 @@ void client_scan_callback(ble_gap_evt_adv_report_t* report)
     return; // Keep scanning for the right one !!
   }
   if (Bluefruit.Scanner.isRunning()) { Bluefruit.Scanner.stop(); }
-#if Serial_Monitor  
-  Serial.println("Advertised Client Cycling Power Service is found! ... Raw data packet:");
-  Serial.println(F("Timestamp Addr              Rssi Data"));
-  Serial.printf("%09d ", millis());
+#ifdef DEBUG  
+  DEBUG_PRINTLN("Advertised Client Cycling Power Service is found! ... Raw data packet:");
+  DEBUG_PRINTLN(F("Timestamp Addr              Rssi Data"));
+  DEBUG_PRINTF("%09d ", millis());
   // MAC is in little endian --> print reverse
   Serial.printBufferReverse(report->peer_addr.addr, 6, ':');
-  Serial.print(F(" "));
-  Serial.print(report->rssi);
-  Serial.print(F("  "));
+  DEBUG_PRINT(F(" "));
+  DEBUG_PRINT(report->rssi);
+  DEBUG_PRINT(F("  "));
   Serial.printBuffer(report->data.p_data, report->data.len, '-');
-  Serial.println();
+  DEBUG_PRINTLN();
 #endif  
   Bluefruit.Central.connect(report);
 }// End
@@ -883,38 +855,25 @@ void Client_Enable_Notify_Indicate(void)
   // Reaching here means we are ready to go, let's enable notification on measurement chr
   if ( client_cpmc.enableNotify() )
   {
-#if Serial_Monitor  
-    Serial.println("Ready to receive Client Cycling Power Measurement values");
-#endif
+    DEBUG_PRINTLN("Ready to receive Client Cycling Power Measurement values");
   } else {
-#if Serial_Monitor  
-    Serial.println("Couldn't enable notify for client_CP Measurement Characteristic. Increase DEBUG LEVEL for troubleshooting");
-#endif
+    DEBUG_PRINTLN("Couldn't enable notify for client_CP Measurement Characteristic. Mandatory!");
   }
   
   if ( client_cpcp.enableIndicate() )
   {
-#if Serial_Monitor  
-    Serial.println("Ready to receive Client Cycling Control Point Responses");
-#endif
+    DEBUG_PRINTLN("Ready to receive Client Cycling Control Point Responses");
   } else {
-#if Serial_Monitor  
-    Serial.println("Couldn't enable indicate for client_CP Control Point Characteristic. Increase DEBUG LEVEL for troubleshooting");
-#endif
+    DEBUG_PRINTLN("Couldn't enable indicate for client_CP Control Point Characteristic. Mandatory!");
   }
     if ( client_cpwt.enableIndicate() )
     {
-#if Serial_Monitor  
-      Serial.println("Unlocking client_CPS Wahoo Trainer Characteristic --> Ready to receive Response Messages");
-#endif
-      // Activate the trainer
+      DEBUG_PRINTLN("Client sends Unlocking Command to Wahoo Characteristic"); // Activate the trainer
       // client_CPWT needs: "write with response" !!
-      client_cpwt.write_resp(UnlockCommandBuf, 3); // Unlock the client_CPS Wahoo Characteristic at the Wahoo trainer
+      client_cpwt.write_resp(unlockCommand, 3); // Unlock the client_CPS Wahoo Characteristic at the Wahoo trainer
       delay(300); // Give the trainer some time to wake up
     } else {
-#if Serial_Monitor  
-      Serial.println("Couldn't enable indicate for Client Cycling Power Wahoo Trainer Characteristic. Increase DEBUG LEVEL for troubleshooting");
-#endif
+      DEBUG_PRINTLN("Couldn't enable indicate for Client Cycling Power Wahoo Trainer Characteristic. Mandatory!");
     }
 } // End
 
@@ -933,33 +892,29 @@ void Client_connect_callback(uint16_t conn_handle)
   ble_gap_addr_t peer_address = connection->getPeerAddr();
   memcpy(central_addr, peer_address.addr, 6);
  
-#if Serial_Monitor
-  Serial.printf("Central connected to Peripheral device: %s conn handle [%d] MAC Address: ", central_name, conn_handle);
+#ifdef DEBUG
+  DEBUG_PRINTF("Central connected to Peripheral device: %s conn handle [%d] MAC Address: ", central_name, conn_handle);
   PrintPeerAddress(central_addr);
-  Serial.println();
+  DEBUG_PRINTLN();
 #endif 
 
   Trainer.conn_handle = conn_handle;
   Trainer.IsConnected = true;
   memcpy(Trainer.PeerName, central_name, sizeof(central_name));
-#if Serial_Monitor
-    Serial.printf("Devname: %s Peername: %s conn_handle %d Isconnected: %2X\n", Trainer.DevName, Trainer.PeerName, Trainer.conn_handle, Trainer.IsConnected);
-#endif
+  DEBUG_PRINTF("Devname: %s Peername: %s conn_handle %d Isconnected: %2X\n", Trainer.DevName, Trainer.PeerName, Trainer.conn_handle, Trainer.IsConnected);
   ShowOnOledLarge("Pairing", (const char*)Trainer.DevName, "Done!", 500);
   Get_client_Diss(conn_handle);
-#if Serial_Monitor
-  Serial.print("Connecting and checking client_CPS Service ... ");
-#endif
+  DEBUG_PRINT("Connecting and checking client_CPS Service ... ");
   // If client_CPS is not found, disconnect, resume scanning, and return
   if ( client_cps.discover(conn_handle) )
   {
-#if Serial_Monitor
-    Serial.printf("CPS Found! Handle: [%d]\n", conn_handle);
+#ifdef DEBUG
+    DEBUG_PRINTF("CPS Found! Handle: [%d]\n", conn_handle);
 #endif
   } else {
-#if Serial_Monitor
-    Serial.println("Not Found!"); 
-    Serial.println("Disconnecting since Client Cyling Power Service is mandatory!");
+#ifdef DEBUG
+    DEBUG_PRINTLN("Not Found!"); 
+    DEBUG_PRINTLN("Disconnecting since Client Cyling Power Service is mandatory!");
 #endif
     // MANDATORY so disconnect since we couldn't find the client_CPS service
     Bluefruit.disconnect(conn_handle);
@@ -968,59 +923,44 @@ void Client_connect_callback(uint16_t conn_handle)
     // Bluefruit.Scanner.resume();
     return;
   }
-#if Serial_Monitor 
-  Serial.print("Discovering client_CP Measurement characteristic ... ");
-#endif
+  DEBUG_PRINT("Discovering client_CP Measurement characteristic ... ");
   if ( !client_cpmc.discover() )
   {
     // Measurement chr is mandatory, if it is not found (valid), then disconnect
-#if Serial_Monitor
-    Serial.println("Not Found!");  
-    Serial.println("Disconnecting since client_CP Measurement Characteristic is mandatory!");
+#ifdef DEBUG
+    DEBUG_PRINTLN("Not Found!");  
+    DEBUG_PRINTLN("Disconnecting since client_CP Measurement Characteristic is mandatory!");
 #endif
     Bluefruit.disconnect(conn_handle);
     return;
   }
-#if Serial_Monitor
-  Serial.println("Found it!");
-  
-  Serial.print("Discovering client_CP Control Point characteristic ... ");
+#ifdef DEBUG
+  DEBUG_PRINTLN("Found it!"); 
+  DEBUG_PRINT("Discovering client_CP Control Point characteristic ... ");
 #endif
   if ( client_cpcp.discover() )
   {
     // CP Control Point chr is not mandatory
-#if Serial_Monitor
-    Serial.println("Found it!");  
-#endif
+    DEBUG_PRINTLN("Found it!");  
   } else {
-#if Serial_Monitor
-  Serial.println("Not Found!");  
-#endif
+  DEBUG_PRINTLN("Not Found!");  
   }
-#if Serial_Monitor 
-  Serial.print("Discovering Client Wahoo Trainer specific characteristic (CPWT) ... ");
-#endif
+  DEBUG_PRINT("Discovering Client Wahoo Trainer specific characteristic (CPWT) ... ");
   if ( !client_cpwt.discover() ) //   CYCLING_POWER_WAHOO_TRAINER
   {
-#if Serial_Monitor 
-  Serial.println("Not Found and disconnecting!"); 
-  Serial.println("Wahoo Trainer Characteristic is mandatory!");
+#ifdef DEBUG 
+  DEBUG_PRINTLN("Not Found and disconnecting!"); 
+  DEBUG_PRINTLN("Wahoo Trainer Characteristic is mandatory!");
 #endif
   Bluefruit.disconnect(conn_handle);
   return;
   } else {   
-#if Serial_Monitor
-    Serial.println("Found it!"); 
-#endif
+    DEBUG_PRINTLN("Found it!"); 
   }
-#if Serial_Monitor 
-  Serial.print("Discovering Client Cycling Power Feature characteristic ... ");
-#endif
+  DEBUG_PRINT("Discovering Client Cycling Power Feature characteristic ... ");
   if ( client_cpfc.discover() )
   {
-#if Serial_Monitor
-    Serial.println("Found it!");
-#endif    
+    DEBUG_PRINTLN("Found it!");
   // Configure the Cycle Power Feature characteristic
   // See: https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.characteristic.cycling_power_feature.xml
   // Properties = Read
@@ -1053,58 +993,47 @@ void Client_connect_callback(uint16_t conn_handle)
   // Read 32-bit client_cpfc value
   const uint8_t CPFC_FIXED_DATALEN = 4;
   client_cpfcDef = client_cpfc.read32();
-#if Serial_Monitor
+#ifdef DEBUG
   uint8_t cpfcData[CPFC_FIXED_DATALEN] = {(uint8_t)(client_cpfcDef & 0xff), (uint8_t)(client_cpfcDef >> 8), 
                                           (uint8_t)(client_cpfcDef >> 16), (uint8_t)(client_cpfcDef >> 24)};
-  Serial.print("Power Feature 4 bytes: [ ");
+  DEBUG_PRINT("Power Feature 4 bytes: [ ");
   for (int i = 0; i < CPFC_FIXED_DATALEN; i++) {
     if ( i <= sizeof(cpfcData)) {
-      Serial.printf("%02X ", cpfcData[i], HEX);
+      DEBUG_PRINTF("%02X ", cpfcData[i], HEX);
     }
   }
-  Serial.println("] ");
+  DEBUG_PRINTLN("] ");
   for (int i = 0; i < 20; i++) {
     if ( client_cpfcDef & (1 << i) )
       {
-       Serial.println(Feature_str[i]);
+       DEBUG_PRINTLN(Feature_str[i]);
       }
     }
 #endif
   } else {
-#if Serial_Monitor
-    Serial.println("NOT Found!");
-#endif
+    DEBUG_PRINTLN("NOT Found!");
   }
-#if Serial_Monitor
-  Serial.print("Discovering Client Power Sensor Location characteristic ... ");
-#endif
+  DEBUG_PRINT("Discovering Client Power Sensor Location characteristic ... ");
   if ( client_cplc.discover() )
   {
-#if Serial_Monitor
-    Serial.println("Found it!");
-#endif    
+    DEBUG_PRINTLN("Found it!");
   // The Sensor Location characteristic
   // See: https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.characteristic.sensor_location.xml
   // Properties = Read
   // Min Len    = 1
   // Max Len    = 1
-  //  B0:1      = UINT16 - Sensor Location   
-    // power sensor location value is 16 bit
-#if Serial_Monitor
+  //  B0      = UINT16 - Sensor Location   
+    // power sensor location value is 8 bit
+#ifdef DEBUG
     const char* power_str[] = { "Other", "Top of shoe", "In shoe", "Hip", "Front wheel", "Left crank", "Right crank", "Left pedal",
     "Right pedal", "Front hub", "Rear dropout", "Chainstay", "Rear wheel", "Rear hub", "Chest", "Spider", "Chain ring"};
 #endif
-    // Read 16-bit client_cplc value from peripheral
-    client_cplc_loc_value = client_cplc.read16();
-#if Serial_Monitor
-    uint8_t loc_value = (uint8_t)client_cplc_loc_value;
-    Serial.print("Power Location Sensor: ");
-    Serial.printf("Loc#: %d %s\n", loc_value, power_str[loc_value]);
-#endif
+    // Read 8-bit client_cplc value from peripheral
+    client_cplc_loc_value = client_cplc.read8();
+    DEBUG_PRINT("Power Location Sensor: ");
+    DEBUG_PRINTF("Loc#: %d %s\n", client_cplc_loc_value, power_str[client_cplc_loc_value]);
   } else {
-#if Serial_Monitor
-    Serial.println("NOT Found!");
-#endif
+    DEBUG_PRINTLN("NOT Found!");
   }
 } // End client_connect_callback
 
@@ -1113,18 +1042,16 @@ void Get_client_Diss(uint16_t conn_handle)
 {
   // If diss is not found then go on.... NOT FATAL !
   if (!client_diss.discover(conn_handle) ) { return; }
-#if Serial_Monitor  
-  Serial.print(F("Found Device Information: \n"));
-#endif
+  DEBUG_PRINT(F("Found Device Information: \n"));
   char dissDataBuf[20]; // Max len = 20 !!!
     //  1
   if ( client_disma.discover() ) {
       // read and print out Manufacturer
       memset(dissDataBuf, 0, sizeof(dissDataBuf));
       if ( client_disma.read(dissDataBuf, sizeof(dissDataBuf)) ) {
-#if Serial_Monitor
-        Serial.print("Manufacturer:  ");
-        Serial.println(dissDataBuf);
+#ifdef DEBUG
+        DEBUG_PRINT("Manufacturer:  ");
+        DEBUG_PRINTLN(dissDataBuf);
 #endif
       }
   }
@@ -1133,9 +1060,9 @@ void Get_client_Diss(uint16_t conn_handle)
       // read and print out Model Number
       memset(dissDataBuf, 0, sizeof(dissDataBuf));
       if ( client_dismo.read(dissDataBuf, sizeof(dissDataBuf)) ) {
-#if Serial_Monitor
-        Serial.print("Model Number:  ");
-        Serial.println(dissDataBuf);
+#ifdef DEBUG
+        DEBUG_PRINT("Model Number:  ");
+        DEBUG_PRINTLN(dissDataBuf);
 #endif
       }
   }
@@ -1144,9 +1071,9 @@ void Get_client_Diss(uint16_t conn_handle)
       // read and print out Serial Number
       memset(dissDataBuf, 0, sizeof(dissDataBuf));
       if ( client_dissn.read(dissDataBuf, sizeof(dissDataBuf)) ) {
-#if Serial_Monitor
-        Serial.print("Serial Number: ");
-        Serial.println(dissDataBuf);
+#ifdef DEBUG
+        DEBUG_PRINT("Serial Number: ");
+        DEBUG_PRINTLN(dissDataBuf);
 #endif
       }
   }
@@ -1162,9 +1089,7 @@ void Client_disconnect_callback(uint16_t conn_handle, uint8_t reason)
   Trainer.conn_handle = BLE_CONN_HANDLE_INVALID;
   Trainer.IsConnected = false;
   ShowOnOledLarge("Lost!", (const char*)Trainer.DevName, "Connection", 500);
-#if Serial_Monitor
-  Serial.printf("Client Disconnected Peripheral Device: %s handle [%d] reason = 0x\n", Trainer.PeerName, conn_handle, reason, HEX);
-#endif
+  DEBUG_PRINTF("Client Disconnected Peripheral Device: %s handle [%d] reason = 0x\n", Trainer.PeerName, conn_handle, reason, HEX);
 }
 
 
@@ -1196,20 +1121,20 @@ cpcpData[4] = (uint8_t)(responseParameter >> 8);
 */
   // NO TREATMENT OF RESPONSE !!!!!
   // Send Client's (Wahoo) response message to the Server (Zwift)
-  server_cpcp.write(data, len); // Just pass on and process later!
+  server_cpcp.indicate(data, len); // Just pass on and process later!
   
-#if Serial_Monitor
+#ifdef DEBUG
   uint8_t cpcpDataLen = (uint8_t)len;
   uint8_t cpcpData[cpcpDataLen]= {}; 
   // Transfer first the contents of data to buffer (array of chars)
-  Serial.print("Raw client Control Point Data: [ "); 
+  DEBUG_PRINT("Raw client Control Point Data: [ "); 
   for (int i = 0; i < cpcpDataLen; i++) {
     if ( i <= sizeof(cpcpData)) {
       cpcpData[i] = *data++;
-      Serial.printf("%02X ", cpcpData[i], HEX);
+      DEBUG_PRINTF("%02X ", cpcpData[i], HEX);
     }
   }
-  Serial.print("] ");
+  DEBUG_PRINT("] ");
 #endif
 }
 
@@ -1243,24 +1168,24 @@ void client_cpmc_notify_callback(BLEClientCharacteristic* chr, uint8_t* data, ui
   // Client (Wahoo) CPMC data is tranferred to the Server (Zwift)
   server_cpmc.notify(data, len); // Just pass on and process later!
   
-#if Serial_Monitor
+#ifdef DEBUG_POWER
   uint8_t cpmcDataLen = (uint8_t)len;
   uint8_t cpmcDataBuf[cpmcDataLen] = {};
   // Transfer first the contents of data to buffer (array of chars)
-  Serial.print("Raw client_CPS Data: [ ");
+  DEBUG_PRINT("Client Rec'd Raw Wahoo CP Data: [ ");
   for (int i = 0; i < cpmcDataLen; i++) {
     if ( i <= sizeof(cpmcDataBuf)) {
       cpmcDataBuf[i] = *data++;
-      Serial.printf("%02X ", cpmcDataBuf[i], HEX);
+      DEBUG_PRINTF("%02X ", cpmcDataBuf[i], HEX);
     }
   }
-  Serial.print("] ");
+  DEBUG_PRINT("] ");
   long PowerValue = 0;
   uint8_t lsb_InstantaneousPower = cpmcDataBuf[2]; // Instantaneous Power LSB
   // POWER is stored in 2 bytes !!!
   uint8_t msb_InstantaneousPower = (cpmcDataBuf[3] & 0xFF); //  
   PowerValue = lsb_InstantaneousPower + msb_InstantaneousPower * 256;
-  Serial.printf("Power Value: %4d\n", PowerValue);
+  DEBUG_PRINTF("Power Value: %4d\n", PowerValue);
 #endif
 } // End cpmc_notify_callback
 
@@ -1277,34 +1202,37 @@ void client_cpwt_indicate_callback(BLEClientCharacteristic* chr, uint8_t* data, 
   // Send Client's (Wahoo) acknowldege message to the Server (Zwift)
   server_cpwt.indicate(data, len); // Just pass on and process later!
   
-#if Serial_Monitor
+#ifdef DEBUG_CPWT_RESPONSE
   uint8_t RespBufferLen = (uint8_t)len;
   uint8_t RespBuffer[RespBufferLen] = {}; // It is max 6 bytes long
   // Transfer first the contents of data to buffer (array of chars)
-  Serial.print("Response: [ "); 
+  DEBUG_PRINT("Client Rec'd Wahoo Response: [ "); 
   for (int i = 0; i < RespBufferLen; i++) {
     if ( i <= sizeof(RespBuffer)) {
       RespBuffer[i] = *data++;
-      Serial.printf("%02X ", RespBuffer[i], HEX);
+      DEBUG_PRINTF("%02X ", RespBuffer[i], HEX);
     }
   }
-  Serial.print(" ]");
+  DEBUG_PRINT(" ]");
   // Do something with the response string
   switch(RespBuffer[1]) {
+    case unlock: { 
+      DEBUG_PRINT(" unlock Machine");
+      break; }
     case setSimMode: { 
-      Serial.print(" setSimMode");
+      DEBUG_PRINT(" setSimMode");
       break; }
     case setSimGrade: {
-      Serial.print(" setSimGrade");
+      DEBUG_PRINT(" setSimGrade");
       break; }
     default: {
-      Serial.print(" ? unknown ?");  
+      DEBUG_PRINT(" ? unknown ?");  
     }
   }
   if (  RespBuffer[0] = 0x01 ) {
-    Serial.println(" -> Successful");
+    DEBUG_PRINTLN(" -> Successful");
   } else {
-    Serial.println(" -> Failed");
+    DEBUG_PRINTLN(" -> Failed");
   }
 #endif
 } // end
@@ -1314,9 +1242,7 @@ void client_cpwt_indicate_callback(BLEClientCharacteristic* chr, uint8_t* data, 
  */
 void Start_Server_Advertising(void)
 {
-#if Serial_Monitor 
-  Serial.println("Start Advertising Wahoo Simulated as Wahoo Sim... pair with Zwift!");
-#endif
+  DEBUG_PRINTLN("Start Server Advertising as 'Sim Wahoo'... pair with Zwift!");
   if (Bluefruit.Advertising.isRunning())
     Bluefruit.Advertising.stop();
 //
@@ -1325,7 +1251,7 @@ void Start_Server_Advertising(void)
   Bluefruit.ScanResponse.clearData();
   delay(100);
 // 
-  Bluefruit.setName("Wahoo Sim");
+  Bluefruit.setName("Sim Wahoo");
   // Prepare a full Advertising packet
   Bluefruit.Advertising.addAppearance(Server_appearance);
   Bluefruit.Advertising.setType(BLE_GAP_ADV_TYPE_CONNECTABLE_SCANNABLE_UNDIRECTED); 
@@ -1357,9 +1283,7 @@ void Start_Server_Advertising(void)
 
 void Setup_Server_CPS(void)
 {
-#if Serial_Monitor 
-  Serial.println("Configuring the (Zwift) Server Cycle Power Service");
-#endif
+  DEBUG_PRINTLN("Configuring the (Zwift) Server Cycle Power Service");
 // Default and fixed settings
 // Server CPWT Cycling Power Wahoo Trainer Char data field -------------------------------------------------------------------------------------
 const uint16_t CPWT_MAX_DATALEN = 20;  // Stay on the safe side: it usually is no longer than 4 or 6 bytes 
@@ -1510,13 +1434,11 @@ const uint8_t cpmcData[cpmcDataLen] = {
   server_cplc.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
   server_cplc.setFixedLen(1);
   server_cplc.begin();
-  server_cplc.write16(12);  // Set the characteristic to 'Rear wheel' (12) write8 --> write16
+  server_cplc.write8(12);  // Set the characteristic to 'Rear wheel' (12) uint8_t
 
   if (Bluefruit.setAppearance(Server_appearance))
   {
-#if Serial_Monitor
-     Serial.printf("Setting Appearance to [%d] Generic: Cycling\n", Server_appearance);
-#endif
+     DEBUG_PRINTF("Setting Appearance to [%d] Generic: Cycling\n", Server_appearance);
   }
 
   // Set the connect/disconnect callback handlers for Peripherals
@@ -1524,9 +1446,7 @@ const uint8_t cpmcData[cpmcDataLen] = {
   Bluefruit.Periph.setDisconnectCallback(Periph_disconnect_callback);
 
   // Configure and Start the Device Information Service
-#if Serial_Monitor
-  Serial.println("Configuring the Device Information Service");
-#endif
+  DEBUG_PRINTLN("Configuring the Device Information Service");
   bledis.setManufacturer("Wahoo Fitness"); 
   bledis.setModel("KICKR");
   // Notice that the Firmware Revision string is default set to 
@@ -1549,23 +1469,25 @@ void server_cpwt_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* da
   uint8_t cpwtData[cpwtDataLen];
   memset(cpwtData, 0, cpwtDataLen); // set to zero
   // Display the raw request packet actual length
-#if Serial_Monitor
-  Serial.printf("Server CPWT Data [Len: %d] [Data:  ", len);
+#ifdef DEBUG_CPWT_CONTROLPOINT
+  DEBUG_PRINTF("Server Rec'd Wahoo Control Point Data [Len: %d] [Data:  ", len);
 #endif
   // Transfer the contents of data to cpwtData
   for (int i = 0; i < cpwtDataLen; i++) {
     if ( i <= sizeof(cpwtData)) {
       cpwtData[i] = *data++;
-#if Serial_Monitor
+#ifdef DEBUG_CPWT_CONTROLPOINT
       // Display the raw request packet byte by byte in HEX
-      Serial.printf("%02X ", cpwtData[i], HEX);
+      DEBUG_PRINTF("%02X ", cpwtData[i], HEX);
 #endif
     }
   }
-#if Serial_Monitor
-  Serial.print(" ]  "); 
+#ifdef DEBUG_CPWT_CONTROLPOINT
+  DEBUG_PRINT(" ]  "); 
   // do something ---------------- with the raw data ---------
-  // Notice that the Unlock command is {0x20, 0xEE, 0xFC} --> is NOT treated
+  if (cpwtData[0] == unlock) {
+    DEBUG_PRINT(" Unlock Machine Command!");
+    }
   if (cpwtData[0] == setSimMode) {
     uint16_t tmp = ( cpwtData[1] + (cpwtData[2]*256) );  // This works perfect !!!
     float weight = (float(tmp) / 100); // Rider weight in Kg
@@ -1573,9 +1495,9 @@ void server_cpwt_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* da
     float rrc = (float(tmp) / 1000);    // Rolling Resistance Coefficient
     tmp = ( cpwtData[5] + (cpwtData[6]*256) );  // This works perfect !!!
     float wrc = (float(tmp) / 1000);    // Wind Resistance Coefficient
-    Serial.printf(" Weight: %0.1f RRC: %f WRC: %f", weight, rrc, wrc);
+    DEBUG_PRINTF(" Weight: %0.1f RRC: %f WRC: %f", weight, rrc, wrc);
   }
-  Serial.println();
+  DEBUG_PRINTLN();
 #endif
   if (cpwtData[0] == setSimGrade) {
     uint16_t gr = ( cpwtData[1] + (cpwtData[2]*256) ); // This works perfect !!!
@@ -1589,9 +1511,6 @@ void server_cpwt_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* da
   if (!InControlUpDownMovementLoop) {
     ControlUpDownMovement();
   } 
-#if Serial_Monitor
-  else { Serial.println(">> Inside Loop <<"); }
-#endif
 }
 
 void SetNewRawGradeValue(float RoadGrade)
@@ -1621,9 +1540,7 @@ void SetNewRawGradeValue(float RoadGrade)
           RawgradeValue = aRGVmax;  // Do not allow values to exceed aRGVmax !!
         }
         // --------------------------------------------------------------------------------------------------
-#if Serial_Monitor
-        Serial.printf("New Grade percentage: %02.1f %% RawgradeValue: %05d \n", gradePercentValue, RawgradeValue);
-#endif
+        DEBUG_PRINTF("New Grade percentage: %02.1f %% RawgradeValue: %05d \n", gradePercentValue, RawgradeValue);
 }
 
 void server_cpcp_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* data, uint16_t len)
@@ -1653,34 +1570,34 @@ void server_cpcp_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* da
   // Transfer cpcp data from the Server (Zwift) to the Client (Wahoo)
   client_cpcp.write_resp(data, len); // Just pass on and process later!
   
-#if Serial_Monitor
+#ifdef DEBUG
   uint8_t cpcpDataLen = (uint8_t)len;    // Get the actual length of data bytes and type cast to (uint8_t)
   uint8_t cpcpData[cpcpDataLen];
   memset(cpcpData, 0, cpcpDataLen); // set to zero
   // Display the raw request packet actual length
-  Serial.printf("Server CPCP Data [Len: %d] [Data:  ", len);
+  DEBUG_PRINTF("Server CPCP Data [Len: %d] [Data:  ", len);
   // Transfer the contents of data to cpcpData
   for (int i = 0; i < cpcpDataLen; i++) {
     if ( i <= sizeof(cpcpData)) {
       cpcpData[i] = *data++;
       // Display the raw request packet byte by byte in HEX
-      Serial.printf("%02X ", cpcpData[i], HEX);
+      DEBUG_PRINTF("%02X ", cpcpData[i], HEX);
     }
   }
-  Serial.print(" ]  "); 
+  DEBUG_PRINT(" ]  "); 
 #endif
 }
 
-#if Serial_Monitor
+#ifdef DEBUG
 void PrintPeerAddress(uint8_t addr[6])
 {
   for (int i = 1; i < 6; i++) {
       // Display byte by byte in HEX reverse: little Endian
 //    if ( i <= sizeof(addr)) {
-      Serial.printf("%02X:",addr[(6-i)], HEX);
+      DEBUG_PRINTF("%02X:",addr[(6-i)], HEX);
 //    }
   }
-   Serial.printf("%02X ",addr[0], HEX);
+   DEBUG_PRINTF("%02X ",addr[0], HEX);
 }
 #endif
 
@@ -1695,8 +1612,8 @@ void Periph_connect_callback(uint16_t conn_handle)
   ble_gap_addr_t peer_address = connection->getPeerAddr();
   memcpy(central_addr, peer_address.addr, 6);
   NrPeriphConnected = Bluefruit.Periph.connected();
-#if Serial_Monitor
-  Serial.printf("Peripheral #[%d] connected to Central device: %s conn handle [%d] Address: ",NrPeriphConnected, central_name, conn_handle);
+#ifdef DEBUG
+  DEBUG_PRINTF("Peripheral #[%d] connected to Central device: %s conn handle [%d] Address: ",NrPeriphConnected, central_name, conn_handle);
   PrintPeerAddress(central_addr);
 #endif 
 
@@ -1707,12 +1624,8 @@ void Periph_connect_callback(uint16_t conn_handle)
     Laptop.conn_handle = conn_handle;
     Laptop.IsConnected = true;
     ShowOnOledLarge("Pairing", (const char*)Laptop.DevName, "Done!", 500);
-#if Serial_Monitor
-      Serial.printf("Zwift connected: %2X\n", Laptop.IsConnected); 
-#endif
-#if Serial_Monitor
-    Serial.printf("Devname: %s Peername: %s conn_handle %d Isconnected: %2X\n", Laptop.DevName, Laptop.PeerName, Laptop.conn_handle, Laptop.IsConnected);
-#endif
+    DEBUG_PRINTF("Zwift connected: %2X\n", Laptop.IsConnected); 
+    DEBUG_PRINTF("Devname: %s Peername: %s conn_handle %d Isconnected: %2X\n", Laptop.DevName, Laptop.PeerName, Laptop.conn_handle, Laptop.IsConnected);
   return;  
   }
 
@@ -1720,12 +1633,8 @@ void Periph_connect_callback(uint16_t conn_handle)
   Smartphone.conn_handle = conn_handle;
   Smartphone.IsConnected = true;
   memcpy(Smartphone.DevAddr, central_addr, 6);
-#if Serial_Monitor
-      Serial.printf("Phone connected: %2X\n", Smartphone.IsConnected);
-#endif
-#if Serial_Monitor
-    Serial.printf("Devname: %s Peername: %s conn_handle %d Isconnected: %2X\n", Smartphone.DevName, Smartphone.PeerName, Smartphone.conn_handle, Smartphone.IsConnected);
-#endif
+  DEBUG_PRINTF("Phone connected: %2X\n", Smartphone.IsConnected);
+  DEBUG_PRINTF("Devname: %s Peername: %s conn_handle %d Isconnected: %2X\n", Smartphone.DevName, Smartphone.PeerName, Smartphone.conn_handle, Smartphone.IsConnected);
   while (!bleuart.notifyEnabled()) {
       } // !!!! wait until ready !!!!
   ShowOnOledLarge("Pairing", (const char*)Smartphone.DevName, "Done!", 500);
@@ -1747,9 +1656,7 @@ void Periph_connect_callback(uint16_t conn_handle)
   // send these persistent data to the Settings page on the smartphone
   bleuart.print(String(TXpacketBuffer));
   //
-#if Serial_Monitor
-  Serial.print(F("Persistent data sent to Phone: ")); Serial.println(TXpacketBuffer);
-#endif
+  DEBUG_PRINT(F("Persistent data sent to Phone: ")); DEBUG_PRINTLN(TXpacketBuffer);
 }
 
 /*
@@ -1792,9 +1699,7 @@ void Periph_disconnect_callback(uint16_t conn_handle, uint8_t reason)
      Smartphone.IsConnected = false;
      memcpy(central_name, Smartphone.PeerName, sizeof(Smartphone.PeerName));
      ShowOnOledLarge("Lost!", (const char*)Smartphone.DevName, (const char*)disc_reason, 500);
-#if Serial_Monitor
-    Serial.printf("Devname: %s Peername: %s conn_handle %d Isconnected: %2X\n", Smartphone.DevName, Smartphone.PeerName, Smartphone.conn_handle, Smartphone.IsConnected);
-#endif
+     DEBUG_PRINTF("Devname: %s Peername: %s conn_handle %d Isconnected: %2X\n", Smartphone.DevName, Smartphone.PeerName, Smartphone.conn_handle, Smartphone.IsConnected);
      // Start advertising: to be picked up by Laptop/Desktop --> Zwift!
      Start_Server_Advertising();
   } 
@@ -1803,46 +1708,42 @@ void Periph_disconnect_callback(uint16_t conn_handle, uint8_t reason)
      Laptop.IsConnected = false;
      memcpy(central_name, Laptop.PeerName, sizeof(Laptop.PeerName));
      ShowOnOledLarge("Lost!", (const char*)Laptop.DevName, (const char*)disc_reason, 500);
-#if Serial_Monitor
-    Serial.printf("Devname: %s Peername: %s conn_handle %d Isconnected: %2X\n", Laptop.DevName, Laptop.PeerName, Laptop.conn_handle, Laptop.IsConnected);
-#endif
-    // Start advertising: to be picked up by a Smartphone with the Companion App!
-    StartAdvBLEuart();
+     DEBUG_PRINTF("Devname: %s Peername: %s conn_handle %d Isconnected: %2X\n", Laptop.DevName, Laptop.PeerName, Laptop.conn_handle, Laptop.IsConnected);
+     // Start advertising: to be picked up by a Smartphone with the Companion App!
+     StartAdvBLEuart();
   }
-#if Serial_Monitor
-  Serial.printf("Peripheral disconnected from %s [%d] reason = %02X \n", central_name, conn_handle, reason, HEX);
-#endif
+  DEBUG_PRINTF("Peripheral disconnected from %s [%d] reason = %02X \n", central_name, conn_handle, reason, HEX);
 }
 
 void server_cccd_callback(uint16_t conn_handle, BLECharacteristic* chr, uint16_t cccd_value)
 {
     // When changed, show the Notify Status for all NOTIFY charcteristics
-#if Serial_Monitor
-    Serial.printf("Server CCCD Updated to: [%d] --> ", cccd_value);
+#ifdef DEBUG
+    DEBUG_PRINTF("Server CCCD Updated to: [%d] --> ", cccd_value);
     // Check the characteristic UUID this CCCD callback is associated with,
     // in case this handler is used for multiple CCCD records.
     if (chr->uuid == server_cpmc.uuid) { 
         if (chr->notifyEnabled(conn_handle)) { 
-            Serial.print("Server CPMC 'Notify' enabled");
+            DEBUG_PRINT("Server CPMC 'Notify' enabled");
         } else {
-            Serial.print("Server CPMC 'Notify' disabled");
+            DEBUG_PRINT("Server CPMC 'Notify' disabled");
         }
     }
     if (chr->uuid == server_cpwt.uuid) { 
         if (chr->indicateEnabled(conn_handle)) { 
-            Serial.print("Server CPWT 'Indicate' enabled");
+            DEBUG_PRINT("Server CPWT 'Indicate' enabled");
         } else {
-            Serial.print("Server CPWT 'Indicate' disabled");
+            DEBUG_PRINT("Server CPWT 'Indicate' disabled");
         }
     }
     if (chr->uuid == server_cpcp.uuid) { 
         if (chr->indicateEnabled(conn_handle)) { 
-            Serial.print("Server CPCP 'Indicate' enabled");
+            DEBUG_PRINT("Server CPCP 'Indicate' enabled");
         } else {
-            Serial.print("Server CPCP 'Indicate' disabled");
+            DEBUG_PRINT("Server CPCP 'Indicate' disabled");
         }
     }
-    Serial.println();
+    DEBUG_PRINTLN();
 #endif    
 } // end CCCD callback
 

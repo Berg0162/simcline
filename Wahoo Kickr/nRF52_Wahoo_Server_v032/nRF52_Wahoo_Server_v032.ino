@@ -29,6 +29,12 @@
  */
 
 #include <bluefruit.h>
+// -------------------------------------------------------------------------------------------
+// COMPILER DIRECTIVE to allow/suppress DEBUG messages that help debugging...
+// Uncomment general "#define DEBUG" to activate
+//#define DEBUG
+// Include these debug utility macros in all cases!
+#include "DebugUtils.h"
 
 /* Cycling Power Service
  * CP Service: 0x1818  
@@ -52,7 +58,7 @@ uint8_t CYCLING_POWER_WAHOO_TRAINER_Uuid[16] = {0x8B, 0xEB, 0x9F, 0x0F, 0x50, 0x
 BLECharacteristic server_cpwt = BLECharacteristic(CYCLING_POWER_WAHOO_TRAINER_Uuid);
 
 // CPS Wahoo Trainer Operation Codes in Decimal
-//const uint8_t unlock                     = 32;
+const uint8_t unlock                     = 32;
 const uint8_t setResistanceMode          = 64;
 const uint8_t setStandardMode            = 65;
 const uint8_t setErgMode                 = 66;
@@ -62,7 +68,7 @@ const uint8_t setSimWindResistance       = 69;
 const uint8_t setSimGrade                = 70;
 const uint8_t setSimWindSpeed            = 71;
 const uint8_t setWheelCircumference      = 72;
-//const uint8_t UnlockCommandBuf[3]        = {unlock, 0xEE, 0xFC}; // Unlock codes
+//const uint8_t unlockCommand[3]         = {unlock, 0xEE, 0xFC}; // Unlock codes
 
 BLEDis bledis;    // DIS (Device Information Service) helper class instance
 
@@ -80,13 +86,14 @@ unsigned long TimeInterval = 0;
  */
 void setup()
 {
+#ifdef DEBUG
   Serial.begin(115200);
   while ( !Serial ) delay(100);   // for nrf52840 with native usb, milliseconds
-
+#endif
   delay(1000);
 
-  Serial.println("Wahoo Kickr Server with Cycling Power Service only");
-  Serial.println("----------  Feather nRF52 Version 03  ------------");
+  DEBUG_PRINTLN("Wahoo Kickr Server with Cycling Power Service only");
+  DEBUG_PRINTLN("----------  Feather nRF52 Version 032  -----------");
 
 // ------------------------------------------------------
 #if defined(ARDUINO_NRF52840_FEATHER)
@@ -107,22 +114,22 @@ void setup()
 #endif
 
   // Initialise the Bluefruit module
-  Serial.println("Initialise the Bluefruit nRF52 module");
+  DEBUG_PRINTLN("Initialise the Bluefruit nRF52 module");
   // begin (Peripheral = 1, Central = 0)
   Bluefruit.begin(1, 0);
 
   // Setup the Server Cycle Power Service
   // BLEService and BLECharacteristic classes initialized
-  Serial.println("Configuring the Server Cycle Power Service");
+  DEBUG_PRINTLN("Configuring the Server Cycle Power Service");
   Setup_Server_CPS();
   // Setup the advertising packet(s)
-  Serial.println("Setting up the Server advertising");
+  DEBUG_PRINTLN("Setting up the Server advertising");
   Start_Server_Advertising();
-  Serial.println("Advertising! --> Pair with Zwift now ....");  
+  DEBUG_PRINTLN("Advertising! --> Pair with Zwift now ....");  
   while (Bluefruit.Advertising.isRunning()) { // ONLY advertise!
   }
   if ( Bluefruit.connected() ) {
-    Serial.println("Ready to Rock and Roll!");
+    DEBUG_PRINTLN("Ready to Rock and Roll!");
   }
   TimeInterval = millis() + TIME_SPAN; // ADD just enough delay
 } // End
@@ -243,31 +250,34 @@ const uint8_t cpmcData[cpmcDataLen] = {
   // Min Len    = 1
   // Max Len    = 32
   //    B0:3    = UINT8 - Cycling Power Feature (MANDATORY)
-  //      b0    = Pedal power balance supported; 0 = false, 1 = true
-  //      b1    = Accumulated torque supported; 0 = false, 1 = true
-  //      b2    = Wheel revolution data supported; 0 = false, 1 = true
-  //      b3    = Crank revolution data supported; 0 = false, 1 = true
+  //      b0    = Pedal power balance supported; 0 = false, 1 = true        *
+  //      b1    = Accumulated torque supported; 0 = false, 1 = true         *
+  //      b2    = Wheel revolution data supported; 0 = false, 1 = true      
+  //      b3    = Crank revolution data supported; 0 = false, 1 = true      *
   //      b4    = Extreme magnatudes supported; 0 = false, 1 = true
   //      b5    = Extreme angles supported; 0 = false, 1 = true
   //      b6    = Top/bottom dead angle supported; 0 = false, 1 = true
   //      b7    = Accumulated energy supported; 0 = false, 1 = true
+  
   //      b8    = Offset compensation indicator supported; 0 = false, 1 = true
-  //      b9    = Offset compensation supported; 0 = false, 1 = true
-  //      b10   = Cycling power measurement characteristic content masking supported; 0 = false, 1 = true
+  //      b9    = Offset compensation supported; 0 = false, 1 = true        *
+  //      b10   = Cycling power measurement characteristic content masking supported; 0 = false, 1 = true *
   //      b11   = Multiple sensor locations supported; 0 = false, 1 = true
   //      b12   = Crank length adj. supported; 0 = false, 1 = true
   //      b13   = Chain length adj. supported; 0 = false, 1 = true
   //      b14   = Chain weight adj. supported; 0 = false, 1 = true
   //      b15   = Span length adj. supported; 0 = false, 1 = true
-  //      b16   = Sensor measurement context; 0 = force, 1 = torque
+  
+  //      b16   = Sensor measurement context; 0 = force, 1 = torque         *
   //      b17   = Instantaineous measurement direction supported; 0 = false, 1 = true
   //      b18   = Factory calibrated date supported; 0 = false, 1 = true
   //      b19   = Enhanced offset compensation supported; 0 = false, 1 = true
   //   b20:21   = Distribtue system support; 0 = legacy, 1 = not supported, 2 = supported, 3 = RFU
   //   b22:32   = Reserved
 
-  uint32_t cpfcDef = 0x00; // None of the cycling power features are set to TRUE!!!
-  uint8_t cpfcData[CPFC_FIXED_DATALEN] = {(uint8_t)(cpfcDef & 0xff), (uint8_t)(cpfcDef >> 8), (uint8_t)(cpfcDef >> 16), (uint8_t)(cpfcDef >> 24)};
+//  uint32_t cpfcDef = 0x00; //0x00; // None of the cycling power features are set to TRUE!!!
+//  uint8_t cpfcData[CPFC_FIXED_DATALEN] = {(uint8_t)(cpfcDef & 0xff), (uint8_t)(cpfcDef >> 8), (uint8_t)(cpfcDef >> 16), (uint8_t)(cpfcDef >> 24)};
+  uint8_t cpfcData[CPFC_FIXED_DATALEN] = {0x8B, 0x06, 0x01, 0x00}; // Taken from Quarq 
   server_cpfc.setProperties(CHR_PROPS_READ);
   server_cpfc.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
   server_cpfc.setFixedLen(CPFC_FIXED_DATALEN);
@@ -307,11 +317,11 @@ const uint8_t cpmcData[cpmcDataLen] = {
   server_cplc.write8(12);  // Set the characteristic to 'Rear wheel' (12)
 
     // Set the advertised device name (keep it short!)
-  Serial.println("Setting Device Name to 'Wahoo Sim'");
-  Bluefruit.setName("Wahoo Sim");
+  DEBUG_PRINTLN("Setting Device Name to 'Sim Wahoo'");
+  Bluefruit.setName("Sim Wahoo");
   if (Bluefruit.setAppearance(Server_appearance))
   {
-    Serial.printf("Setting Appearance to [%d] Generic: Cycling\n", Server_appearance);
+    DEBUG_PRINTF("Setting Appearance to [%d] Generic: Cycling\n", Server_appearance);
   }
 
   // Set the connect/disconnect callback handlers
@@ -320,23 +330,23 @@ const uint8_t cpmcData[cpmcDataLen] = {
 
 //
   // Configure and Start the Device Information Service
-  Serial.println("Configuring the Device Information Service");
+  DEBUG_PRINTLN("Configuring the Device Information Service");
   bledis.setManufacturer("Wahoo Fitness"); 
-    Serial.println("Manufacturer: Wahoo Fitness");
+    DEBUG_PRINTLN("Manufacturer: Wahoo Fitness");
   bledis.setModel("KICKR");
-    Serial.println("Model: KICKR");
+    DEBUG_PRINTLN("Model: KICKR");
   // Notice that the Firmware Revision string is default set to 
   // the value of the Feather-nRF52 Board being used!
   bledis.setFirmwareRev("0.0.1");
-    Serial.println("Rev Str: 0.0.1");
+    DEBUG_PRINTLN("Rev Str: 0.0.1");
   bledis.setSerialNum("1234");
-    Serial.println("Serial Num: 1234");
+    DEBUG_PRINTLN("Serial Num: 1234");
   bledis.setHardwareRev("0.0.1");
-    Serial.println("Hardware Rev: 0.0.1");
+    DEBUG_PRINTLN("Hardware Rev: 0.0.1");
   bledis.setSoftwareRev("0.0.1");
-    Serial.println("Software Rev: 0.0.1");
+    DEBUG_PRINTLN("Software Rev: 0.0.1");
   bledis.begin();
-    Serial.println("Done!");
+    DEBUG_PRINTLN("Done!");
 //
 } // End
 
@@ -349,14 +359,14 @@ void server_cpwt_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* da
   cpwtDataLen = (uint8_t)len;    // OperationCode plus min 2 and max 6 data bytes (uint8_t)
   memset(cpwtData, 0, cpwtDataLen); //sizeof(cpwtData)); // Size was defined at setup, it is NOT dynamic
   // Display the raw request packet actual length
-  Serial.printf("Server CPWT Data [Len: %d] [Data:  ", len);
+  DEBUG_PRINTF("Server CPWT Data [Len: %d] [Data:  ", len);
   // Transfer the contents of data to cpwtData
   for (int i = 0; i < cpwtDataLen; i++) {
     cpwtData[i] = *data++;
     // Display the raw request packet byte by byte in HEX
-    Serial.printf("%02X ", cpwtData[i], HEX);
+    DEBUG_PRINTF("%02X ", cpwtData[i], HEX);
   }
-  Serial.print("] "); 
+  DEBUG_PRINT("] "); 
 
   // The documentation I found states that all write actions to this CPWT characteristic are "Write with Response"
   // So we have formally to acknowledge the receipt of the setting
@@ -364,10 +374,13 @@ void server_cpwt_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* da
   uint8_t RespBuffer[2] = {};
   RespBuffer[0] = 0x01; // set for success = 1
   RespBuffer[1] = cpwtData[0]; // return the received opCode
-  server_cpwt.write(RespBuffer, 2);
+  server_cpwt.indicate(RespBuffer, 2);
   
   // do something ---------------- with the raw data ---------
-  // Notice that the Unlock command is {0x20, 0xEE, 0xFC} --> is NOT treated
+  // Notice that the Unlock command is treated now!
+  if (cpwtData[0] == unlock) {
+    DEBUG_PRINT(" Unlock Machine Command!");
+    }
   if (cpwtData[0] == setSimMode) {
     uint16_t tmp = ( cpwtData[1] + (cpwtData[2]*256) );  // This works perfect !!!
     float weight = (float(tmp) / 100); // Rider weight in Kg
@@ -375,16 +388,15 @@ void server_cpwt_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* da
     float rrc = (float(tmp) / 1000);    // Rolling Resistance Coefficient
     tmp = ( cpwtData[5] + (cpwtData[6]*256) );  // This works perfect !!!
     float wrc = (float(tmp) / 1000);    // Wind Resistance Coefficient
-    Serial.printf(" SimMode:  Weight: %0.1f RRC: %f WRC: %f", weight, rrc, wrc);
+    DEBUG_PRINTF(" SimMode:  Weight: %0.1f RRC: %f WRC: %f", weight, rrc, wrc);
   }
   if (cpwtData[0] == setSimGrade) {
     //uint16_t gr = (cpwtData[1] << 8) + (cpwtData[2] & 0xFF); // alternative ??????
     uint16_t gr = ( cpwtData[1] + (cpwtData[2]*256) ); // This works perfect !!!
     float SimGrade = 100 * float( ((gr * 2.0 / 65535) - 1.0) ); // Percentage of road grade --> range: between +1 and -1 (!)
-    Serial.printf(" SimGrade: %4.1f%%", SimGrade); // 
+    DEBUG_PRINTF(" SimGrade: %4.1f%%", SimGrade); // 
   }
-  Serial.println();
-  //SetNewPowerValue(); // To simulate cycling
+  DEBUG_PRINTLN();
 }
 
 void PrintPeerAddress(uint8_t addr[6])
@@ -392,10 +404,10 @@ void PrintPeerAddress(uint8_t addr[6])
   for (int i = 1; i < 6; i++) {
       // Display byte by byte in HEX reverse: little Endian
 //    if ( i <= sizeof(addr)) {
-      Serial.printf("%02X:",addr[(6-i)], HEX);
+      DEBUG_PRINTF("%02X:",addr[(6-i)], HEX);
 //    }
   }
-   Serial.printf("%02X ",addr[0], HEX);
+   DEBUG_PRINTF("%02X ",addr[0], HEX);
 }
 
 void server_connect_callback(uint16_t conn_handle)
@@ -407,10 +419,10 @@ void server_connect_callback(uint16_t conn_handle)
   connection->getPeerName(central_name, sizeof(central_name));
   ble_gap_addr_t peer_address = connection->getPeerAddr();
   memcpy(central_addr, peer_address.addr, 6);
-  Serial.printf("Feather nRF52 (Peripheral) connected to Laptop/PC (Central) device: %s MAC Address: ", central_name);
+  DEBUG_PRINTF("Feather nRF52 (Peripheral) connected to Laptop/PC (Central) device: %s MAC Address: ", central_name);
   PrintPeerAddress(central_addr);
-  Serial.println();
-  Serial.println("Waiting for Central Device to set CCCD Notify (enable) and start reading....");
+  DEBUG_PRINTLN();
+  DEBUG_PRINTLN("Waiting for Central Device to set CCCD Notify (enable) and start reading....");
 }
 
 /*
@@ -424,31 +436,31 @@ void server_disconnect_callback(uint16_t conn_handle, uint8_t reason)
   (void) conn_handle;
   (void) reason;
 
-  Serial.print("Server Disconnected from Central Device reason = 0x"); Serial.println(reason, HEX);
-  Serial.println("Stopped, reset and start again!");
+  DEBUG_PRINT("Server Disconnected from Central Device reason = 0x"); DEBUG_PRINTLN(reason, HEX);
+  DEBUG_PRINTLN("Stopped, reset and start again!");
 }
 
 void server_cccd_callback(uint16_t conn_handle, BLECharacteristic* chr, uint16_t cccd_value)
 {
     // When changed, display the Notify Status for all NOTIFY charcteristics
-    Serial.printf("Server CCCD Updated to: [%d] --> ", cccd_value);
+    DEBUG_PRINTF("Server CCCD Updated to: [%d] --> ", cccd_value);
     // Check the characteristic UUID this CCCD callback is associated with,
     // in case this handler is used for multiple CCCD records.
     if (chr->uuid == server_cpmc.uuid) { 
         if (chr->notifyEnabled(conn_handle)) { 
-            Serial.print("Server CPMC 'Notify' enabled");
+            DEBUG_PRINT("Server CPMC 'Notify' enabled");
         } else {
-            Serial.print("Server CPMC 'Notify' disabled");
+            DEBUG_PRINT("Server CPMC 'Notify' disabled");
         }
     }
     if (chr->uuid == server_cpwt.uuid) { 
         if (chr->indicateEnabled(conn_handle)) { // was notify --> WRONG!!!
-            Serial.print("Server CPWT 'Indicate' enabled");
+            DEBUG_PRINT("Server CPWT 'Indicate' enabled");
         } else {
-            Serial.print("Server CPWT 'Indicate' disabled");
+            DEBUG_PRINT("Server CPWT 'Indicate' disabled");
         }
     }
-    Serial.println();
+    DEBUG_PRINTLN();
 } // end CCCD callback
 
 // To simulate you are cycling
@@ -473,7 +485,7 @@ void SetNewPowerValue(void)
     // If it is connected but CCCD is not enabled
     // The characteristic's value is still updated although notification is not sent
     if ( server_cpmc.notify(cpmcData, cpmcDataLen) ){
-      Serial.print("Server Cycle Power Measurement updated to: "); Serial.println(cps_sim_power_watt); 
+      DEBUG_PRINT("Server Cycle Power Measurement updated to: "); DEBUG_PRINTLN(cps_sim_power_watt); 
     }
 // Handle Power measurement --------------------
     // Set time interval to wait for next setting
