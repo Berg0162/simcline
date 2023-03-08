@@ -94,7 +94,7 @@ The two precise device addresses are critical to assure a reliable test! You hav
 12) Inspect the info presented by Serial Monitor for the Zwift road inclination values.....
 <br clear="left">
 
-# Overview of Arduino Program Code Flow and Snippets<br>
+# Overview of Wahoo Simcline Program Code Flow and Snippets<br>
 + Include headers of libraries and declare classes
 ```C++
 .
