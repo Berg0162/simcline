@@ -16,7 +16,7 @@ There are <b>Instructables</b> available with all the nitty gritty of how to cre
 # [SIMCLINE version 2.0](https://www.instructables.com/SIMCLINE-20-Easy-Simulation-of-Road-Incline/)<br>
 
 The applied electronic components in the 2 projects are somewhat different but NOT in an essential way, as documented hereafter.<br>
-<b>NOTICE that the SIMCLINE control code can be run with both (mechanically different) SIMCLINE versions!</b> However, 3 different code versions are specially designed for operating with a TACX, Wahoo trainer <b>or</b> FTMS enabled trainers!</b> You will find in the arduino folder all the test programs and the common libraries. These will help you to test the electronic components separately and built together of both SIMCLINE versions.<br> 
+<b>NOTICE that the SIMCLINE control code can be run with both (mechanically different) SIMCLINE versions!</b> However, 3 different code versions are specially designed for operating with a TACX <b>or</b> Wahoo Kickr <b>or</b> FTMS enabled trainers!</b> You will find in the arduino folder all the test programs and the common libraries. These will help you to test the electronic components separately and built together of both SIMCLINE versions.<br> 
 
 Finally you have to select the SIMCLINE code that is appropriate for the trainer of your liking!<br>
 
