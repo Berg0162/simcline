@@ -59,8 +59,8 @@ Please follow the instructions at the first part of the program code!
 + Start your reconnaissance with running <b>Wahoo_Client</b> and experience how the Feather is controlling the resistance of your Wahoo trainer. 
 + Next step is running <b>Wahoo_Server</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the Feather.<br>
 
-<i>The 2 test programs (Client and Server) are NOT using a SSD1306 display, only Serial Monitor to show what is happening!</i><br>
-Please write down the MAC or Device Addresses of a) your Wahoo trainer and b) your Desktop/Laptop with Zwift. These are presented in the Serial Monitor log file when running the Client and Server test code.<br>
+<i>The 3 test programs (Client, Server and Bridge) are <b>ONLY</b> Serial Monitor to show what is happening!</i><br>
+Please write down the MAC or Device Addresses of a) your Wahoo trainer and b) your Desktop/Laptop with Zwift. These are presented in the Serial Monitor log file when running the Client, Server and Bridge test code.<br>
 
 <b>Now it is time to test the bridge!</b><br>
 The <b>Wahoo_Zwift_Bridge</b> code needs these "hardware" addresses to unmistakingly establish a BLE connection with the right device. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera. 
@@ -80,7 +80,7 @@ The <b>Wahoo_Zwift_Bridge</b> code needs these "hardware" addresses to unmistaki
 The two precise device addresses are critical to assure a reliable test! You have to insert the values in the program code!<br> 
 
 1) First insert in the <b>Wahoo_Zwift_Bridge</b> code the two precise BLE MAC Addresses it has to connect with
-2) Upload and Run this code on the Feather nRF52840
+2) Upload and Run this code on the Feather nRF52840 Express or Adafruit ESP32 Feather V2
 2) Start the Serial Monitor to catch debugging info
 3) Start/Power-On the Wahoo trainer  
 4) Feather and Trainer will pair as reported on the Serial Monitor
@@ -91,7 +91,7 @@ The two precise device addresses are critical to assure a reliable test! You hav
 9) After successful pairing start the default Zwift ride or any ride you wish
 10) Make Serial Monitor visible on top of the Zwift window 
 11) Hop on the bike and make it happen..
-12) Inspect the info presented by Serial Monitor and check the SSD1306 for the Zwift road inclination values.....
+12) Inspect the info presented by Serial Monitor for the Zwift road inclination values.....
 <br clear="left">
 
 # Overview of Arduino Program Code Flow and Snippets<br>
