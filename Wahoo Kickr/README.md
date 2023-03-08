@@ -94,7 +94,7 @@ The two precise device addresses are critical to assure a reliable test! You hav
 12) Inspect the info presented by Serial Monitor for the Zwift road inclination values.....
 <br clear="left">
 
-# Overview of Wahoo Simcline Program Code Flow and Snippets<br>
+# Overview of Wahoo Simcline nRF52 Code Flow and Snippets<br>
 + Include headers of libraries and declare classes
 ```C++
 .
@@ -286,13 +286,13 @@ void server_cccd_callback(uint16_t conn_handle, BLECharacteristic* chr, uint16_t
   Bluefruit.begin(1, 1);
   // Set the device name (keep it short!) 
 #if Serial_Monitor
-  Serial.println("Setting Device Name to 'Wahoo Sim'");
+  Serial.println("Setting Device Name to 'Sim Wahoo'");
 #endif
   // Supported tx_power values depending on mcu:
   // - nRF52832: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +3dBm and +4dBm.
   // - nRF52840: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +2dBm, +3dBm, +4dBm, +5dBm, +6dBm, +7dBm and +8dBm.
   Bluefruit.setTxPower(4); // See above for supported values: +4dBm
-  Bluefruit.setName("Wahoo Sim");
+  Bluefruit.setName("Sim Wahoo");
 
   Setup_Client_CPS();
   Client_Start_Scanning();
@@ -445,7 +445,7 @@ After some exploring of the field (I had no experience with App development), th
 
 # Flow and Some Code Snippets<br>
 + The Simcline Companion app is differently functioning with this implementation of the Simcline Wahoo code... First of all and most important the "Bridge-Function" is a very heavy burden on the processing capacity of the Feather nRF52. This simply does NOT (!) allow the smartphone to be connected over BLE at the same time the Laptop/Desktop (with Zwift) is connected, as is the case when you have a TACX trainer connected!
-+ After startup of the Simcline is established and it has paired with trainer and laptop (with Zwift), you have to disconnect (unpair) first the Simcline (a.k.a. Wahoo Sim) on the Zwift pairing screen. Only then it starts (BLE) advertising for the smartphone to connect! The Companion App (on your smartphone) establishes a connection over BLE with the Nordic UART service (a.k.a. BLEUART) for exchange of information. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings (<= 20 bytes) containing diagnostic messages or cyling variables.<br>
++ After startup of the Simcline is established and it has paired with trainer and laptop (with Zwift), you have to disconnect (unpair) first the Simcline (a.k.a. Sim Wahoo) on the Zwift pairing screen. Only then it starts (BLE) advertising for the smartphone to connect! The Companion App (on your smartphone) establishes a connection over BLE with the Nordic UART service (a.k.a. BLEUART) for exchange of information. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings (<= 20 bytes) containing diagnostic messages or cyling variables.<br>
 + At first the SIMCLINE sends the latest (persistent) settings data to allow the App user to assess the current values.
 + From this moment on the App user can change the current settings or control data, the Companion App sends these to the SIMCLINE to make use of.
 + The SIMCLINE receives asynchronously settings and sets the appropriate operational variables in accordance. This determines only at a later stage the working of the equipment!
