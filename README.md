@@ -1,4 +1,4 @@
-# <img src="https://github.com/Berg0162/simcline/blob/master/images/SC_logo.png" width="64" height="64" alt="SIMCLINE Icon"> &nbsp; SIMCLINE for Smart TACX and Wahoo KICKR trainers
+# <img src="https://github.com/Berg0162/simcline/blob/master/images/SC_logo.png" width="64" height="64" alt="SIMCLINE Icon"> &nbsp; SIMCLINE for Smart TACX, Wahoo KICKR and FTMS enabled trainers
 # Simulation of Changing Road Inclination for Indoor Cycling<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_And_Wheel.jpg" width="300" height="300" ALIGN="left" alt="SIMCLINE 1">
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_2_0.jpg" width="300" height="300" ALIGN="left" alt="SIMCLINE 2">
@@ -20,11 +20,11 @@ The applied electronic components in the 2 projects are somewhat different but N
 
 Finally you have to select the SIMCLINE code that is appropriate for the trainer of your liking!<br>
 
-# [Code support for Smart TACX trainers](https://github.com/Berg0162/simcline/tree/master/Tacx%20Smart)<br>
+# [nRF52 Code support for Smart TACX trainers](https://github.com/Berg0162/simcline/tree/master/Tacx%20Smart)<br>
 
-# [Code support for Wahoo KICKR trainers](https://github.com/Berg0162/simcline/tree/master/Wahoo%20Kickr/)<br>
+# [nRF52/ESP32 Code support for Wahoo KICKR trainers](https://github.com/Berg0162/simcline/tree/master/Wahoo%20Kickr/)<br>
 
-# [Code support for FTMS enabled trainers](https://github.com/Berg0162/simcline/tree/master/FTMS%20Enabled/)<br>
+# [nRF52/ESP32 Code support for FTMS enabled trainers](https://github.com/Berg0162/simcline/tree/master/FTMS%20Enabled/)<br>
 
 # SIMCLINE 1.0<br>
 See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" align="left" alt="Instructables"> [SIMCLINE 1.0 Instructables](https://www.instructables.com/id/SIMCLINE-Simulation-of-Changing-Road-Incline-for-I/)
