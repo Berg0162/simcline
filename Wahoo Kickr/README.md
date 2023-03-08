@@ -1,4 +1,4 @@
-# <img src="https://github.com/Berg0162/simcline/blob/master/images/SC_logo.png" width="64" height="64" alt="SIMCLINE Icon"> &nbsp; SIMCLINE for Wahoo KICKR
+# <img src="https://github.com/Berg0162/simcline/blob/master/images/SC_logo.png" width="64" height="64" alt="SIMCLINE Icon"> &nbsp; SIMCLINE for Wahoo KICKR (nRF52/ESP32)
 # Simulation of Changing Road Inclination for Indoor Cycling<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_And_Wheel.jpg" width="300" height="300" ALIGN="left" alt="SIMCLINE">
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_2_0.jpg" width="300" height="300" ALIGN="left" alt="SIMCLINE 2">
@@ -27,7 +27,7 @@ Meanwhile there is well documented (<b>FTMS</b>) FiTness Machine Service protoco
 A next generation of Simclines will hopefully be based on this FTMS, when all companies embrace its open standard, however, today we still have to open our box of tricks! <br>
 
 # ESP32 versions available --> Work in progress!
-In week #9 of 2023 I have added ESP32 Wahoo Kickr versions for Client, Server, Bridge and a fully geared Simcline. These versions still need to be fully tested before they will be as reliable as the Feather nRF52840 Express versions. The ESP32 versions have been developed with the Adafruit ESP32 Feather V2 Development board (8MB Flash + 2 MB PSRAM - STEMMA QT). This board has the same formfactor and is more or less pin compatible with the hitherto applied Feather nRF52840 Express development board. [see: ESP32 Feather V2 for information.](https://www.adafruit.com/product/5400)<br>
+In week #9 of 2023 I have added ESP32 Wahoo Kickr versions for Client, Server, Bridge and a fully geared Simcline. These versions still need to be fully tested before they will be as reliable as the Feather nRF52840 Express versions. The ESP32 versions have been developed with the <b>Adafruit ESP32 Feather V2</b> Development board (8MB Flash + 2 MB PSRAM - STEMMA QT). This board has the same formfactor and is more or less pin compatible with the hitherto applied Feather nRF52840 Express development board. [see: ESP32 Feather V2 for information.](https://www.adafruit.com/product/5400)<br>
 If you are using an ESP32 board then also download the ESP32 NimBLE library, see [Arduino Installation NimBLE](https://github.com/h2zero/NimBLE-Arduino#arduino-installation)<br>
 
 # How to start?<br>
@@ -43,7 +43,7 @@ In the Github repository (see above) you will find the appropriate test code nam
 
 <b>What it does in short:</b><br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Wahoo_Feather_Zwift_BLE.png" align="left" width="1000" height="500" alt="Simcline in the Middle"><br>
-The <b>Wahoo_Zwift_Bridge</b> code links a bike trainer (BLE Server Wahoo KICKR) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52840/832, like a bridge in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! This test code is fully ignorant of the mechanical components that drive the Simcline. It simply estabishes a virtual BLE bridge and allows you to ride the bike on the Wahoo trainer and feel the resistance that comes with it, thanks to Zwift. The experience should not differ from a normal direct one-to-one connection, Zwift - Wahoo KICKR!<br>
+The <b>Wahoo_Zwift_Bridge</b> code links a bike trainer (BLE Server Wahoo KICKR) and a PC/Laptop (BLE Client running Zwift) with the Feather nRF52/ESP32, like a bridge in between. The MITM bridge can pass on, control, filter and alter the interchanged trafic data! This test code is fully ignorant of the mechanical components that drive the Simcline. It simply estabishes a virtual BLE bridge and allows you to ride the bike on the Wahoo trainer and feel the resistance that comes with it, thanks to Zwift. The experience should not differ from a normal direct one-to-one connection, Zwift - Wahoo KICKR!<br>
 + The client-side scans and connects with the Wahoo relevant Cycling Power Service (<b>CPS</b>) plus the additional Wahoo proprietary CPS characteristic and collects cyling power data like Zwift would do! The code with the name: <b>Wahoo_Client</b> is doing just that one side of the "bridge"!
 + The Server-side advertises and enables connection with Cycling apps like Zwift and collects relevant resistance data, it simulates as if an active Wahoo trainer is connected to Zwift or alike! The code with the name: <b>Wahoo_Server</b> is doing just the other side of the "bridge"!
 + The <b>Wahoo_Zwift_Bridge</b> code is connecting both sides at the same time: the full-blown bridge!<br clear="left">
@@ -51,7 +51,7 @@ The <b>Wahoo_Zwift_Bridge</b> code links a bike trainer (BLE Server Wahoo KICKR)
 <b>How to make it work?</b><br>
 The requirements are simple: 
 + running Zwift app or alike, 
-+ working Feather nRF52840/52832 board <u>plus</u> SSD1306 Oled display 
++ working Feather nRF52840 or Adafruit ESP32 Feather V2
 + a Wahoo KICKR trainer.<br>
 
 <b>Use the test code for reconnaissance!</b><br>
@@ -59,8 +59,8 @@ Please follow the instructions at the first part of the program code!
 + Start your reconnaissance with running <b>Wahoo_Client</b> and experience how the Feather is controlling the resistance of your Wahoo trainer. 
 + Next step is running <b>Wahoo_Server</b>, pairing with Zwift and then notice how your avatar is moving effortless in the Zwift world controlled by the Feather.<br>
 
-<i>The 2 test programs (Client and Server) are NOT using a SSD1306 display, only Serial Monitor to show what is happening!</i><br>
-Please write down the MAC or Device Addresses of a) your Wahoo trainer and b) your Desktop/Laptop with Zwift. These are presented in the Serial Monitor log file when running the Client and Server test code.<br>
+<i>The 3 test programs (Client, Server and Bridge) are <b>ONLY</b> utilizing Serial Monitor to show what is happening!</i><br>
+Please write down the MAC or Device Addresses of a) your Wahoo trainer and b) your Desktop/Laptop with Zwift. These are presented in the Serial Monitor log file when running the Client, Server and Bridge test code.<br>
 
 <b>Now it is time to test the bridge!</b><br>
 The <b>Wahoo_Zwift_Bridge</b> code needs these "hardware" addresses to unmistakingly establish a BLE connection with the right device. I know it can be implemented differently but this is to avoid unwanted BLE connection(s) with an additional power meter, another fitness device or a second computer/laptop, etcetera. 
@@ -80,21 +80,21 @@ The <b>Wahoo_Zwift_Bridge</b> code needs these "hardware" addresses to unmistaki
 The two precise device addresses are critical to assure a reliable test! You have to insert the values in the program code!<br> 
 
 1) First insert in the <b>Wahoo_Zwift_Bridge</b> code the two precise BLE MAC Addresses it has to connect with
-2) Upload and Run this code on the Feather nRF52840
+2) Upload and Run this code on the Feather nRF52840 Express or Adafruit ESP32 Feather V2
 2) Start the Serial Monitor to catch debugging info
 3) Start/Power-On the Wahoo trainer  
 4) Feather and Trainer will pair as reported on the Serial Monitor
 5) Start Zwift on your computer or tablet
-6) Search on Zwift pairing screen "<b>Power</b>" for the Feather nRF52 a.k.a. "<b>Sim Wahoo</b>"
+6) Search on Zwift pairing screen "<b>Power</b>" for the Feather a.k.a. "<b>Sim Wahoo</b>"
 7) Pair <b>Power</b> and <b>Controllable</b> with "<b>Sim Wahoo</b>"
 8) Notice Wahoo does NOT support Speed nor Cadence, optionally pair with alternative
 9) After successful pairing start the default Zwift ride or any ride you wish
 10) Make Serial Monitor visible on top of the Zwift window 
 11) Hop on the bike and make it happen..
-12) Inspect the info presented by Serial Monitor and check the SSD1306 for the Zwift road inclination values.....
+12) Inspect the info presented by Serial Monitor for the Zwift road inclination values.....
 <br clear="left">
 
-# Overview of Arduino Program Code Flow and Snippets<br>
+# Overview of Wahoo Simcline nRF52 Code Flow and Snippets<br>
 + Include headers of libraries and declare classes
 ```C++
 .
@@ -286,13 +286,13 @@ void server_cccd_callback(uint16_t conn_handle, BLECharacteristic* chr, uint16_t
   Bluefruit.begin(1, 1);
   // Set the device name (keep it short!) 
 #if Serial_Monitor
-  Serial.println("Setting Device Name to 'Wahoo Sim'");
+  Serial.println("Setting Device Name to 'Sim Wahoo'");
 #endif
   // Supported tx_power values depending on mcu:
   // - nRF52832: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +3dBm and +4dBm.
   // - nRF52840: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +2dBm, +3dBm, +4dBm, +5dBm, +6dBm, +7dBm and +8dBm.
   Bluefruit.setTxPower(4); // See above for supported values: +4dBm
-  Bluefruit.setName("Wahoo Sim");
+  Bluefruit.setName("Sim Wahoo");
 
   Setup_Client_CPS();
   Client_Start_Scanning();
@@ -445,7 +445,7 @@ After some exploring of the field (I had no experience with App development), th
 
 # Flow and Some Code Snippets<br>
 + The Simcline Companion app is differently functioning with this implementation of the Simcline Wahoo code... First of all and most important the "Bridge-Function" is a very heavy burden on the processing capacity of the Feather nRF52. This simply does NOT (!) allow the smartphone to be connected over BLE at the same time the Laptop/Desktop (with Zwift) is connected, as is the case when you have a TACX trainer connected!
-+ After startup of the Simcline is established and it has paired with trainer and laptop (with Zwift), you have to disconnect (unpair) first the Simcline (a.k.a. Wahoo Sim) on the Zwift pairing screen. Only then it starts (BLE) advertising for the smartphone to connect! The Companion App (on your smartphone) establishes a connection over BLE with the Nordic UART service (a.k.a. BLEUART) for exchange of information. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings (<= 20 bytes) containing diagnostic messages or cyling variables.<br>
++ After startup of the Simcline is established and it has paired with trainer and laptop (with Zwift), you have to disconnect (unpair) first the Simcline (a.k.a. Sim Wahoo) on the Zwift pairing screen. Only then it starts (BLE) advertising for the smartphone to connect! The Companion App (on your smartphone) establishes a connection over BLE with the Nordic UART service (a.k.a. BLEUART) for exchange of information. A simple dedicated protocol was implemented that allows for bidirectional exchange of short strings (<= 20 bytes) containing diagnostic messages or cyling variables.<br>
 + At first the SIMCLINE sends the latest (persistent) settings data to allow the App user to assess the current values.
 + From this moment on the App user can change the current settings or control data, the Companion App sends these to the SIMCLINE to make use of.
 + The SIMCLINE receives asynchronously settings and sets the appropriate operational variables in accordance. This determines only at a later stage the working of the equipment!
