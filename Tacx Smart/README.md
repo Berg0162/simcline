@@ -103,7 +103,7 @@ Sending Common Page 70 allows a connected device to request specific data pages 
 .
 ```
 By sending regularly a request for Data Page 51 (0x33) (Track Resistance) the SIMCLINE is always informed about the settings of the current grade of the simulated track and the coefficient of rolling resistance. These values are both set by the <b>ANT+ controller</b>. For proper functioning of the SIMCLINE only the current road grade is critical.</br>
-# Overview of Arduino Program Code Flow and Snippets<br>
+# Overview of Arduino (Feather nRF52840 Express) Program Code Flow and Snippets<br>
 + Include headers of libraries and declare classes
 ```C++
 .
@@ -371,6 +371,8 @@ So when the Simcline seems not to follow the road inclination values on the trai
 <br>
 
 # [Code support for Wahoo KICKR trainers](https://github.com/Berg0162/simcline/tree/master/Wahoo%20Kickr/)<br>
+
+# [Code support for FTMS-enabled trainers](https://github.com/Berg0162/simcline/tree/master/FTMS%20Enabled)<br>
 
 # Mechanical Construction of SIMCLINE<br>
 There are elaborated <b>Instructables</b> available with all the nitty gritty of how to create, construct and install the various parts and components of the SIMCLINE.<br> 
