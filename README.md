@@ -20,7 +20,7 @@ The applied electronic components in the 2 projects are somewhat different but N
 
 Finally you have to select the SIMCLINE code that is appropriate for the trainer of your liking!<br>
 
-# [nRF52 Code support for Smart TACX trainers](https://github.com/Berg0162/simcline/tree/master/Tacx%20Smart)<br>
+# [nRF52/ESP32 Code support for Smart TACX trainers](https://github.com/Berg0162/simcline/tree/master/Tacx%20Smart)<br>
 
 # [nRF52/ESP32 Code support for Wahoo KICKR trainers](https://github.com/Berg0162/simcline/tree/master/Wahoo%20Kickr/)<br>
 
