@@ -192,6 +192,7 @@ The two precise device addresses are critical to assure a reliable test run! You
 |Trainer brand/type  |Testing parter|FTMS_Client|FTMS_Server|FTMS_Bridge|Simcline_FTMS|Dev.Board|
 |--------------------|--------------|-----------|-----------|-----------|-------------|---------|
 |Elite Direto XR |[cherryphilip74](https://github.com/cherryphilip74)|Working|Working|Working|Working|nRF52840|
+|Elite Suito |[Macrcd](https://github.com/macrocd)|Working|Working|Working|Working|nRF52840|
 |Zwift Hub |[le-joebar](https://github.com/le-joebar)|Working|Working|Working|Working|nRF52840|
 |Zwift Hub |[le-joebar](https://github.com/le-joebar)|Working|Working|Working|To Do|ESP32|
 
