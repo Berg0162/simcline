@@ -111,7 +111,7 @@ To benefit the most of the dual core of the ESP32 Feather the Simcline program l
 <br><br>
 + Set in the Arduino IDE 2.0 --> Tools Menu --> <b>Events Run On: "Core 1"</b><br>
 + Set in the Arduino IDE 2.0 --> Tools Menu --> <b>Arduino Runs On: "Core 1"</b><br>
-+ The <b>xControlUpDownMovement</b> is set in the program code to run on "Core 0". This routine is "continuously" controlling the Up- and Down-movements of the actuator in alignment with the repeatedly changing information about the road inclination. <br> 
++ The <b>xControlUpDownMovement</b> is set in the program code to run on <b>Core 0</b>. This routine is "continuously" controlling the Up- and Down-movements of the actuator in alignment with the repeatedly changing information about the road inclination. You do not want any interference with other critical processes like the handling of all BLE traffic!<br> 
 
 # Overview of Arduino Feather nRF52840 Express Program Code Flow and Snippets<br>
 + Include headers of libraries and declare classes
