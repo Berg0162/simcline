@@ -105,11 +105,11 @@ Sending Common Page 70 allows a connected device to request specific data pages 
 By sending regularly a request for Data Page 51 (0x33) (Track Resistance) the SIMCLINE is always informed about the settings of the current grade of the simulated track and the coefficient of rolling resistance. These values are both set by the <b>ANT+ controller</b>. For proper functioning of the SIMCLINE only the current road grade is critical.</br>
 
 # Overview of Arduino Adafruit ESP32 Feather V2 Program Code Flow and Snippets (work in progress)<br>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Arduino_IDE_2_Tools_Menu.jpg" align "left" width="440" height="310" alt="Arduino IDE 2.0 Tools Menu">
 To benefit the most of the dual core of the ESP32 Feather the Simcline program load must be balanced carefully. The experience has shown that a reliable situation is achieved when one realizes the following settings:
-<img src="https://github.com/Berg0162/simcline/blob/master/images/Arduino_IDE_2_Tools_Menu.jpg" width="440" height="310" alt="Arduino IDE 2.0 Tools Menu"><br clear="right">
 + Set in the Arduino IDE 2.0 --> Tools Menu --> Events Run On: "Core 1"
 + Set in the Arduino IDE 2.0 --> Tools Menu --> Arduino Runs On: "Core 1"
-+ The <b>xControlUpDownMovement</b> is set in the program code to run on "Core 0". This routine is "continuously" controlling the Up- and Down-movements of the actuator in alignment with the repeatedly changing information about the road inclination. 
++ The <b>xControlUpDownMovement</b> is set in the program code to run on "Core 0". This routine is "continuously" controlling the Up- and Down-movements of the actuator in alignment with the repeatedly changing information about the road inclination. <br clear="right"> 
 
 # Overview of Arduino Feather nRF52840 Express Program Code Flow and Snippets<br>
 + Include headers of libraries and declare classes
