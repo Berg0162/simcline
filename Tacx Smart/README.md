@@ -106,7 +106,7 @@ By sending regularly a request for Data Page 51 (0x33) (Track Resistance) the SI
 
 # Overview of Arduino Adafruit ESP32 Feather V2 Program Code Flow and Snippets (work in progress)<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Arduino_IDE_2_Tools_Menu.jpg" align="left" width="440" height="310" alt="Arduino IDE 2.0 Tools Menu">
-To benefit the most of the dual core of the ESP32 Feather the Simcline program load must be balanced carefully. The experience has shown that a reliable situation is achieved when one realizes the following settings:<br clear="left">
+The module nestled in at the end of this Feather contains a dual-core ESP32 chip, 8 MB of SPI Flash, 2 MB of PSRAM, a tuned PCB antenna, and all the passives you need to take advantage of this powerful new processor. The ESP32 has both WiFi and Bluetooth Classic/LE support. That means it's perfect for just about any wireless or Internet-connected project.To benefit the most of the dual cores of the ESP32 Feather the Simcline program load must be balanced carefully. The experience has shown that a reliable situation is achieved when one realizes the following settings:<br clear="left">
 
 <br><br>
 + Set in the Arduino IDE 2.0 --> Tools Menu --> <b>Events Run On: "Core 1"</b><br>
