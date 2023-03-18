@@ -94,6 +94,17 @@ The two precise device addresses are critical to assure a reliable test! You hav
 12) Inspect the info presented by Serial Monitor for the Zwift road inclination values.....
 <br clear="left">
 
+# Overview of Arduino Adafruit ESP32 Feather V2 Program Code Flow and Snippets (work in progress)<br>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Arduino_IDE_2_Tools_Menu.jpg" align="left" width="440" height="310" alt="Arduino IDE 2.0 Tools Menu">
+The module nestled in at the end of this Feather contains a dual-core ESP32 chip, 8 MB of SPI Flash, 2 MB of PSRAM, a tuned PCB antenna, and all the passives you need to take advantage of this powerful new processor. The ESP32 has both WiFi and Bluetooth Classic/LE support. That means it's perfect for just about any wireless or Internet-connected project.
+The Arduino IDE supports FreeRTOS for the ESP32, which is a Real Time Operating system. This allows us to handle several tasks in parallel that run independently.
+Tasks are pieces of code that execute something. Tasks can run on one of the 2 cores. To benefit the most of the dual cores of the ESP32 Feather the Simcline program load must be balanced carefully. The experience has shown that a reliable situation is achieved when one realizes the following settings:<br clear="left">
+
+<br><br>
++ Set in the Arduino IDE 2.0 --> Tools Menu --> <b>Events Run On: "Core 1"</b><br>
++ Set in the Arduino IDE 2.0 --> Tools Menu --> <b>Arduino Runs On: "Core 1"</b><br>
++ The <b>xControlUpDownMovement</b> task is set in the program code to run on <b>Core 0</b>. This task is "continuously" controlling the Up- and Down-movements of the actuator in alignment with the repeatedly changing information about the road inclination. You do not want any interference with other critical processes like the handling of all BLE traffic!<br> 
+
 # Overview of Wahoo Simcline nRF52 Code Flow and Snippets<br>
 + Include headers of libraries and declare classes
 ```C++
