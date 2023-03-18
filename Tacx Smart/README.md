@@ -108,9 +108,9 @@ By sending regularly a request for Data Page 51 (0x33) (Track Resistance) the SI
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Arduino_IDE_2_Tools_Menu.jpg" align="left" width="440" height="310" alt="Arduino IDE 2.0 Tools Menu">
 To benefit the most of the dual core of the ESP32 Feather the Simcline program load must be balanced carefully. The experience has shown that a reliable situation is achieved when one realizes the following settings:<br clear="left">
 
-<br><br>
-+ Set in the Arduino IDE 2.0 --> Tools Menu --> Events Run On: "Core 1"
-+ Set in the Arduino IDE 2.0 --> Tools Menu --> Arduino Runs On: "Core 1"
+<br>
++ Set in the Arduino IDE 2.0 --> Tools Menu --> <b>Events Run On: "Core 1"</b>
++ Set in the Arduino IDE 2.0 --> Tools Menu --> <b>Arduino Runs On: "Core 1"</b>
 + The <b>xControlUpDownMovement</b> is set in the program code to run on "Core 0". This routine is "continuously" controlling the Up- and Down-movements of the actuator in alignment with the repeatedly changing information about the road inclination. <br> 
 
 # Overview of Arduino Feather nRF52840 Express Program Code Flow and Snippets<br>
