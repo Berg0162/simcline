@@ -12,6 +12,7 @@ The SIMCLINE Companion App (for Android smartphones) can be paired simultaneousl
 
 # How to start?<br>
 + Install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) and all the libraries on a PC/Mac.
++ If you are using an ESP32 board then also download the ESP32 NimBLE library, see [Arduino Installation NimBLE](https://github.com/h2zero/NimBLE-Arduino#arduino-installation)
 + Download all the code from [Github](https://github.com/Berg0162/simcline/tree/master/Tacx%20Smart) and install.
 <br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry_02.jpg" align="left" width="200" height="200" alt="Cardboard">
