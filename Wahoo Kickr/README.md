@@ -26,9 +26,13 @@ Meanwhile there is well documented (<b>FTMS</b>) FiTness Machine Service protoco
 
 A next generation of Simclines will hopefully be based on this FTMS, when all companies embrace its open standard, however, today we still have to open our box of tricks! <br>
 
-# ESP32 versions available --> Work in progress!
-In week #9 of 2023 I have added ESP32 Wahoo Kickr versions for Client, Server, Bridge and a fully geared Simcline. These versions still need to be fully tested before they will be as reliable as the Feather nRF52840 Express versions. The ESP32 versions have been developed with the <b>Adafruit ESP32 Feather V2</b> Development board (8MB Flash + 2 MB PSRAM - STEMMA QT). This board has the same formfactor and is more or less pin compatible with the hitherto applied Feather nRF52840 Express development board. [see: ESP32 Feather V2 for information.](https://www.adafruit.com/product/5400)<br>
-If you are using an ESP32 board then also download the ESP32 NimBLE library, see [Arduino Installation NimBLE](https://github.com/h2zero/NimBLE-Arduino#arduino-installation)<br>
+# Choose a Development board: nRF52840 or ESP32?<br>
+Until early 2023 the Simcline project (a.o.) solely worked with the <b>Feather nRF52840 Express</b> development board and the Bluefruit/Adafruit libraries. This is a very stable platform and gave reliable results during development and what's more during many indoor seasons of 5 hours per week operation! However, the MITM application and actuator control (a.k.a. Simcline) is at the capacity limits of the nRF52840 processor. 
+See for a reliable and <b>proven</b> solution: [Adafruit Feather nRF52840 Express](https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather) <br>
+
+So the question was raised why not use the <b>ESP32</b>, a series of low-cost and low-power System on a Chip (SoC) microcontrollers developed by Espressif that include Wi-Fi and Bluetooth wireless capabilities and dual-core processor? See for an introduction: [Random Nerds Tutorials](https://randomnerdtutorials.com/getting-started-with-esp32/). Particularly the multiprocessing capabilities of the dual-core processor make the ESP32 a very tempting option in this project!
+To benefit of the same formfactor (fit with the Simcline 2.0 component box!), I decided to (re)produce the Simcline code with the [Adafruit Feather ESP32 V2](https://learn.adafruit.com/adafruit-esp32-feather-v2) for the <b>ESP32</b> platform. Just comparing the overal specs (on paper) of both processor platforms is not sufficient... one needs to take into account the (quality of the) available libraries as well to reach success. The 'standard' ESP32 Arduino <b>Bluedroid</b> library (for BLE support) turned out to be buggy! Fortunately [H2Zero](https://github.com/h2zero/NimBLE-Arduino) has created a more or less compatible replacement for Bluedroid, called <b>NimBLE-Arduino</b>! The application of <b>NimBLE</b> saved the porting of the software to the ESP32 platform! 
+In week 9 of 2023 the ESP32 code reached a stable level and became publicly available for testing with Wahoo Kickr trainers.
 
 # How to start?<br>
 + Install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) and all the libraries on a PC/Mac.
