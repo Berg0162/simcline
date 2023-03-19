@@ -94,16 +94,120 @@ The two precise device addresses are critical to assure a reliable test! You hav
 12) Inspect the info presented by Serial Monitor for the Zwift road inclination values.....
 <br clear="left">
 
-# Overview of Arduino Adafruit ESP32 Feather V2 Program Code Flow and Snippets (work in progress)<br>
+ 
+# Dual Processor use with ESP32
+One of the advantages of the ESP32 platform is the fact that the ESP32 WROOM processor has two cores. This makes it possible to precisely balance the load of a program over 2 processor cores. <br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Arduino_IDE_2_Tools_Menu.jpg" align="left" width="440" height="310" alt="Arduino IDE 2.0 Tools Menu">
-The module nestled in at the end of this Feather contains a dual-core ESP32 chip, 8 MB of SPI Flash, 2 MB of PSRAM, a tuned PCB antenna, and all the passives you need to take advantage of this powerful new processor. The ESP32 has both WiFi and Bluetooth Classic/LE support. That means it's perfect for just about any wireless or Internet-connected project.
-The Arduino IDE supports FreeRTOS for the ESP32, which is a Real Time Operating system. This allows us to handle several tasks in parallel that run independently.
-Tasks are pieces of code that execute something. Tasks can run on one of the 2 cores. To benefit the most of the dual cores of the ESP32 Feather the Simcline program load must be balanced carefully. The experience has shown that a reliable situation is achieved when one realizes the following settings:<br clear="left">
+With the Simcline this is particular usefull for the motor control of the actuator. During operation Zwift sends from time to time new settings, and one of these is the grade value (road inclination in degrees). The program translates the grade to a level that should be reached by the actuator to simulate exactly the road grade that was received from Zwift. However, the actuator can only be switched to <b>move up</b>, <b>move down</b> or <b>stop</b>. After  having set the actuator to move (up or down), the program has to check continuously if the actuator has reached the desired level by reading its position with the help of the Time-Of-Flight sensor and act accordingly. Meanwhile the trainer sends your cycling data and the Zwift app has to confirm the receipt of these data. The data sent by Zwift has also to be tranferred to the trainer and also the trainer has to confirm the receipt. Being a MITM means handling a lot of BLE traffic and it does not allow for mistakes!
+The load of the Simcline program itself, the BLE handling and the critical control of the actuator is balanced over 2 processor cores on the ESP32 platform.
+The following code snippets show how this is achieved for controlling the actuator motor. To avoid conflicts during variable updates (i.c. TargetPosition) a Binary Semaphore scheme is applied to protect <b>task shared variables</b> during an update.<br clear="left">
 
-<br><br>
-+ Set in the Arduino IDE 2.0 --> Tools Menu --> <b>Events Run On: "Core 1"</b><br>
-+ Set in the Arduino IDE 2.0 --> Tools Menu --> <b>Arduino Runs On: "Core 1"</b><br>
-+ The <b>xControlUpDownMovement</b> task is set in the program code to run on <b>Core 0</b>. This task is "continuously" controlling the Up- and Down-movements of the actuator in alignment with the repeatedly changing information about the road inclination. You do not want any interference with other critical processes like the handling of all BLE traffic!<br> 
+At the start the major players are defined
+```C++
+.
+// ----------------------xControlUpDownMovement task definitions ------------------
+SemaphoreHandle_t xSemaphore = NULL;
+TaskHandle_t ControlTaskHandle = NULL;
+// Set Arduino IDE Tools Menu --> Events Run On: "Core 1"
+// Set Arduino IDE Tools Menu --> Arduino Runs On: "Core 1"
+// Run xControlUpDownMovement on "Core 0"
+const BaseType_t xControlCoreID = 0;
+void xControlUpDownMovement(void* arg); 
+// --------------------------------------------------------------------------------
+.
+```
+In the setup() routine the variables are instantiated (after checking the mechanics of the motor function) and the <b>xControlUpDownMovement</b> task is pinned to processor <b>core 0</b>, with a priority of 10. Most of the Simcline program and Events are running on <b>core 1</b>.
+```C++
+.
+  } else {
+    ShowOnOledLarge("Testing", "Functions", "Done!", 500);
+    // Is working properly --> Start Motor Control Task
+    xSemaphore = xSemaphoreCreateBinary();
+    xTaskCreatePinnedToCore(xControlUpDownMovement, "xControlUpDownMovement", 4096, NULL, 10, &ControlTaskHandle, xControlCoreID);
+    xSemaphoreGive(xSemaphore);
+    DEBUG_PRINTLN("Motor Control Task Created and Active!");        
+    IsBasicMotorFunctions = true;
+    DEBUG_PRINTLN("Simcline Basic Motor Funtions are working!!");
+    // Put Simcline in neutral: flat road position
+#ifdef EMA_ALPHA
+    // Init EMA filter at first call with flat road position as reference
+    TargetPosition = EMA_TargetPositionFilter(TargetPosition); 
+#endif
+    SetNewActuatorPosition();
+  }
+.
+```
+Whenever new values for the road grade are received these are translated to a physical actuator position (level above ground) and the <b>TargetPosition</b> is set during Semaphore protection. When the new position has been set, the protection is cancelled, and the motor control task can access the new setting.
+```C++
+.
+void SetNewActuatorPosition(void) {
+  // Handle mechanical movement i.e. wheel position in accordance with Road Inclination
+  // Map RawgradeValue ranging from 0 to 40.000 on the
+  // TargetPosition (between MINPOSITION and MAXPOSITION) of the Lifter
+  // Notice 22000 is equivalent to +20% incline and 19000 to -10% incline
+  RawgradeValue = constrain(RawgradeValue, RGVMIN, RGVMAX); // Keep values within the safe range
+  TargetPosition = map(RawgradeValue, RGVMIN, RGVMAX, MAXPOSITION, MINPOSITION);
+  // EMA filter for smoothing quickly fluctuating Target Position values see: Zwift Titan Grove
+#ifdef EMA_ALPHA
+  TargetPosition = EMA_TargetPositionFilter(TargetPosition);
+#endif
+  if(IsBasicMotorFunctions) {  
+    xSemaphoreTake(xSemaphore, portMAX_DELAY); 
+    lift.SetTargetPosition(TargetPosition);
+    xSemaphoreGive(xSemaphore);
+#ifdef MOVEMENTDEBUG
+    DEBUG_PRINTF("RawgradeValue: %05d Grade percent: %03.1f%% ", RawgradeValue, gradePercentValue);
+    DEBUG_PRINTF("TargetPosition: %03d\n", TargetPosition, DEC);
+#endif
+  }  
+}
+.
+```
+The motor control task regularly checks how far off the actuator position is from its target position and if it should be braked yet. However, it happens all the time that the road grade changed from upward to flat or to downward. The actuator should follow these changes and therefore the motor is switched many times to brake or to reverse its movement. When the motor control task is accessing the relevant variables the semaphore is protecting these against updates!
+```C++
+void xControlUpDownMovement(void *arg) {
+  // Check "continuously" the Actuator Position and move Motor Up/Down until target position is reached
+  int OnOffsetAction = 0;
+  const TickType_t xDelay = 110 / portTICK_PERIOD_MS; // Block for 110ms < 10Hz sample rate of VL6180X
+  while(1) {
+    if(xSemaphoreTake(xSemaphore, portMAX_DELAY)) {
+        // BLE channels can interrupt and consequently target position changes on-the-fly !!
+        // We do not want changes in TargetPosition during one of the following actions!!!
+        OnOffsetAction = lift.GetOffsetPosition(); // calculate offset to target and determine action
+        switch (OnOffsetAction)
+            {
+              case 0 :
+                lift.brakeActuator();
+                #ifdef MOVEMENTDEBUG
+                DEBUG_PRINTLN(F(" -> Brake"));
+                #endif
+                break;
+              case 1 :
+                lift.moveActuatorUp();
+                #ifdef MOVEMENTDEBUG
+                DEBUG_PRINTLN(F(" -> Upward"));
+                #endif
+                break;
+              case 2 :
+                lift.moveActuatorDown();
+                #ifdef MOVEMENTDEBUG
+                DEBUG_PRINTLN(F(" -> Downward"));
+                #endif
+                break;
+              case 3 :
+                // Timeout --> OffsetPosition is undetermined --> do nothing and brake
+                lift.brakeActuator();
+                #ifdef MOVEMENTDEBUG
+                DEBUG_PRINTLN(F(" -> Timeout"));
+                #endif
+                break;
+            } // switch 
+        xSemaphoreGive(xSemaphore);    
+    }      
+    vTaskDelay(xDelay);
+  } // while
+} // end
+```
 
 # Overview of Wahoo Simcline nRF52 Code Flow and Snippets<br>
 + Include headers of libraries and declare classes
