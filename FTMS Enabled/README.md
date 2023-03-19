@@ -227,9 +227,15 @@ The following code snippets show how this is achieved for controlling the actuat
 At the start the major players are defined
 ```C++
 .
+// ----------------------xControlUpDownMovement task definitions ------------------
 SemaphoreHandle_t xSemaphore = NULL;
 TaskHandle_t ControlTaskHandle = NULL;
-void xControlUpDownMovement(void *arg);
+// Set Arduino IDE Tools Menu --> Events Run On: "Core 1"
+// Set Arduino IDE Tools Menu --> Arduino Runs On: "Core 1"
+// Run xControlUpDownMovement on "Core 0"
+const BaseType_t xControlCoreID = 0;
+void xControlUpDownMovement(void* arg); 
+// --------------------------------------------------------------------------------
 .
 ```
 In the setup() routine the variables are instantiated (after checking the mechanics of the motor function) and the <b>xControlUpDownMovement</b> task is pinned to processor <b>core 1</b>, with a priority of 10. Most of the Simcline program is running on <b>core 0</b>.
@@ -239,7 +245,7 @@ In the setup() routine the variables are instantiated (after checking the mechan
     ShowOnOledLarge("Testing", "Functions", "Done!", 500);
     // Is working properly --> Start Motor Control Task
     xSemaphore = xSemaphoreCreateBinary();
-    xTaskCreatePinnedToCore(xControlUpDownMovement, "xControlUpDownMovement", 4096, NULL, 10, &ControlTaskHandle, 1);
+    xTaskCreatePinnedToCore(xControlUpDownMovement, "xControlUpDownMovement", 4096, NULL, 10, &ControlTaskHandle, xControlCoreID);
     xSemaphoreGive(xSemaphore);
     DEBUG_PRINTLN("Motor Control Task Created and Active!");        
     IsBasicMotorFunctions = true;
