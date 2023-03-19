@@ -238,7 +238,7 @@ void xControlUpDownMovement(void* arg);
 // --------------------------------------------------------------------------------
 .
 ```
-In the setup() routine the variables are instantiated (after checking the mechanics of the motor function) and the <b>xControlUpDownMovement</b> task is pinned to processor <b>core 1</b>, with a priority of 10. Most of the Simcline program is running on <b>core 0</b>.
+In the setup() routine the variables are instantiated (after checking the mechanics of the motor function) and the <b>xControlUpDownMovement</b> task is pinned to processor <b>core 0</b>, with a priority of 10. Most of the Simcline program and Events are running on <b>core 1</b>.
 ```C++
 .
   } else {
@@ -290,6 +290,7 @@ The motor control task regularly checks how far off the actuator position is fro
 void xControlUpDownMovement(void *arg) {
   // Check "continuously" the Actuator Position and move Motor Up/Down until target position is reached
   int OnOffsetAction = 0;
+  const TickType_t xDelay = 110 / portTICK_PERIOD_MS; // Block for 110ms < 10Hz sample rate of VL6180X
   while(1) {
     if(xSemaphoreTake(xSemaphore, portMAX_DELAY)) {
         // BLE channels can interrupt and consequently target position changes on-the-fly !!
@@ -325,7 +326,7 @@ void xControlUpDownMovement(void *arg) {
             } // switch 
         xSemaphoreGive(xSemaphore);    
     }      
-    vTaskDelay(10);
+    vTaskDelay(xDelay);
   } // while
 } // end
 ```
