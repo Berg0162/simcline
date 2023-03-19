@@ -32,10 +32,11 @@
   
 # Changelog ESP32 FTMS Simcline
 
-## v1.0.0
+## v0.1.1
 
 ### Added or Changed
-- Added this changelog :)
+- Modified xControlUpDownMovement task; Runs now on "Core 0"; User needs to pin "Core 1" in Tools Menu to Events & Arduino tasks
+- Modified vTaskDelay() to be more in synch with 10Hz sample rate of VL6180X
 
 ### Removed
-- Some older versions
+- 
