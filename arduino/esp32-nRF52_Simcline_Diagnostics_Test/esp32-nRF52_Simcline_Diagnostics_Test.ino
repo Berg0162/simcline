@@ -25,7 +25,7 @@ This is programming code for ESP32 Espressif Wroom boards or
 */
 
 // -------------------------------------------------------------------------------------------
-// COMPILER DIRECTIVE to allow/suppress DEBUG messages that help debugging...
+// COMPILER DIRECTIVE to help debugging...
 // Comment out "#define MANUAL_INPUT_DATA" to activate: input of predetermined test values!
 #define MANUAL_INPUT_DATA
 
