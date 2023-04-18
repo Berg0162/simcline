@@ -37,6 +37,10 @@
 ### Added or Changed
 - Modified xControlUpDownMovement task; Runs now on "Core 0"; User needs to pin "Core 1" in Tools Menu to Events & Arduino tasks
 - Modified vTaskDelay() to be more in synch with 10Hz sample rate of VL6180X
+- Changed Stack Depth values from 2048 to 4096 for Server Control Point Indicate (modified) and Write w Response
+
+## v0.1.2
+- Inserted check (boolean) on Control Point Write-Response out of synch...
 
 ### Removed
 - 
