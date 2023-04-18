@@ -15,10 +15,13 @@
 
 # Changelog ESP32 FTMS_Bridge
 
-## v0.1.0
+## v0.1.2
 
 ### Added or Changed
-- Added first version
+Version 1.1
+Changed Stack Depth values from 2048 to 4096 for Server Control Point Indicate (modified) and Write w Response
+Version 1.2
+Inserted check (boolean) on Control Point Write-Response out of synch...
 
 ### Removed
 - Some older versions
