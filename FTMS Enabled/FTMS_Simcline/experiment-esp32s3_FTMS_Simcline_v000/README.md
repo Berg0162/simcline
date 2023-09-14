@@ -36,7 +36,7 @@ This is a small 5V, 500mA Step-Down Voltage Regulator that is responsible for vo
 All components are documented very well and are low cost. There are lots of examples for use in an Arduino environment. They have turned out to be very reliable. The exact wiring of the components can be followed in the figure above.<br>
 
 ## Experimental Setup
-<img src="https://github.com/Berg0162/simcline/blob/master/images/ESP32S3_Simcline_01.jpg" width=400 height=500>
-<img src="https://github.com/Berg0162/simcline/blob/master/images/ESP32S3_Simcline_02.jpg" width=400 height=500>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/ESP32S3_Simcline_01.jpg" width=300 height=400>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/ESP32S3_Simcline_02.jpg" width=300 height=400>
 
 
