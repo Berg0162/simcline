@@ -7,20 +7,20 @@ T-Display-S3 is a ESP32-S3 development board. It is equipped with a color 1.9" L
 
 ## Quick Specs
 
-MCU: ESP32-S3R8 Dual-core LX7 microprocessor
-Wireless Connectivity: Wi-Fi 802.11, BLE 5 + BT mesh
-Programming Platform: Arduino-ide、 Micropython
-Flash: 16MB
-PSRAM: 8MB
-Bat Voltage Detection: IO04
-Onboard Functions: Boot + Reset + IO14 Button
-LCD: 1.9" diagonal, Full-color TFT Display
-Drive Chip: ST7789V
-Resolution: 170(H)RGB x320(V) 8-Bit Parallel Interface
-Working Power Supply: 3.3V
-Supports: STEMMA QT / Qwiic
-Connector: JST-SH 1.0mm 4PIN
-Dimensions: 62 x 26 x 10mm
+- MCU: ESP32-S3R8 Dual-core LX7 microprocessor
+- Wireless Connectivity: Wi-Fi 802.11, BLE 5 + BT mesh
+- Programming Platform: Arduino-ide、 Micropython
+- Flash: 16MB
+- PSRAM: 8MB
+- Bat Voltage Detection: IO04
+- Onboard Functions: Boot + Reset + IO14 Button
+- LCD: 1.9" diagonal, Full-color TFT Display
+- Drive Chip: ST7789V
+- Resolution: 170(H)RGB x320(V) 8-Bit Parallel Interface
+- Working Power Supply: 3.3V
+- Supports: STEMMA QT / Qwiic
+- Connector: JST-SH 1.0mm 4PIN
+- Dimensions: 62 x 26 x 10mm
 
 # Electronic Components and Circuitry used in version 2.0<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_Light_ESP32S3_T_Display_Wiring.png"  alt="Circuitry version 2.0">
