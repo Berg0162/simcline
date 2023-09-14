@@ -9,7 +9,7 @@ T-Display-S3 is a ESP32-S3 development board. It is equipped with a color 1.9" L
 ## Quick Specs
 - MCU: ESP32-S3R8 Dual-core LX7 microprocessor
 - Wireless Connectivity: Wi-Fi 802.11, BLE 5 + BT mesh
-- Programming Platform: Arduino-ide、 Micropython
+- Programming Platform: Arduino-ide, Micropython
 - Flash: 16MB
 - PSRAM: 8MB
 - Bat Voltage Detection: IO04
