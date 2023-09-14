@@ -42,4 +42,4 @@ All components are documented very well and are low cost. There are lots of exam
 
 ## Video of user interface during riding
 
-https://www.youtube.com/watch?v=asnAkheFVb0&t=11s
+[See](https://www.youtube.com/watch?v=asnAkheFVb0&t=11s)
