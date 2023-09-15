@@ -69,3 +69,4 @@ All components are documented very well and are low cost. There are lots of exam
 ## Video of display during fictional riding
 Notice that the road inclination data were randomly generated (between -10 and +20) in a pace that one will never meet in the real world, just to show the interface during a long ride!
 [See video on Youtube](https://www.youtube.com/watch?v=asnAkheFVb0&t=11s)
+ 
