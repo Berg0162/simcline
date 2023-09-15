@@ -55,6 +55,7 @@ All components are documented very well and are low cost. There are lots of exam
 <img src="https://github.com/Berg0162/simcline/blob/master/images/ESP32S3_Simcline_02.jpg" align="left" width=300 height=400>
 <br clear="left">
 
-## Video of user interface during riding
+## Video of user interface during fictional riding
+Notice that the road inclination data were randomly generated in a pace that one will never meet in the real world, just to show the interface during a long ride!
 
 [See video on Youtube](https://www.youtube.com/watch?v=asnAkheFVb0&t=11s)
