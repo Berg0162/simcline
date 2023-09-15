@@ -3,6 +3,21 @@
 ## Description
 T-Display-S3 is a ESP32-S3 development board. It is equipped with a color 1.9" LCD screen and two programmable buttons. Communication using I8080 interface. Retains the same layout design as T-Display. You can directly use ESP32S3 for USB communication or programming.
 
+## LilyGo ESP32S3 T-display
+This board and ESP32S3 processor was selected for its excellent specifications crisp and colorful display. Aside of gaining experience with the [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI) library, creating a much richer visual user interface (than a SSD1306 0,96 Inch) was the dominant incentive. A lot of inspiration and practical knowledge was obtained by studying on Youtube: [the Volos Projects](https://www.youtube.com/c/VolosProjects). This ended up sofar in a good working and visually attractive Simcline 2.0 interface! What's more, in the experiments the processor was behaving like to be expected (despite the high display interface load) and I did not experience (during operation) any difference with other ESP32 boards (with minimal display interface load) that have been tested thoroughly...<br>
+Unfortunately the LilyGo board does NOT fit the original components box, so that needs extra attention in the near future. Technically there is no reason sofar not to like this board!!!
+
+## Arduino IDE 2.2
+The present code is developed on Arduino IDE 2.2. Notice that you will need an Arduino IDE that is tailored for this specific <b>ESP32S3</b> processor!<br>
+
+## Before you start
+Please follow the installation instructions for the [ESP32S3 T-display](https://github.com/Xinyuan-LilyGO/T-Display-S3)<br>
+If you select in the menu bar of Arduino IDE 2.2 <b>Tools</b>, the settings for the <b>ESP32S3</b> processor and the project are the following:
+<p align=center>
+<img src="https://github.com/Berg0162/s3-switch/blob/main/images/LilyGO_ESP32S3_Tools_Settings.png" width="350" height="400" alt="S3-Switch">
+</p>
+<br clear="left">
+
 ## T-Display-S3 Pinout
 <img src="https://github.com/Berg0162/simcline/blob/master/images/T-Display-S3-pinout.png">
 
@@ -22,7 +37,7 @@ T-Display-S3 is a ESP32-S3 development board. It is equipped with a color 1.9" L
 - Connector: JST-SH 1.0mm 4PIN
 - Dimensions: 62 x 26 x 10mm
 
-# Electronic Components and Circuitry used in version 2.0<br>
+# Electronic Components and Circuitry used in experimental version<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_Light_ESP32S3_T_Display_Wiring.png"  alt="Circuitry version 2.0">
 I have chosen for the following 5 compact active components that are slightly different from the earlier SIMCLINE project and that can finally all be mounted inside the components box:<br>
 <b>Adafruit DRV8871 DC Motor Driver</b><br>
@@ -40,6 +55,8 @@ All components are documented very well and are low cost. There are lots of exam
 <img src="https://github.com/Berg0162/simcline/blob/master/images/ESP32S3_Simcline_02.jpg" align="left" width=300 height=400>
 <br clear="left">
 
-## Video of user interface during riding
+## Video of user interface during fictional riding
+- Notice that the road inclination data were randomly generated (between -10 and +20) in a pace that one will never meet in the real world, just to show the interface during a long ride!<br>
+- Color palette for grade percentage is taken from [www.CylingCols.com](https://www.cyclingcols.com/col/Angliru).
 
 [See video on Youtube](https://www.youtube.com/watch?v=asnAkheFVb0&t=11s)
