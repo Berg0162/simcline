@@ -59,5 +59,7 @@ All components are documented very well and are low cost. There are lots of exam
 - Notice that the road inclination data were randomly generated (between -10 and +20) in a pace that one will never meet in the real world, just to show the interface during a long ride!<br>
 - Color palette for grade percentage is taken from [www.CylingCols.com](https://www.cyclingcols.com/col/Angliru).
 <img src="https://github.com/Berg0162/simcline/blob/master/images/GalibierSE.gif" align="left" width=539 height=280>
+<br clear="left">
+- Road profile is refreshed with every event and shows the last 24 events
 
 [See video on Youtube](https://www.youtube.com/watch?v=asnAkheFVb0&t=11s)
