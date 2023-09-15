@@ -39,7 +39,7 @@ If you select in the menu bar of Arduino IDE 2.2 <b>Tools</b>, the settings for 
 
 # Electronic Components and Circuitry used in experimental version<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_Light_ESP32S3_T_Display_Wiring.png"  alt="Circuitry version 2.0">
-I have chosen for the following 5 compact active components that are slightly different from the earlier SIMCLINE project and that can finally all be mounted inside the components box:<br>
+I have chosen for the following 4 compact active components that are slightly different from the earlier SIMCLINE project and that can finally all be mounted inside the components box:<br>
 <b>Adafruit DRV8871 DC Motor Driver</b><br>
 A small one channel motor driver for 12 V (6.5 - 48 V) and 3,6 Amperes max. This board enables the processor to set the Actuator motor in up or down movement. It transforms logical digital levels (Go Up, Go Down and Stop) from the Feather nRF52/ESP32 to switching of 12 Volt at 3,6 Amperes max., the levels at which the Actuator works. Notice that default the board comes limited to 2,6 Amperes and you need to add a resistor to set for max current level. Install Vertical Through Hole Male PCB Header Pins on the board; this will allow correct mounting of the board inside the components box!<br>
 <b>LYLIGO ESP32S3 T-Display</b><br>
@@ -55,7 +55,7 @@ All components are documented very well and are low cost. There are lots of exam
 <img src="https://github.com/Berg0162/simcline/blob/master/images/ESP32S3_Simcline_02.jpg" align="left" width=300 height=400>
 <br clear="left">
 
-## User interface during a ride
+## Display during a ride
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_ESP32S3_T_Display.png" align="left" width=283 height=628><br>
 - Icons bar on the top shows active connections
 - Actual road grade is shown in digits in the center of a gauge
@@ -66,6 +66,6 @@ All components are documented very well and are low cost. There are lots of exam
 <img src="https://github.com/Berg0162/simcline/blob/master/images/GalibierSE.gif" align="left" width=539 height=280>
 <br clear="left">
 
-## Video of user interface during fictional riding
+## Video of display during fictional riding
 Notice that the road inclination data were randomly generated (between -10 and +20) in a pace that one will never meet in the real world, just to show the interface during a long ride!
 [See video on Youtube](https://www.youtube.com/watch?v=asnAkheFVb0&t=11s)
