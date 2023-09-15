@@ -57,6 +57,6 @@ All components are documented very well and are low cost. There are lots of exam
 
 ## Video of user interface during fictional riding
 Notice that the road inclination data were randomly generated in a pace that one will never meet in the real world, just to show the interface during a long ride!<br>
-Color palette for grade percentage is taken from [wwww.CylingCols.com](HTTPS://wwww.CylingCols.com).
+Color palette for grade percentage is taken from [wwww.CylingCols.com](https://https://www.cyclingcols.com/col/Angliru).
 
 [See video on Youtube](https://www.youtube.com/watch?v=asnAkheFVb0&t=11s)
