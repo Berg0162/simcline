@@ -3,6 +3,21 @@
 ## Description
 T-Display-S3 is a ESP32-S3 development board. It is equipped with a color 1.9" LCD screen and two programmable buttons. Communication using I8080 interface. Retains the same layout design as T-Display. You can directly use ESP32S3 for USB communication or programming.
 
+## LilyGo ESP32S3 T-display
+This board and ESP32S3 processor was selected for its excellent specifications crisp and rich display. Aside of gaining experience with the [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI) library, creating a richer visual user interface (to the Simcline) was the dominant incentive. A lot of inspiration and practical knowledge was obtained by studying on Youtube: [the Volos Projects](https://www.youtube.com/c/VolosProjects). This ended up sofar in a good working and visually attractive Simcline 2.0 interface! What's more, in the experiments the processor was behaving like to be expected and I did not experience any (negative) differences with other ESP32 boards that have been tested thoroughly...<br>
+Unfortunately the LilyGo board does NOT fit the original components box, so that needs extra attention in the near future. Technically there is no reason sofar not to like this board!!!
+
+## Arduino IDE 2.2
+The present code is developed on Arduino IDE 2.2. Notice that you will need an Arduino IDE that is tailored for this specific <b>ESP32S3</b> processor!<br>
+
+## Before you start
+Please follow the installation instructions for the [ESP32S3 T-display](https://github.com/Xinyuan-LilyGO/T-Display-S3)<br>
+If you select in the menu bar of Arduino IDE 2.2 <b>Tools</b>, the settings for the <b>ESP32S3</b> processor and the project are the following:
+<p align=center>
+<img src="https://github.com/Berg0162/s3-switch/blob/main/images/LilyGO_ESP32S3_Tools_Settings.png" width="350" height="400" alt="S3-Switch">
+</p>
+<br clear="left">
+
 ## T-Display-S3 Pinout
 <img src="https://github.com/Berg0162/simcline/blob/master/images/T-Display-S3-pinout.png">
 
