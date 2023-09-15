@@ -61,6 +61,7 @@ All components are documented very well and are low cost. There are lots of exam
 - Actual road grade is shown in digits in the center of a gauge
 - Gauge shows clockwise positive up-hill-grades and counter clockwise negative down-hill-grades
 - Road profile is refreshed with every event (i.e. change of road grade) and shows the last 24 events
+- Position in vertical color palette legend is dynamically shown
 - Color palette for grade percentage is taken from [www.CylingCols.com](https://www.cyclingcols.com/col/Angliru).
 <img src="https://github.com/Berg0162/simcline/blob/master/images/GalibierSE.gif" align="left" width=539 height=280>
 <br clear="left">
