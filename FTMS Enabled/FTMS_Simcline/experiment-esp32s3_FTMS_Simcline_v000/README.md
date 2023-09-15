@@ -22,7 +22,7 @@ T-Display-S3 is a ESP32-S3 development board. It is equipped with a color 1.9" L
 - Connector: JST-SH 1.0mm 4PIN
 - Dimensions: 62 x 26 x 10mm
 
-# Electronic Components and Circuitry used in version 2.0<br>
+# Electronic Components and Circuitry used in experimental version<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_Light_ESP32S3_T_Display_Wiring.png"  alt="Circuitry version 2.0">
 I have chosen for the following 5 compact active components that are slightly different from the earlier SIMCLINE project and that can finally all be mounted inside the components box:<br>
 <b>Adafruit DRV8871 DC Motor Driver</b><br>
