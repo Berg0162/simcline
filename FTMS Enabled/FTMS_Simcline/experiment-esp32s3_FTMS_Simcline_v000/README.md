@@ -57,9 +57,9 @@ All components are documented very well and are low cost. There are lots of exam
 
 ## User interface during a ride
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_ESP32S3_T_Display.png" align="left" width=283 height=628><br>
-- Icons bar on the top shows current connections
+- Icons bar on the top shows active connections
 - Actual road grade is shown in digits in the center of a gauge
-- Gauge shows clockwise positive up-hill-grades and counter clockwise negative down-hill-grades
+- Gauge shows clockwise, positive up-hill-grades and counter clockwise, negative down-hill-grades
 - Road profile is refreshed with every event (i.e. change of road grade) and shows the last 24 events
 - Position in vertical color palette legend is dynamically shown
 - Color palette for grade percentage is taken from [www.CylingCols.com](https://www.cyclingcols.com/col/Angliru).
