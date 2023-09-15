@@ -55,14 +55,15 @@ All components are documented very well and are low cost. There are lots of exam
 <img src="https://github.com/Berg0162/simcline/blob/master/images/ESP32S3_Simcline_02.jpg" align="left" width=300 height=400>
 <br clear="left">
 
-## Video of user interface during fictional riding
+## User interface during a ride
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_ESP32S3_T_Display.png" align="left" width=283 height=628><br>
-
+- Actual road grade digits are shown in the center of a gauge
+- Guage shows clockWise positive up-hill-grades and counter clockwise down-hill-grades
 - Road profile is refreshed with every event (i.e. change of road grade) and shows the last 24 events
 - Color palette for grade percentage is taken from [www.CylingCols.com](https://www.cyclingcols.com/col/Angliru).
 <img src="https://github.com/Berg0162/simcline/blob/master/images/GalibierSE.gif" align="left" width=539 height=280>
 <br clear="left">
-<br>
 
+## Video of user interface during fictional riding
 Notice that the road inclination data were randomly generated (between -10 and +20) in a pace that one will never meet in the real world, just to show the interface during a long ride!
 [See video on Youtube](https://www.youtube.com/watch?v=asnAkheFVb0&t=11s)
