@@ -56,12 +56,13 @@ All components are documented very well and are low cost. There are lots of exam
 <br clear="left">
 
 ## Video of user interface during fictional riding
-<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_ESP32S3_T_Display.png" align="left" width=283 height=628>
+<img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_ESP32S3_T_Display.png" align="left" width=283 height=628><br>
+
 - Road profile is refreshed with every event (i.e. change of road grade) and shows the last 24 events
 - Color palette for grade percentage is taken from [www.CylingCols.com](https://www.cyclingcols.com/col/Angliru).
 <img src="https://github.com/Berg0162/simcline/blob/master/images/GalibierSE.gif" align="left" width=539 height=280>
 <br clear="left">
 <br>
 
-Notice that the road inclination data were randomly generated (between -10 and +20) in a pace that one will never meet in the real world, just to show the interface during a long ride!<br>
+Notice that the road inclination data were randomly generated (between -10 and +20) in a pace that one will never meet in the real world, just to show the interface during a long ride!
 [See video on Youtube](https://www.youtube.com/watch?v=asnAkheFVb0&t=11s)
