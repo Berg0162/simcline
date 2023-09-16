@@ -43,4 +43,12 @@
 - Inserted check (boolean) on Control Point Write-Response out of synch...
 
 ### Removed
-- 
+-
+
+# Changelog EXPERIMENTAL_esp32s3_T-Display_FTMS_Simcline_v012
+
+## v0.1.2
+- Conforms ESP32 FTMS Simcline version 0.1.2
+
+### Added or Changed
+- Added experimental version of ESP32 FTMS Simcline v0.1.2 with a <b>LilyGo ESP32S3 T-Display</b> development board
