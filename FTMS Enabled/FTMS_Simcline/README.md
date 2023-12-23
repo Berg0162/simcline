@@ -42,6 +42,9 @@
 ## v0.1.2
 - Inserted check (boolean) on Control Point Write-Response out of synch...
 
+## v0.1.3
+- Changed CSC service to NOT Mandatory
+
 ### Removed
 -
 
