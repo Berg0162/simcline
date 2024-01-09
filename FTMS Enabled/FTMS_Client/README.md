@@ -15,9 +15,12 @@
 # Changelog ESP32 FTMS_Client
 
 ## v0.1.0
-
 ### Added or Changed
 - Added first version
+
+## v0.1.1
+### Added or Changed
+- Cycling Speed Cadence Service changed to NOT Mandatory
 
 ### Removed
 - Some older versions
