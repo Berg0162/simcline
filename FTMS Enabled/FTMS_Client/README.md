@@ -22,5 +22,9 @@
 ### Added or Changed
 - Cycling Speed Cadence Service changed to NOT Mandatory
 
+## v0.1.2
+### Added or Changed
+- Inserted checks on the input value of sensor location and location description array sizes (CPS, CSC and HBM)
+
 ### Removed
 - Some older versions
