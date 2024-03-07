@@ -1,12 +1,10 @@
 # Changelog nRF52 FTMS_Bridge
 
 ## v0.3.1
-
 ### Added or Changed
 - Corrected unsecure use of sizeof() with string arrays! Feature: FTM, CP and CSC !!!
 
 ## v0.3.2
-
 ### Added or Changed
 - Trainer.IsConnected = true only at the end of client_connect_callback to avoid cluttering of messages
 - Inserted more selective setting of Connection Parameters at start of scanning and at start of advertising
@@ -26,6 +24,10 @@ Inserted check (boolean) on Control Point Write-Response out of synch...
 ## v0.1.3
 ### Added or Changed
 Cycling Speed Cadence Service changed to NOT Mandatory
+
+## v0.1.4
+### Added or Changed
+Inserted checks on the input values of sensor location and location description array sizes (CP, CSC and HBM)
 
 ### Removed
 - Some older versions
