@@ -45,6 +45,9 @@
 ## v0.1.3
 - Changed CSC service to NOT Mandatory
 
+## v0.1.4
+- Inserted checks on the input values of sensor location and location description array sizes (CP, CSC and HBM)
+
 ### Removed
 -
 
