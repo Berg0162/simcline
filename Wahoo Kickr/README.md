@@ -90,8 +90,8 @@ The two precise device addresses are critical to assure a reliable test! You hav
 3) Start/Power-On the Wahoo trainer  
 4) Feather and Trainer will pair as reported on the Serial Monitor
 5) Start Zwift on your computer or tablet
-6) Search on Zwift pairing screen "<b>Power</b>" for the Feather a.k.a. "<b>Sim Wahoo</b>"
-7) Pair <b>Power</b> and <b>Controllable</b> with "<b>Sim Wahoo</b>"
+6) Search on Zwift pairing screen "<b>Power</b>" for the Feather a.k.a. "<b>Sim32</b>" or "<b>Sim52</b>"
+7) Pair <b>Power</b> and <b>Controllable</b> with "<b>Sim32</b>" or "<b>Sim52</b>"
 8) Notice Wahoo does NOT support Speed nor Cadence, optionally pair with alternative
 9) After successful pairing start the default Zwift ride or any ride you wish
 10) Make Serial Monitor visible on top of the Zwift window 
@@ -406,13 +406,13 @@ void server_cccd_callback(uint16_t conn_handle, BLECharacteristic* chr, uint16_t
   Bluefruit.begin(1, 1);
   // Set the device name (keep it short!) 
 #if Serial_Monitor
-  Serial.println("Setting Device Name to 'Sim Wahoo'");
+  Serial.println("Setting Device Name to 'Sim52'");
 #endif
   // Supported tx_power values depending on mcu:
   // - nRF52832: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +3dBm and +4dBm.
   // - nRF52840: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +2dBm, +3dBm, +4dBm, +5dBm, +6dBm, +7dBm and +8dBm.
   Bluefruit.setTxPower(4); // See above for supported values: +4dBm
-  Bluefruit.setName("Sim Wahoo");
+  Bluefruit.setName("Sim52");
 
   Setup_Client_CPS();
   Client_Start_Scanning();
