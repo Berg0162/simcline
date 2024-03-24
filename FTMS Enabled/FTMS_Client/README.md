@@ -26,5 +26,12 @@
 ### Added or Changed
 - Inserted checks on the input value of sensor location and location description array sizes (CPS, CSC and HBM)
 
+## v0.1.3
+### Added or Changed
+- NimBLE registerForNotify() has been deprecated and is replaced with subscribe() / unsubscribe()
+- Replaced Control point test data (Volcano Circuit) for steeper rolling hills to improve experience of pedalling resistance
+- Added more DEBUG on/off selections to minimize serial output information overload
+- Changed device identification naming to a simpler scheme: SIM32
+  
 ### Removed
 - Some older versions
