@@ -48,6 +48,12 @@
 ## v0.1.4
 - Inserted checks on the input values of sensor location and location description array sizes (CP, CSC and HBM)
 
+## v0.1.5
+- Corrected invalid (enable/disable) setting of HR measurement Characteristic in client_Set_All_NotificationIndication()
+- Changed device identification naming to a simpler scheme: SIM32 instead of "SIM DevName"
+- Server Characteristic values (read only) are now updated when a new client connection is established
+- NimBLE registerForNotify() has been deprecated and is replaced with subscribe() / unsubscribe()
+
 ### Removed
 -
 
