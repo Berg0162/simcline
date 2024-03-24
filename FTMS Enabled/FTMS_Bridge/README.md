@@ -32,7 +32,7 @@ Inserted checks on the input values of sensor location and location description 
 ## v0.1.5
 ### Added or Changed
 Corrected invalid (enable/disable) setting of HR measurement Characteristic in client_Set_All_NotificationIndication()<br>
-Changed device identification naming to a simpler scheme: SIM32 or SIM52 instead of  of "Sim DevName"<br>
+Changed device identification naming to a simpler scheme: SIM32 or SIM52 instead of "Sim DevName"<br>
 Server Characteristic values (read only) are now updated when a new client connection is established<br>
 NimBLE registerForNotify() has been deprecated and is replaced with subscribe() / unsubscribe()<br>
 
