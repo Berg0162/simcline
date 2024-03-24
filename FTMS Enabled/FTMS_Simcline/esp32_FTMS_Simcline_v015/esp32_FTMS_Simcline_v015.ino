@@ -11,46 +11,50 @@
         All text must be included in any redistribution
 *********************************************************************/
 
+
 /* -----------------------------------------------------------------------------------------------------
-               This code should work with all indoor cycling trainers that fully support,
-          Fitness Machine Service, Cycling Power Service and Cycling Speed & Cadence Service
-   ------------------------------------------------------------------------------------------------------
-
-    The code links a BLE Server (a peripheral to Zwift) and a BLE Client (a central to the Trainer) with a bridge
-    in between, the ESP32 being man-in-the-middle (MITM).
-    The ESP32-bridge can control, filter and alter the bi-directional interchanged data!
-    The client-side (central) scans and connects with the trainer relevant services: FTMS, CPS and CSC. It collects
-    all cyling data of the services and passes these on to the server-side....
-    The client-side supplies the indoor trainer with target and resistance control data.
-    The server-side (peripheral) advertises and enables connection with cycling apps like Zwift and collects the app's
-    control commands, target and resistance data. It passes these on to the client-side....
-    The server-side supplies the app with the generated cycling data in return.
-
-    The client plus server (MITM) are transparent to the indoor trainer as well as to the training app Zwift or alike!
-
-    Requirements: Zwift app or alike, ESP32 board and a FTMS/CPS/CSC supporting indoor trainer
-    1) Upload and Run this code on a ESP32 board
-    2) Start the Serial Monitor to catch debugging info
-    3) Start/Power On the indoor trainer
-    4) ESP32-bridge and trainer (with <name>) will pair as reported in the output
-    5) Start Zwift on your computer or tablet and wait....
-    6) Search on the Zwift pairing screens for <SIM32>
-    7) Pair: Power, Cadence and Controllable one after another with <SIM32>
-    8) Optionally one can pair as well devices for heartrate and/or steering (Sterzo)
-    9) Start the default Zwift ride or any ride you wish
-   10) Make Serial Monitor output window visible on top of the Zwift window
-   11) Hop on the bike: do the work and feel resistance change with the road
-   12) Inspect the info presented by Serial Monitor.....
-
-    This device is identified with the name <SIM32>. You will see this only when connecting to Zwift on the 
-    pairing screens! Notice: Zwift extends device names with additional numbers for identification!
-
-*/
+ *             This code should work with all indoor cycling trainers that fully support,
+ *        Fitness Machine Service, Cycling Power Service and Cycling Speed & Cadence Service
+ * ------------------------------------------------------------------------------------------------------
+ *
+ *  The code links a BLE Server (a peripheral to Zwift) and a BLE Client (a central to the Trainer) with a bridge 
+ *  in between, the ESP32 being man-in-the-middle (MITM). The ESP32 is an integral part of the Simcline,
+ *  that interprets the exchanged road grade and moves the front wheel up and down with the change in inclination.
+ *  The ESP32-bridge can control, filter and alter the bi-directional interchanged data!
+ *  The client-side (central) scans and connects with the trainer relevant services: FTMS, CPS and CSC. It collects 
+ *  all cyling data of the services and passes these on to the server-side....  
+ *  The client-side supplies the indoor trainer with target and resistance control data.
+ *  The server-side (peripheral) advertises and enables connection with cycling apps like Zwift and collects the app's  
+ *  control commands, target and resistance data. It passes these on to the client-side....  
+ *  The server-side supplies the app with the generated cycling data in return. 
+ *  
+ *  The client plus server (MITM) are transparent to the indoor trainer as well as to the training app Zwift or alike!
+ *  
+ *  Requirements: Zwift app or alike, operational Simcline and a FTMS/CPS/CSC/HBM supporting indoor trainer
+ *  0) Upload and Run this code on the Simcline (i.c. ESP32 board)
+ *  1) Start the Serial Monitor to catch debugging info and check the Oled display
+ *  2) The code will do basic testing of mechanical parts and sensors
+ *  3) Start/Power On the indoor trainer  
+ *  4) Simcline and trainer (with <name>) will pair as reported in the output
+ *  5) Start Zwift on your computer or tablet and wait....
+ *  6) Search on the Zwift pairing screens for the Simcline a.k.a. <SIM32>
+ *  7) Pair: Power, Cadence and Controllable one after another with <SIM32>
+ *  8) Optionally one can pair as well devices for heartrate and/or steering (Sterzo)
+ *  9) Start the default Zwift ride or any ride you wish
+ * 10) Make Serial Monitor output window visible on top of the Zwift window 
+ * 11) Hop on the bike: do the work and feel resistance change with the road
+ * 12) Inspect the info presented by Serial Monitor.....
+ *  
+ *
+ *   This device is identified with the name <SIM32>. You will see this only when connecting to Zwift on the 
+ *   pairing screens! Notice: Zwift extends device names with additional numbers for identification!
+ *  
+ */
 /*
 Version 1.1
 Changed Stack Depth values from 2048 to 4096 for Server Control Point Indicate (modified) and Write w Response
 Version 1.2
-Inserted check (boolean) on Write-Response out of synch...
+Inserted check (boolean) on Control Point Write-Response out of synch...
 Version 1.3 
 Cycling Speed Cadence Service changed to NOT Mandatory
 Version 1.4
@@ -77,21 +81,25 @@ NimBLE registerForNotify() has been deprecated and is replaced with subscribe() 
 #ifdef DEBUG_FTM_INDOORBIKEDATA
 //#define DEBUG_DECODE_IBD        // If defined allows for decoding the Indoor Bike Data
 #endif
-#define DEBUG_FTM_TRAININGSTATUS// If defined allows for parsing the Training Status Data
-#define DEBUG_FTM_STATUS        // If defined allows for parsing the Machine Status Data
-//#define DEBUG_FTM_CONTROLPOINT_RESPONSE     // If defined allows for parsing the Data
+//#define DEBUG_FTM_TRAININGSTATUS// If defined allows for parsing the Training Status Data
+//#define DEBUG_FTM_STATUS        // If defined allows for parsing the Machine Status Data
+#define DEBUG_FTM_CONTROLPOINT_RESPONSE     // If defined allows for parsing the Data
 #define DEBUG_FTM_CONTROLPOINT_OPCODE_DATA  // If defined allows for parsing and decoding Data
+//#define MOVEMENTDEBUG 
 #endif
 // --------------------------------------------------------------------------------------------
+#ifndef ADAFRUIT_FEATHER_ESP32_V2
+#define ADAFRUIT_FEATHER_ESP32_V2
+#endif
+
+// Exponential EMA ALPHA filter definition
+// Used to filter sequence of actuator target positions --> minimize consecutive small up/down movements
+// Should be between low (10-40) is maximal and high (50-90) is minimal filtering
+// Uncomment "#define EMA_ALPHA" to activate
+//#define EMA_ALPHA 60    // Value is in percentage 0-99. 
 
 #define 	BLE_APPEARANCE_GENERIC_CYCLING   1152
-/*
-#define 	BLE_APPEARANCE_CYCLING_CYCLING_COMPUTER   1153
-#define 	BLE_APPEARANCE_CYCLING_SPEED_SENSOR   1154
-#define 	BLE_APPEARANCE_CYCLING_CADENCE_SENSOR   1155
-#define 	BLE_APPEARANCE_CYCLING_POWER_SENSOR   1156
-#define 	BLE_APPEARANCE_CYCLING_SPEED_CADENCE_SENSOR   1157
-*/
+
 #include <NimBLEDevice.h>
 // We need this for setting the Server-side Generic Access Char's --> Appearance and DeviceName
 #include <nimble/nimble/host/services/gap/include/services/gap/ble_svc_gap.h>
@@ -115,7 +123,6 @@ typedef struct
 #define LAPTOPADDRESS {0x05,0x04,0x03,0x02,0x01,0x00} // Little Endian format!!
 // Trainer FTMS enabled Device Address, in printed format: [00:01:02:03:04:05]
 #define TRAINERADDRESS {0x05,0x04,0x03,0x02,0x01,0x00} // Little Endian format!!
- 
 // -----------------------------------------------------------------
 // Initialize connectable device registration
 Device_info_t Trainer    = {TRAINERADDRESS, "MyTrainer", BLE_HS_CONN_HANDLE_NONE, false};
@@ -127,8 +134,8 @@ Device_info_t Smartphone = {        {0x00}, "MyPhone"  , BLE_HS_CONN_HANDLE_NONE
 #define UUID16_SVC_GENERIC_ACCESS                             BLEUUID((uint16_t)0x1800)
 #define UUID16_CHR_DEVICE_NAME                                BLEUUID((uint16_t)0x2A00)
 #define UUID16_CHR_APPEARANCE                                 BLEUUID((uint16_t)0x2A01)
-//#define UUID16_CHR_PERIPHERAL_PREFERRED_CONNECTION_PARAMETERS BLEUUID((uint16_t)0x2A04)
-//#define UUID16_CHR_CENTRAL_ADDRESS_RESOLUTION                 BLEUUID((uint16_t)0x2AA6)
+#define UUID16_CHR_PERIPHERAL_PREFERRED_CONNECTION_PARAMETERS BLEUUID((uint16_t)0x2A04)
+#define UUID16_CHR_CENTRAL_ADDRESS_RESOLUTION                 BLEUUID((uint16_t)0x2AA6)
 BLERemoteService* pRemote_GenericAccess_Service;
 BLERemoteCharacteristic* pRemote_GA_Appearance_Chr; // Read
 uint16_t client_GA_Appearance_Value = BLE_APPEARANCE_GENERIC_CYCLING;  // Default decimal: 1152 -> Generic Cycling
@@ -139,10 +146,10 @@ std::string client_GA_DeviceName_Str = THISDEVICENAME;
 #define UUID16_SVC_DEVICE_INFORMATION                         BLEUUID((uint16_t)0x180A)
 #define UUID16_CHR_MODEL_NUMBER_STRING                        BLEUUID((uint16_t)0x2A24)
 #define UUID16_CHR_SERIAL_NUMBER_STRING                       BLEUUID((uint16_t)0x2A25)
+#define UUID16_CHR_FIRMWARE_REVISION_STRING                   BLEUUID((uint16_t)0x2A26)
+#define UUID16_CHR_HARDWARE_REVISION_STRING                   BLEUUID((uint16_t)0x2A27)
+#define UUID16_CHR_SOFTWARE_REVISION_STRING                   BLEUUID((uint16_t)0x2A28)
 #define UUID16_CHR_MANUFACTURER_NAME_STRING                   BLEUUID((uint16_t)0x2A29)
-//#define UUID16_CHR_FIRMWARE_REVISION_STRING                   BLEUUID((uint16_t)0x2A26)
-//#define UUID16_CHR_HARDWARE_REVISION_STRING                   BLEUUID((uint16_t)0x2A27)
-//#define UUID16_CHR_SOFTWARE_REVISION_STRING                   BLEUUID((uint16_t)0x2A28)
 BLERemoteService*  pRemote_DeviceInformation_Service; 
 BLERemoteCharacteristic* pRemote_DIS_ManufacturerName_Chr;   // Read
 std::string client_DIS_Manufacturer_Str;
@@ -153,16 +160,17 @@ std::string client_DIS_SerialNumber_Str;
 // -------------------------------------------------------------------------------------
 BLEService *server_DeviceInformation_Service;
 BLECharacteristic *server_DIS_ModelNumber_Chr;       // Read
+//std::string client_DIS_ModelNumber_Str = "ESP32 Feather V2";
 BLECharacteristic *server_DIS_SerialNumber_Chr;      // Read
+//std::string client_DIS_SerialNumber_Str = "12345";
+BLECharacteristic *server_DIS_Firmware_Chr;          // Read
+std::string client_DIS_Firmware_Str = "12345";
+BLECharacteristic *server_DIS_Hardware_Chr;          // Read
+std::string client_DIS_Hardware_Str = "12345";
+BLECharacteristic *server_DIS_Software_Chr;          // Read
+std::string client_DIS_Software_Str = "12345";
 BLECharacteristic *server_DIS_ManufacturerName_Chr;  // Read
-/*
-//BLECharacteristic *server_DIS_Firmware_Chr;          // Read
-//std::string client_DIS_Firmware_Str = "12345";
-//BLECharacteristic *server_DIS_Hardware_Chr;          // Read
-//std::string client_DIS_Hardware_Str = "12345";
-//BLECharacteristic *server_DIS_Software_Chr;          // Read
-//std::string client_DIS_Software_Str = "12345";
-*/
+//std::string client_DIS_Manufacturer_Str = "Adafruit Industries";
 //--------------------------------------------------------------------------------------
 
 /* NORDIC UART SERVICE a.k.a. NUS
@@ -195,9 +203,9 @@ BLERemoteCharacteristic* pRemote_CP_Measurement_Chr;    // Notify, Read
 BLERemoteCharacteristic* pRemote_CP_Feature_Chr;        // Read
 uint32_t client_CP_Feature_Flags = 0;
 BLERemoteCharacteristic* pRemote_CP_Location_Chr;       // Read
-uint8_t client_CP_Location_Value = {0x0C};              // --> rear wheel !
+uint8_t client_CP_Location_Value = {0x0C};                    //          --> rear wheel !
 BLERemoteCharacteristic* pRemote_CP_ControlPoint_Chr;   // Indicate, Write
-bool client_ControlPoint_Response = true;   // CPWrite CPIndicate synch test
+bool client_ControlPoint_Response = true;               // CP Write-Response synch test
 // ---------------------------------------------------------------------------------------
 BLEService        *server_CyclingPower_Service;
 BLECharacteristic *server_CP_Measurement_Chr; //                          Notify, Read
@@ -229,7 +237,7 @@ const char* client_CP_Feature_Str[client_CP_Feature_Len] = {
       "Factory calibrated date supported",
       "Enhanced offset compensation supported" };
 
-const uint8_t client_Sensor_Location_Str_Len = 17;      
+const uint8_t client_Sensor_Location_Str_Len = 17;       
 const char* client_Sensor_Location_Str[client_Sensor_Location_Str_Len] = { "Other", "Top of shoe", "In shoe", "Hip", 
     "Front wheel", "Left crank", "Right crank", "Left pedal", "Right pedal", "Front hub", 
     "Rear dropout", "Chainstay", "Rear wheel", "Rear hub", "Chest", "Spider", "Chain ring"};
@@ -282,7 +290,7 @@ BLERemoteCharacteristic* pRemote_HR_Location_Chr;
     0x06 Foot
     0x07–0xFF Reserved for Future Use
 */
-uint8_t client_HR_Location_Value = { 0x01 }; // Chest
+uint8_t client_HR_Location_Value= { 0x01 }; // Chest
 // --------------------------------------------------------------------------------------
 BLEService *server_HeartRate_Service;
 BLECharacteristic *server_HR_Measurement_Chr;  // Notify Write
@@ -378,14 +386,6 @@ typedef union // The union type automatically maps the bytes member array to the
 // Fitness Machine Control Point Data variable
 ftmcp_data_ut server_FTM_Control_Point_Data;
 
-/* Control Point: Common Response Buffers
-const uint8_t ftmcpResponseCode = 0x80;
-const uint8_t ftmcpRespConfirm = 0x01; // Ok!
-const uint8_t ftmcpRespUnknown = 0x02; // Unknown OpCode
-unsigned char ftmcpRespConfirmBuffer[3] = {ftmcpResponseCode, 0x00, ftmcpRespConfirm};
-unsigned char ftmcpRespUnknownBuffer[3] = {ftmcpResponseCode, 0x00, ftmcpRespUnknown};
-*/
-
 // Global variables for decoding of Control Point: INDOOR BIKE DATA RESISTANCE PARAMETERS
 float wind_speed = 0;       // meters per second, resolution 0.001
 float grade = 0;            // percentage, resolution 0.01
@@ -435,23 +435,127 @@ const uint8_t indicationOn[] = {0x2, 0x0};
 const bool indications = false;  //false as first argument to subscribe to indications instead of notifications
 const bool notifications = true; //true as first argument to subscribe to notifications
 // ---------------------------------------------------------------------------------------
-#define CONTROL_POINT_TIME_SPAN 2000    // Time span for sending Control Point data
-unsigned long TimeInterval = 0;
-// ---------------------------------------------------------------------------------
+// Libraries for use of I2C devices (Oled and VL6180X distance sensor)
+#include <SPI.h>
+#include <Wire.h>
+// Necessary libraries for use of Oled display(s)
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+// Additional splash screen bitmap and icon(s) for Oled
+#include "Adafruit_SSD1306_Icons.h" // needs to be in the SAME (!) directory
+// Declarations for an SSD1306 128x64 display connected to I2C (SDA, SCL pins)
+#define SCREEN_WIDTH 128            // SSD1306-OLED display width, in pixels
+#define SCREEN_HEIGHT 64            // SSD1306-OLED display height, in pixels
+#define OLED_RESET -1               // No reset pin on this OLED display
+#define OLED_I2C_ADDRESS 0x3C       // I2C Address of OLED display
+// Declare the display
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+// Declare Global var for OLED Display selection 1 (Cycling data) or 2 (Road Grade)
+uint8_t OledDisplaySelection = 2; // default Road Grade to show
+
+// LittleFS for internal storage of persistent data on the ESP32
+#include <LittleFS.h>
+using namespace fs;
+// Managing persistence of some data with LittleFS system
+// PeRSistent Data is written to a file with the name: PRS_FILENAME
+#define PRS_FILENAME "/prsdata.txt"
+// Minimum(!) Read and Write block sizes
+#define LITTLEFS_BLOCK_SIZE 128
+#define FORMAT_LITTLEFS_IF_FAILED true
+// LittleFS--------------------------------------------------------------
+
+
+//----------- Global variable definitions for high level movement control -----------------------------------------------
+// In theory the RawgradeValue varies between 0 (equals -200% grade) and 40000 (equals +200% grade)
+// SIMCLINE is mechanically working between -10% and +20% --> 19000 and 22000
+
+//------------------------------------------------- WARNING --------------------------------------------------------------
+//------------ SET THESE TWO VALUES IN ACCORDANCE WITH THE MECHANICAL RANGE LIMITATIONS OF YOUR SIMCLINE !!! -------------
+// Raw Grade Value Minimally (Mechanically: the lowest position of wheel axis)  19000 is equiv. of 10% downhill road grade
+#define RGVMIN 19500 // -5%  // Always is RGVMIN < 20000 (flat road level)
+// Raw Grade Value Maximally (Mechanically: the highest position of wheel axis) 22000 is equiv. of 20% uphill road grade
+#define RGVMAX 22000 // 20%  // +20% // Always is RGVMAX > 20000 (flat road level)
+//------------------------------------------------- WARNING --------------------------------------------------------------
+
+// Correction for measuring plane difference and midth wheel axis position (1 cm offset is an MEASUREOFFSET of about 40)
+#define MEASUREOFFSET 50 // about 1.25 cm
+// Raw Grade Value Minimally (Mechanically: the lowest position of wheel axis)  19000 is equiv. of 10% downhill road grade
+// These values are derived from the above RGVMIN and RGVMAX settings
+#define RGVMIN_GRADE (20000-RGVMIN)/100 // Notice: positive value of the Minimal downhill grade! 
+#define RGVMAX_GRADE (RGVMAX-20000)/100 // Notice: positive value of the Maximal uphill grade!
+// Besides what is mechanically possible there are also limits in what is physically pleasant
+// Keep the following aRGVMin and aRGVMax values within the limits of the mechanically feasible values of above !!!
+// DEFAULT Minimally Allowed Raw Grade Value that should not be exceeded: -5%! -> Descent grade Limit
+int aRGVmin = 19500;
+// DEFAULT Maximally Allowed Raw Grade Value that should not be exceeded: 15%! -> Ascent grade limit
+int aRGVmax = 21500;
+// Value for a flat road equals 0% grade or a RGV of 20000; result needs to be corrected for the measure offset
+long RawgradeValue = (20000 - MEASUREOFFSET);
+int GradeChangeFactor = 100; // 100% means no effect, 50% means only halved up/down steps --> Road Grade Change Factor
+// The Grade Percentage of a road is defined as a measure of the road's steepness as it rises and falls along its route
+float gradePercentValue = 0;
+//-----------------------------------------------------------------
+
+/* ------------------------------------------------------------------------------------------------
+ * Warning I/O Pins can have identical board position but different I/O Pin declarations for 
+ * connection with the pins of the Motor driver board
+ * ADAFRUIT_FEATHER_ESP32_V2 is nearly pin compatible with ARDUINO_NRF52840_FEATHER
+*/
+#ifdef ADAFRUIT_FEATHER_ESP32_V2
+#define actuatorOutPin1 A0   // --> A0/P0.02 connected to pin IN2 of the DRV8871 Motor Driver board
+#define actuatorOutPin2 A1   // --> A1/P0.03 connected to pin IN1 of the DRV8871 Motor Driver board
+#endif
+
+// -------------------------- WARNING ------------------------------------------------------------
+// The following VL6180X sensor values are a 100% construction specific and
+// should be experimentally determined, when the Actuator AND the VL6180X sensor are mounted!
+// ------>>>> Test manually and use example/test sketches that go with the VL6180X sensor! <<<<---
+// Microswitches should limit physically/mechanically the upper and lower position of the Actuator!
+// The microswitches are mechanically controlled, and NOT by the software --> should be fail safe!
+// Notice that unrestricted movement at the boundaries can damage the Actuator and/or construction!
+// The following values are respected by the software and will (in normal cases!) never be exceeded!
+#define MINPOSITION 270 // 265 // VL6180X highest value top microswitch activated to mechanically stop operation
+#define MAXPOSITION 470 // 535 // VL6180X lowest value bottom microswitch activated to mechanically stop operation
+
+// -------------------------- WARNING ------------------------------------------------------------
+// Operational boundaries of the VL6180X sensor are used/set in class Lifter after calling its "init".
+// A safe measuring range of at least 30 cm of total movement is recommended for the VL6180X sensor setting!
+//
+// Bandwidth is used in the code to take measuring errors and a safe margin into account when reaching
+// the above defined max or min positions of the construction! The software does painstakingly respect
+// these and is independent of the appropriate working of the microswitches when reaching the boundaries!
+// These microswitches are a SECOND line of defence against out of range and potentially damaging movement!
+#define BANDWIDTH 4
+
+// Library code for low level measuring (VL6180X) and controlling UP and down movement
+#include <Lifter.h> 
+// Decalaration of Lifter Class for control of the low level up/down movement
+Lifter lift;
+// Global variables for Lifter position control --> RawGradeValue has been defined/set previously to flat road level!!
+int16_t TargetPosition = map(RawgradeValue, RGVMIN, RGVMAX, MAXPOSITION, MINPOSITION);
+bool IsBasicMotorFunctions = false; // Mechanical motor functions
+// ----------------------xControlUpDownMovement task definitions ------------------
+SemaphoreHandle_t xSemaphore = NULL;
+TaskHandle_t ControlTaskHandle = NULL;
+// Set Arduino IDE Tools Menu --> Events Run On: "Core 1"
+// Set Arduino IDE Tools Menu --> Arduino Runs On: "Core 1"
+// Run xControlUpDownMovement on "Core 0"
+const BaseType_t xControlCoreID = 0;
+void xControlUpDownMovement(void* arg); 
+// --------------------------------------------------------------------------------
 // Client Connect and Disconnect callbacks defined
 class client_Connection_Callbacks:public BLEClientCallbacks {
   void onConnect(BLEClient* pClient);
   void onDisconnect(BLEClient* pClient);
-  bool onConnParamsUpdateRequest(BLEClient* pClient, ble_gap_upd_params *params);  
-};
-
+  bool onConnParamsUpdateRequest(BLEClient* pClient, ble_gap_upd_params *params);
+  };
 // Server Connect and Disconnect callbacks defined
 class server_Connection_Callbacks:public BLEServerCallbacks {
   void onConnect(BLEServer* pServer, ble_gap_conn_desc* desc);
   void onDisconnect(BLEServer* pServer, ble_gap_conn_desc* desc);
   void onMTUChange(uint16_t MTU, ble_gap_conn_desc* desc);
 };
-// Handler class for Server Multi Characteristic action(s) defined
+// Handler class for Server CPS, CSC, HRM, FTMS Characteristics action(s) defined
 class CharacteristicCallbacks:public NimBLECharacteristicCallbacks {
 /*  We only define onSubscribe !!!
     void onRead(NimBLECharacteristic* pCharacteristic);
@@ -464,7 +568,19 @@ class CharacteristicCallbacks:public NimBLECharacteristicCallbacks {
 // Define CharacteristicCallbacks instance(s) globally to use for multiple Server Characteristics 
 static CharacteristicCallbacks server_Multi_Chr_Callbacks;
 
+bool getPRSdata(void);
+void setPRSdata(void);
 void ConvertMacAddress(char *fullAddress, uint8_t addr[6], bool NativeFormat);
+#ifdef EMA_ALPHA
+int16_t EMA_TargetPositionFilter(int16_t current_value);
+#endif
+void ShowIconsOnTopBar(void);
+void ShowOnOledLarge(const char* Line1, const char* Line2, const char* Line3, uint16_t Pause);
+void ShowSlopeTriangleOnOled(void);
+void SetManualGradePercentValue(void);
+void SetNewRawGradeValue(float RoadGrade);
+void SetNewActuatorPosition(void);
+
 void server_setupGA(void);
 void server_setupDIS(void);
 void server_setupHRM(void);
@@ -478,24 +594,93 @@ bool client_Connect_Callback(void);
 // ---------------------------------------------------------------------------------
 
 void setup() {
-#ifdef DEBUG
+
   Serial.begin(115200);
   while (!Serial) delay(10); 
   Serial.flush();
   delay(1000); // Give Serial I/O time to settle
-#endif 
+
+/* The Feather ESP32 V2 has a NEOPIXEL_I2C_POWER pin that must be pulled HIGH
+ * to enable power to the STEMMA QT port. Without it, the QT port will not work!
+ */
+#ifdef ADAFRUIT_FEATHER_ESP32_V2
+  // Turn on the I2C power on Stemma connector by pulling pin HIGH.
+  pinMode(NEOPIXEL_I2C_POWER, OUTPUT);
+  digitalWrite(NEOPIXEL_I2C_POWER, HIGH);
+#endif
   DEBUG_PRINTLN("");
-  DEBUG_PRINTLN("ESP32 NimBLE MITM supporting: CPS, CSC, HBM and FTMS");
-  DEBUG_PRINTLN("------------------ Version 01.5 --------------------");
+  DEBUG_PRINTLN("ESP32 NimBLE SIMCLINE supporting: CPS, CSC, HBM and FTMS");
+  DEBUG_PRINTLN("-------------------- Version 01.5 ----------------------");
   DEBUG_PRINTLN(THISDEVICENAME);
   delay(200);
-  NimBLEDevice::init(THISDEVICENAME); // Give the device a Shortname 
-  // Start the Server-side first!
+  // LittleFS start the Littlefilesystem lib and see if we have persistent data ----
+  // This opens LittleFS with a root subdirectory /littlefs/
+  LittleFS.begin();
+  // WARNING --------- Uncomment only when strictly necessary!!! ---------
+  // Uncomment only the very first time the Simcline code is executed!!!
+  /* This creates LittleFS with a root subdirectory /littlefs/
+  LittleFS.format();
+  DEBUG_PRINTLN("Wipe out all persistent data, including any file(s)....");
+  */
+  // Get or set (first time only) the values of relevant and crucial variables
+  // to persistence, whith the Companion App the user can set these on the fly!
+  // Get or set the values of aRGVmax, aRGVmin, GradeChangeFactor in PRSdata.
+  if (!getPRSdata()) {
+    setPRSdata();
+  }
+  // LittleFS------------------------------------------------------------------------
+  
+  // Start the show for the Oled display
+  if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_I2C_ADDRESS)) {
+    DEBUG_PRINTLN(F("SSD1306 OLED display allocation failed!"));
+  } else {
+    DEBUG_PRINTLN(F("SSD1306 OLED display is running..."));
+    // Load Oled with initial display buffer contents on the screen,
+    // the SSD1306 library initializes with a Adafruit splash screen,
+    // (respect or edit the splash.h in the library).
+    display.display(); // Acknowledge Adafruit rights, license and efforts
+    delay(500); // show some time
+  }
+  // Ready to show our own SIMCLINE splash screen
+  display.clearDisplay(); // clean the oled screen
+  display.setTextColor(SSD1306_WHITE);
+  display.drawBitmap(24, 0, Mountain_bw_79x64, 79, 64, 1);
+  display.display();
+  delay(2000); // Take somewhat more time.....
+  //Show Name and SW version on Oled
+  ShowOnOledLarge("SIMCLINE", "FTMS", "v01.4", 500);
+  // Initialize Lifter Class data, variables, test and set to work !
+  lift.Init(actuatorOutPin1, actuatorOutPin2, MINPOSITION, MAXPOSITION, BANDWIDTH);
+  // Test Actuator and VL8106X for proper functioning
+  ShowOnOledLarge("Testing", "Up & Down", "Functions", 100);
+  if (!lift.TestBasicMotorFunctions()) {
+    ShowOnOledLarge("Testing", "Functions", "Failed!", 500);
+    IsBasicMotorFunctions = false; // Not working properly
+    DEBUG_PRINTLN("Simcline >> ERROR << Basic Motor Funtions are NOT working!!");
+  } else {
+    ShowOnOledLarge("Testing", "Functions", "Done!", 500);
+    // Is working properly --> Start Motor Control Task
+    xSemaphore = xSemaphoreCreateBinary();
+    xTaskCreatePinnedToCore(xControlUpDownMovement, "xControlUpDownMovement", 4096, NULL, 10, &ControlTaskHandle, xControlCoreID);
+    xSemaphoreGive(xSemaphore);
+    DEBUG_PRINTLN("Motor Control Task Created and Active!");        
+    IsBasicMotorFunctions = true;
+    DEBUG_PRINTLN("Simcline Basic Motor Funtions are working!!");
+    // Put Simcline in neutral: flat road position
+#ifdef EMA_ALPHA
+    // Init EMA filter at first call with flat road position as reference
+    TargetPosition = EMA_TargetPositionFilter(TargetPosition); 
+#endif
+    SetNewActuatorPosition();
+  }
+  // Initialize NimBLE with maximum connections as Peripheral = 1, Central = 1
+  BLEDevice::init(THISDEVICENAME); // Give the device a Shortname    
+  // Start the Server-side now!
   pServer = BLEDevice::createServer();
   //Setup callbacks onConnect and onDisconnect
   pServer->setCallbacks(new server_Connection_Callbacks());
   // Set server auto-restart advertise on
-  pServer->advertiseOnDisconnect(true); 
+  pServer->advertiseOnDisconnect(true);  
   // Server setup
   DEBUG_PRINTLN("Configuring the default Generic Access Service");
   server_setupGA();
@@ -513,11 +698,11 @@ void setup() {
   server_setupHRM();
   DEBUG_PRINTLN("Setting up the Server advertising payload(s)");
   server_startADV();
-  DEBUG_PRINTLN("Server is advertising: CPS, CSC and FTMS");  
- 
-  // Now start the Client-side!
+  //BLEDevice::stopAdvertising(); 
+  DEBUG_PRINTLN("Server is advertising: CPS, CSC and FTMS");    
+    
+  // Start the Client-side!
   client_Start_Scanning();
-  while(pBLEScan->isScanning()) ; // Wait until scanning is finished
   if(doClientConnectCall) {
     doClientConnectCall = false;
     bool dummy = client_Connect_Callback();
@@ -525,8 +710,42 @@ void setup() {
   if(!Trainer.IsConnected) {
     DEBUG_PRINTLN(">>> Failed to connect Trainer! Reset ESP32 and try again!");
     while(1) {delay(100);}
-  } 
+  }
+  //BLEDevice::startAdvertising(); 
+  //DEBUG_PRINTLN("Server is advertising: CPS, CSC and FTMS"); 
 } // End of setup.
+
+// LittleFS --------------------------------------------------
+bool getPRSdata(void) { // aRGVmax, aRGVmin, GradeChangeFactor -> PRSdata
+  if (LittleFS.exists(PRS_FILENAME)) {
+    File file = LittleFS.open(PRS_FILENAME, FILE_READ);
+    if (file) {    
+      uint32_t readLen;
+      uint8_t buffer[LITTLEFS_BLOCK_SIZE+1] = { 0 };
+      readLen = file.read(buffer, LITTLEFS_BLOCK_SIZE);
+      buffer[readLen] = 0; // set the values to the pointed by variables
+      sscanf((char*)buffer, "%d %d %d %d", &aRGVmax, &aRGVmin, &GradeChangeFactor, &OledDisplaySelection);
+      DEBUG_PRINT(F("ESP32 internally Got persistent storage from: /littlefs/PRSdata -> "));
+      DEBUG_PRINTF("Max: %d Min: %d Perc.: %d Displ.: %d\n", aRGVmax, aRGVmin, GradeChangeFactor, OledDisplaySelection);
+      file.close();
+      return true;
+    }    
+  }
+  return false;
+}
+
+void setPRSdata(void) { // aRGVmax, aRGVmin, GradeChangeFactor -> PRSdata
+  uint8_t buffer[LITTLEFS_BLOCK_SIZE+1] = { 0 };
+  File file = LittleFS.open(PRS_FILENAME, FILE_WRITE);
+  if (file) {
+      sprintf((char*)buffer, "%d %d %d %d", aRGVmax, aRGVmin, GradeChangeFactor, OledDisplaySelection);
+      file.write(buffer, LITTLEFS_BLOCK_SIZE);
+      file.close();
+      DEBUG_PRINT(F("ESP32 internally Set new values in persistent storage to: /littlefs/PRSdata -> "));
+      DEBUG_PRINTLN((char*)buffer);
+  }
+}
+// LittleFS --------------------------------------------------
 
 void ConvertMacAddress(char *fullAddress, uint8_t addr[6], bool NativeFormat)
 { // Display byte by byte in HEX 
@@ -538,6 +757,187 @@ void ConvertMacAddress(char *fullAddress, uint8_t addr[6], bool NativeFormat)
       addr[2], addr[1], addr[0], HEX);       
   }
 };
+
+void ShowIconsOnTopBar(void) {
+  // Show Icons on Top Bar
+  if (Trainer.IsConnected) { // show icon
+    display.drawBitmap(112, 0, power_icon16x16, 16, 16, 1);
+  }
+  if (Laptop.IsConnected) { // show icon
+    display.drawBitmap(0, 0, zwift_icon16x16, 16, 16, 1);
+  }
+  if (Smartphone.IsConnected) { // show icon Phone
+    display.drawBitmap(0, 0, mobile_icon16x16, 16, 16, 1);
+  }
+}
+
+void ShowOnOledLarge(const char* Line1, const char* Line2, const char* Line3, uint16_t Pause) {
+  // Clear and set Oled to display 3 line info -> centered
+  int pos = 1;
+  display.clearDisplay();
+  display.setTextColor(SSD1306_WHITE);
+  // ShowIconsOnTopBar();
+  display.setTextSize(2);  // Large characters 11 pixels wide
+  if (Line1) {
+    pos = round( (127 - (12 * strlen(Line1))) / 2 );
+    display.setCursor(pos, 2); // 16
+    display.print(Line1);
+  }
+  if (Line2) {
+    pos = round( (127 - (12 * strlen(Line2))) / 2 );
+    display.setCursor(pos, 22); // 16
+    display.print(Line2);
+  }
+  if (Line3) {
+    pos = round( (127 - (12 * strlen(Line3))) / 2 );
+    display.setCursor(pos, 44); // 16
+    display.print(Line3);
+  }
+  display.display();
+  delay(Pause);  // Pause indicated time in ms
+}
+
+void ShowSlopeTriangleOnOled(void) {
+  display.clearDisplay();
+  display.setTextColor(SSD1306_WHITE);
+  ShowIconsOnTopBar();
+  display.setCursor(102, 10); //26
+  display.setTextSize(2);
+  display.print(F("%"));
+  char tmp[7];
+  dtostrf(gradePercentValue, 5, 1, tmp); // show sign only if negative
+  display.setCursor(10, 6); // 22
+  display.setTextSize(3);
+  display.print(tmp);
+  // The following calculations give more "weight" to lower grade values
+  // (like: 1.2% or 0.5%), these will occur more often in practice and are not well
+  // displayable at 128*64! --> 64 * 64 = 4096 and this value should not be
+  // exceeded (4096/20) = 204.8
+  int pos = 64 - int(sqrt(abs(204 * gradePercentValue))); // cast to int to get rid of decimals only now!
+  if (gradePercentValue > 0) {
+    display.fillTriangle( 1, 63, 127, 63, 127, pos, SSD1306_INVERSE);
+  } else {
+    display.fillTriangle( 127, 63, 1, 63, 0, pos, SSD1306_INVERSE);
+  }
+  // Draw the baseline to smooth small decimal values and show flat road case
+  display.drawFastHLine(1, 63, 127, SSD1306_WHITE);
+  display.display();
+} 
+// ---------------------------------------------------------------------------------
+
+
+// ---------------------------------------------------------------------------------
+#ifdef EMA_ALPHA
+int16_t EMA_TargetPositionFilter(int16_t current_value) {
+  static int16_t exponential_average = current_value;
+
+  exponential_average = int16_t( (EMA_ALPHA * (uint32_t)current_value + (100 - EMA_ALPHA) * (uint32_t)exponential_average) / 100 );
+  return exponential_average;
+}
+#endif
+
+void SetManualGradePercentValue(void) 
+{
+  gradePercentValue = float( (RawgradeValue - 20000 + MEASUREOFFSET) )/100;
+  SetNewActuatorPosition();
+}
+
+void SetNewRawGradeValue(float RoadGrade)
+{
+        // ----- Recalculate to relevant values for this project ------
+        // Take into account the allowed Increase Percentage of the inclination
+        // 100% has no effect, 50% means every increase or decrease is divided by 2
+        // --> the increase or decrease of inclination is in 50% smaller steps...
+        gradePercentValue = RoadGrade;
+        RawgradeValue = (long)(RoadGrade*100) + 20000;
+        RawgradeValue = 20000 + long((RawgradeValue - 20000) * GradeChangeFactor / 100);
+        // in steps of 0.01% and with an offset of -200%
+        // gradeValue     gradePercentValue
+        //     0                 -200%
+        //  19000                 -10%
+        //  20000                   0%
+        //  22000                 +20%
+        //  40000                +200%
+        // -------------------------------------
+        // Take into account the measuring offset
+        RawgradeValue = RawgradeValue - MEASUREOFFSET;
+        // Test for Maximally en Minimally Allowed Raw Grade Values ----------------------------------------
+        if (RawgradeValue < aRGVmin) {
+          RawgradeValue = aRGVmin;  // Do not allow lower values than aRGVmin !!
+        }
+        if (RawgradeValue > aRGVmax) {
+          RawgradeValue = aRGVmax;  // Do not allow values to exceed aRGVmax !!
+        }
+        // --------------------------------------------------------------------------------------------------
+        DEBUG_PRINTF("Set Simcline to Percentage: %02.1f %% RawgradeValue: %05d \n", gradePercentValue, RawgradeValue);
+}
+
+void SetNewActuatorPosition(void) {
+  // Handle mechanical movement i.e. wheel position in accordance with Road Inclination
+  // Map RawgradeValue ranging from 0 to 40.000 on the
+  // TargetPosition (between MINPOSITION and MAXPOSITION) of the Lifter
+  // Notice 22000 is equivalent to +20% incline and 19000 to -10% incline
+  RawgradeValue = constrain(RawgradeValue, RGVMIN, RGVMAX); // Keep values within the safe range
+  TargetPosition = map(RawgradeValue, RGVMIN, RGVMAX, MAXPOSITION, MINPOSITION);
+  // EMA filter for smoothing quickly fluctuating Target Position values see: Zwift Titan Grove
+#ifdef EMA_ALPHA
+  TargetPosition = EMA_TargetPositionFilter(TargetPosition);
+#endif
+  if(IsBasicMotorFunctions) {  
+    xSemaphoreTake(xSemaphore, portMAX_DELAY); 
+    lift.SetTargetPosition(TargetPosition);
+    xSemaphoreGive(xSemaphore);
+#ifdef MOVEMENTDEBUG
+    DEBUG_PRINTF("RawgradeValue: %05d Grade percent: %03.1f%% ", RawgradeValue, gradePercentValue);
+    DEBUG_PRINTF("TargetPosition: %03d\n", TargetPosition, DEC);
+#endif
+  }  
+}
+
+void xControlUpDownMovement(void *arg) {
+  // Check "continuously" the Actuator Position and move Motor Up/Down until target position is reached
+  int OnOffsetAction = 0;
+  const TickType_t xDelay = 110 / portTICK_PERIOD_MS; // Block for 110ms < 10Hz sample rate of VL6180X
+  while(1) {
+    if(xSemaphoreTake(xSemaphore, portMAX_DELAY)) {
+        // BLE channels can interrupt and consequently target position changes on-the-fly !!
+        // We do not want changes in TargetPosition during one of the following actions!!!
+        OnOffsetAction = lift.GetOffsetPosition(); // calculate offset to target and determine action
+        switch (OnOffsetAction)
+            {
+              case 0 :
+                lift.brakeActuator();
+#ifdef MOVEMENTDEBUG
+                DEBUG_PRINTLN(F(" -> Brake"));
+#endif
+                break;
+              case 1 :
+                lift.moveActuatorUp();
+#ifdef MOVEMENTDEBUG
+                DEBUG_PRINTLN(F(" -> Upward"));
+#endif
+                break;
+              case 2 :
+                lift.moveActuatorDown();
+#ifdef MOVEMENTDEBUG
+                DEBUG_PRINTLN(F(" -> Downward"));
+#endif
+                break;
+              case 3 :
+                // Timeout --> OffsetPosition is undetermined --> do nothing and brake
+                lift.brakeActuator();
+#ifdef MOVEMENTDEBUG
+                DEBUG_PRINTLN(F(" -> Timeout"));
+#endif
+                break;
+            } // switch 
+        xSemaphoreGive(xSemaphore);    
+    }      
+    vTaskDelay(xDelay);
+  } // while
+} // end
+
+// ----------------------------------------------------------------------------------
 
 void client_HR_Measurement_Notify_Callback(BLERemoteCharacteristic* pBLERemoteCharacteristic, uint8_t* pData, size_t length, bool isNotify) {
   // Client HR Measurement data is tranferred to the Server (Zwift)
@@ -826,7 +1226,7 @@ void client_CSC_Measurement_Notify_Callback(BLERemoteCharacteristic* pBLERemoteC
 
 bool client_CyclingSpeedCadence_Connect(void)
 {
-    // Obtain a reference to the remote HRM service.
+    // Obtain a reference to the remote CSC service.
     pRemote_CyclingSpeedCadence_Service = pClient_FTMS->getService(UUID16_SVC_CYCLING_SPEED_AND_CADENCE);
     if (pRemote_CyclingSpeedCadence_Service == nullptr) {
       DEBUG_PRINTLN("Cycling Speed Cadence Service: Not Found!");
@@ -889,7 +1289,7 @@ bool client_CyclingSpeedCadence_Connect(void)
         else 
           DEBUG_PRINTF(" Loc#: %d \n", client_CSC_Location_Value);
 #endif
-      }
+     }
     }
     return true;    
 }
@@ -1119,7 +1519,7 @@ void client_FTM_ControlPoint_Indicate_Callback(BLERemoteCharacteristic* pBLERemo
   // The receipt of Control Point settings is acknowledged by the trainer: handle it
   // Send Client's Response message to the Server
   // NO TREATMENT OF COMMAND !!!
-  if((Laptop.IsConnected)) { 
+  if((Laptop.IsConnected)) {   
     server_FTM_ControlPoint_Chr->setValue(pData, length);
     server_FTM_ControlPoint_Chr->indicate(); // Just pass on and process later!
     client_ControlPoint_Response = true; // Should be set now!    
@@ -1321,7 +1721,7 @@ bool client_Connect_Callback(void) {
     //Do NOT(!) allow for any possible delay (Regularly this is handled in loop() with DoCallClientEnable = true)
     client_Set_All_NotificationIndication(true);
   }
-  // ----------------------------------------------------------------------------------------------*/
+  // ----------------------------------------------------------------------------------------------
   Trainer.IsConnected = true;
   client_ControlPoint_Response = true; // Should be set now!  
 return true;
@@ -1351,12 +1751,11 @@ class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
         DEBUG_PRINTF("Keep Scanning! Unknown Trainer Mac Address: [%s]\n", fullMacAddress);
         return;
       }      
+      BLEDevice::getScan()->stop();
       myDevice = advertisedDevice;
       /* Connect to the FTMS BLE Server -> Sorry you can't do that here!!! --------------------------------
       ** pClient_FTMS->connect(myDevice);  NOT ALLOWED TO CALL CONNECT --> CAUSES FATAL ERROR !!!! ???? */  
-      doClientConnectCall = true;         // Work around via loop()
-      //NimBLEDevice::getScan()->stop();
-      pBLEScan->stop();           
+      doClientConnectCall = true;         // Work around via loop()           
     } // Found our server
   } // onResult
 }; // MyAdvertisedDeviceCallbacks
@@ -1386,7 +1785,7 @@ void client_Connection_Callbacks::onConnect(BLEClient* pClient) {
      *  Timeout: 10 millisecond increments. --> Try 400 (4000 ms)
      */ 
     //pClient_FTMS->updateConnParams(pClient_FTMS->getConnId(), 24, 48, 0, 400);
-    //DEBUG_PRINTLN("Client Updates Connection Parameters -> Min Interval: [24] Max Interval: [48] Latency: [0] Supervision Timeout: [400]");     
+    //DEBUG_PRINTLN("Client Updates Connection Parameters -> Min Interval: [24] Max Interval: [48] Latency: [0] Supervision Timeout: [400]");  
 };
 
 bool client_Connection_Callbacks::onConnParamsUpdateRequest(BLEClient* pClient, ble_gap_upd_params *params) {
@@ -1427,20 +1826,20 @@ void client_Start_Scanning(void)
 {
   // Retrieve a Scanner and set the callback we want to use to be informed when we
   // have detected a new device.  Specify that we want active scanning and start the
-  // scan to run for 5 seconds.
-  pBLEScan = NimBLEDevice::getScan();
+  // scan to run for ## seconds.
+  pBLEScan = BLEDevice::getScan();
   pBLEScan->setAdvertisedDeviceCallbacks(new MyAdvertisedDeviceCallbacks());
   pBLEScan->setInterval(1349);
   pBLEScan->setWindow(449);
   pBLEScan->setActiveScan(true);
-  DEBUG_PRINTLN("Client Starts Scanning for Server Device with CPS, CSC and FTMS!");  
+   DEBUG_PRINTLN("Client Starts Scanning for Server Device with CPS, CSC and FTMS!");  
   //pBLEScan->start(5, false); // Scan for 5 seconds only
   pBLEScan->start(0, false);
 }
 
 // Handler class for Server Multi Characteristic actions limited to onSubscribe
 void CharacteristicCallbacks::onSubscribe(NimBLECharacteristic* pCharacteristic, ble_gap_conn_desc* desc, uint16_t subValue) {
-          std::string str = "Central (" + Laptop.PeerName + "/Zwift) Updated CCCD -->";
+          String str = "Central Updated CCCD -->";
         if(subValue == 0) {
             str += " Notify/Indicate Disabled for Char:";
         }else if(subValue == 1) {
@@ -1470,14 +1869,11 @@ void server_startADV(void)
     pAdvertising->addServiceUUID(UUID16_SVC_FITNESS_MACHINE);
     pAdvertising->setAppearance(client_GA_Appearance_Value);
     DEBUG_PRINTF("Setting Appearance in Advertised data to [%d]\n", client_GA_Appearance_Value);
-    pAdvertising->setName(THISDEVICENAME);
-    DEBUG_PRINTF("Setting DeviceName in Advertised data to [%s]\n", THISDEVICENAME);
     pAdvertising->setScanResponse(true);
-    pAdvertising->setMinInterval(32); // in 0.625ms units, 0 = use default.
-    pAdvertising->setMaxInterval(244); // in 0.625ms units, 0 = use default.
+    pAdvertising->setMinInterval(144); // 32 in 0.625ms units, 0 = use default.
+    pAdvertising->setMaxInterval(244); // 244 in 0.625ms units, 0 = use default.
+    BLEDevice::startAdvertising();    
     // Start Advertising 
-    pAdvertising->start(); 
-    //NimBLEDevice::startAdvertising();    
 }
 
 void server_Connection_Callbacks::onConnect(BLEServer* pServer, ble_gap_conn_desc *desc) {
@@ -1493,7 +1889,7 @@ void server_Connection_Callbacks::onConnect(BLEServer* pServer, ble_gap_conn_des
     BLEDevice::stopAdvertising();
     DEBUG_PRINTF("Server Connection Parameters -> Interval: [%d] Latency: [%d] Supervision Timeout: [%d]\n",serverConnectionInterval, \
                                                                   serverConnectionLatency, serverConnectionSupTimeout); 
-    DEBUG_PRINTF("ESP32 Server connected to Client device with MAC Address: [%s] Conn Handle: [%d]\n", fullMacAddress, serverConnectionHandle); 
+    DEBUG_PRINTF("ESP32 Server connected to Client device with MAC Address: [%s] Conn Handle: [%d]\n", fullMacAddress, serverConnectionHandle);    
     /** We can use the connection handle here to ask for different connection parameters.
      *  Args: connection handle, min connection interval, max connection interval, latency and supervision timeout.
      *  Units; Min/Max Intervals: 1.25 millisecond increments --> between: 24 (30 ms) resp. 48 (60 ms)
@@ -1510,7 +1906,7 @@ void server_Connection_Callbacks::onConnect(BLEServer* pServer, ble_gap_conn_des
       Laptop.conn_handle = serverConnectionHandle;       
       Laptop.IsConnected = true;
       DEBUG_PRINTF("Central (%s/Zwift) has to set CP/CSC/FTMS CCCD Notify/Indicate (enable) and start....\n", Laptop.PeerName.c_str());
-      DoCallClientEnable = true; // Laptop is connected allow now for the trainer to send data
+      DoCallClientEnable = true;
       return; // We are done here!
     }
     // [2] Smartphone is connecting
@@ -1528,7 +1924,7 @@ void server_Connection_Callbacks::onConnect(BLEServer* pServer, ble_gap_conn_des
 };
 
 void server_Connection_Callbacks::onMTUChange(uint16_t MTU, ble_gap_conn_desc* desc) {
-        DEBUG_PRINTF("MTU updated: %u for connection ID: %u\n", MTU, desc->conn_handle);           
+    DEBUG_PRINTF("Central (%s/Zwift) updated MTU to: [%u] for connection ID: %u\n", Laptop.PeerName.c_str(), MTU, desc->conn_handle);           
 };
 
 void server_Connection_Callbacks::onDisconnect(BLEServer* pServer, ble_gap_conn_desc *desc) {
@@ -1604,17 +2000,16 @@ void onWrite(BLECharacteristic *pCharacteristic) {
   if(!client_ControlPoint_Response) {  // skip the next Write action --> out of write-response-synch !! 
     DEBUG_PRINTLN("-> Server Rec'd Raw Control Point Data --> SKIPPED: Out of Synch!");
     return;
-  }
+  }   
   ftmcpData = server_FTM_ControlPoint_Chr->getValue();
   uint8_t ftmcpDataLen = ftmcpData.length();
   // Server FTM Control Point data is tranferred to the Client
   // NO TREATMENT OF COMMAND !!!
-  // write with response !!! writeValue(string, bool response = false);
+  // write with response !!! writeValue(string, bool response = true);
   if(Trainer.IsConnected) { 
-    xTaskCreate(&TaskWriteWithResponse, "Write w Response", 4096, (void *)NULL, 10, &TaskWriteWithResponseHandle); //2048
+    xTaskCreate(&TaskWriteWithResponse, "Write w Response", 4096, (void *)NULL, 1, &TaskWriteWithResponseHandle); //2048
     client_ControlPoint_Response = false;  
   } 
-  //
   memset(server_FTM_Control_Point_Data.bytes, 0, sizeof(server_FTM_Control_Point_Data.bytes));
   // Display the raw request packet
   // Transfer the contents of data to server_FTM_Control_Point_Data.bytes
@@ -1631,6 +2026,7 @@ void onWrite(BLECharacteristic *pCharacteristic) {
   DEBUG_PRINTLN("]");
 #endif    
     switch(server_FTM_Control_Point_Data.values.OPCODE) {
+#ifdef DEBUG_FTM_CONTROLPOINT_OPCODE_DATA
     case ftmcpRequestControl: {
       DEBUG_PRINTLN("Request Control of Machine!");
       break;
@@ -1643,13 +2039,22 @@ void onWrite(BLECharacteristic *pCharacteristic) {
       DEBUG_PRINTLN("Stop or Pause Machine, Parameter: Stop!");
       break;
     }
+    case ftmcpReset: {
+      DEBUG_PRINTLN("Reset Machine!");
+      break;
+    }
+#endif
+
     case ftmcpSetIndoorBikeSimulationParameters: {
+#ifdef DEBUG_FTM_CONTROLPOINT_OPCODE_DATA
       // Short is 16 bit signed, so the windspeed is converted from two bytes to signed value. Highest bit is sign bit
       short ws = (server_FTM_Control_Point_Data.values.OCTETS[0] << 8) + server_FTM_Control_Point_Data.values.OCTETS[1]; 
       wind_speed = ws / 1000.0;
+#endif
       // Short is 16 bit signed, so a negative grade is correctly converted from two bytes to signed value. Highest bit is sign bit
       short gr = (server_FTM_Control_Point_Data.values.OCTETS[3] << 8) + server_FTM_Control_Point_Data.values.OCTETS[2]; 
-      grade = gr / 100.0;
+      grade = (float)(gr/100.0);
+#ifdef DEBUG_FTM_CONTROLPOINT_OPCODE_DATA
       crr = server_FTM_Control_Point_Data.values.OCTETS[4] / 10000.0;
       cw = server_FTM_Control_Point_Data.values.OCTETS[5] / 100.0;
       // Remember, if debugging with Zwift, that these values are divided by 2 if in normal 50% settings!
@@ -1658,10 +2063,10 @@ void onWrite(BLECharacteristic *pCharacteristic) {
       DEBUG_PRINT(" | Grade (100): "); DEBUG_PRINT(grade);
       DEBUG_PRINT(" | Crr (10000): "); DEBUG_PRINT(crr);
       DEBUG_PRINT(" | Cw (100): "); DEBUG_PRINTLN(cw);
-      break;
-    }
-    case ftmcpReset: {
-      DEBUG_PRINTLN("Reset Machine!");
+#endif
+      SetNewRawGradeValue(grade);
+      SetNewActuatorPosition();
+      ShowSlopeTriangleOnOled();  
       break;
     }
     case ftmcpSetTargetResistanceLevel:
@@ -1679,16 +2084,17 @@ void onWrite(BLECharacteristic *pCharacteristic) {
     case ftmcpSetTargetedTimeInFiveHeartRateZones:
     case ftmcpSetWheelCircumference:
     case ftmcpSetSpinDownControl:
-    case ftmcpSetTargetedCadence: 
-    {
+    case ftmcpSetTargetedCadence: {
+#ifdef DEBUG_FTM_CONTROLPOINT_OPCODE_DATA      
       DEBUG_PRINTLN("Unresolved OpCode!");
+#endif
       break;
-    }
+      }
     } // switch
   } // onWrite
   
   void onSubscribe(NimBLECharacteristic* pCharacteristic, ble_gap_conn_desc* desc, uint16_t subValue) {
-        std::string str = "Central (" + Laptop.PeerName + "/Zwift) Updated CCCD -->";
+        String str = "Central Updated CCCD -->";
         if(subValue == 0) {
             str += " Notify/Indicate Disabled for Char:";
         }else if(subValue == 1) {
@@ -1712,7 +2118,7 @@ void server_setupFTMS(void)
                                                                             NIMBLE_PROPERTY::READ);
     server_FTM_Feature_Chr->setValue(client_FTM_Feature_Str);
 
-    server_FTM_Status_Chr = server_FitnessMachine_Service->createCharacteristic(UUID16_CHR_FITNESS_MACHINE_STATUS, 
+     server_FTM_Status_Chr = server_FitnessMachine_Service->createCharacteristic(UUID16_CHR_FITNESS_MACHINE_STATUS, 
                                                                             NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY);
     server_FTM_Status_Chr->setCallbacks(&server_Multi_Chr_Callbacks); //NIMBLE    
     server_FTM_IndoorBikeData_Chr = server_FitnessMachine_Service->createCharacteristic(UUID16_CHR_INDOOR_BIKE_DATA, 
@@ -1731,21 +2137,129 @@ void server_setupFTMS(void)
     server_FTM_TrainingStatus_Chr->setCallbacks(&server_Multi_Chr_Callbacks); //NIMBLE 
     server_FTM_ControlPoint_Chr = server_FitnessMachine_Service->createCharacteristic(UUID16_CHR_FITNESS_MACHINE_CONTROL_POINT, 
                                                                             NIMBLE_PROPERTY::WRITE | NIMBLE_PROPERTY::INDICATE);
-    server_FTM_ControlPoint_Chr->setCallbacks(new server_FTM_ControlPoint_Chr_callback);
+    server_FTM_ControlPoint_Chr->setCallbacks(new server_FTM_ControlPoint_Chr_callback());
     server_FitnessMachine_Service->start();      
 }
 
 class server_NUS_Rxd_Chr_callback: public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) {
     // Read data received over NUS Rxd from Mobile Phone
-#ifdef DEBUG
     std::string NusRxdData = server_NUS_Rxd_Chr->getValue();
     uint8_t NusRxdDataLen = NusRxdData.length();  // Get the actual length of data bytes
     // Display the raw packet data in actual length
-    DEBUG_PRINTF(" -> Server NUS Rxd Data [%d][%s]\n", NusRxdDataLen, NusRxdData.c_str());
-#endif
-  };
+    DEBUG_PRINTF(" -> Server Rec'd NUS Rxd Data [%d][%s]\n", NusRxdDataLen, NusRxdData.c_str());
+    // The following routines parse and process the incoming commands
+    // Every NusRxdData packet starts with a '!' otherwise corrupt/invalid
+    if (NusRxdData[0] != '!') {
+      DEBUG_PRINTLN(F("-> Error: RXD-packet does not start with a '!'"));
+      return; // invalid NusRxdData packet: do not further parse and process
+    }
+  // RXpacket buffer has IdCode = "S"
+  if (NusRxdData[1] == 'S') { // Settings packet
+    // Besides what is mechanically possible there are also limits in what is physically pleasant/comfortable
+    // The allowed Raw Grade Value min and max values should be within the limits of the mechanically feasible values !!!
+    // Minimally allowed Raw Grade Value that should not be exceeded: -5%!
+    // default: aRGVmin is default set to 19500
+    // Maximally allowed Raw Grade Value that should not be exceeded: 15%!
+    // default: aRGVmax is default set to: 21500
+    // New Settings values have arrived --> parse, set values and store persistently
+    uint8_t iMax = 0, iMin = 0, iPerc = 0, iDispl = 0;
+    sscanf((char*)NusRxdData.c_str(), "!S%d;%d;%d;%d;", &iMax, &iMin, &iPerc, &iDispl);
+    // set Ascent Grade Limit to aRGVmax
+    iMax = constrain(iMax, 0, RGVMAX_GRADE);
+    aRGVmax = map(iMax, 0, RGVMAX_GRADE, 20000, RGVMAX);
+    // set Descent Grade Limit to aRGVmin
+    iMin = constrain(iMin, 0, RGVMIN_GRADE); // Notice: positive value!
+    aRGVmin = map(iMin, RGVMIN_GRADE, 0, RGVMIN, 20000);
+    // set Road Grade Change Factor
+    GradeChangeFactor = iPerc;
+    // set OledDisplaySelection
+    OledDisplaySelection = iDispl;
+    // LittleFS for persistent storage of these values
+    setPRSdata();
+    // LittleFS --------------------------------------
+    DEBUG_PRINT(F(" Settings: Max: ")); DEBUG_PRINT(iMax);
+    DEBUG_PRINT(F(" Min: ")); DEBUG_PRINT(iMin);
+    DEBUG_PRINT(F(" Perc: ")); DEBUG_PRINT(iPerc);
+    DEBUG_PRINT(F(" Displ: ")); DEBUG_PRINTLN(iDispl);
+    // Confirm to the PHONE: settings rcvd and set to persistent
+    DEBUG_PRINTF("Server Sends NUS TXD Confirm message: Done!\n");
+    server_NUS_Txd_Chr->setValue("!SDone!;");
+    server_NUS_Txd_Chr->notify();
+    return; // Settings rcvd and set to persistent
+  }
+  // Manual Control Buttons Up Down get parsed and processed!
+  // ONLY when the Actuator plus sensor are working well!
+  // i.e. low level up/down movement functions work !!
+  if (NusRxdData[1] == 'U' && IsBasicMotorFunctions) {
+    DEBUG_PRINTLN("-> Set motor UPward moving!");
+    RawgradeValue = RawgradeValue + 100;
+    SetManualGradePercentValue();
+    ShowSlopeTriangleOnOled();
+    return;
+  }
+  if (NusRxdData[1] == 'D' && IsBasicMotorFunctions) {
+    DEBUG_PRINTLN("-> Set motor DOWNward moving!");
+    RawgradeValue = RawgradeValue - 100;
+    SetManualGradePercentValue();
+    ShowSlopeTriangleOnOled();
+    return;
+  } 
+  server_NUS_Txd_Chr->setValue("!UOut of Order!;");
+  server_NUS_Txd_Chr->notify();
+  DEBUG_PRINTF("\nServer Sends NUS TXD Error message: Out of Order!\n");
+  }; // onWrite
 }; 
+
+void server_NUS_Txd_Persistent_Settings(void) {
+    // Send persistent stored values to Mobile Phone for correct Settings!
+    // recalculate the values for use on the Phone
+    uint8_t TXpacketBuffer[16] = { 0 };
+    int iMax, iMin, iPerc, iDispl;
+    // set within limits
+    aRGVmax = constrain(aRGVmax, 0, RGVMAX);
+    aRGVmin = constrain(aRGVmin, 0, RGVMIN);
+    // set aRGVmax to Ascent Grade Limit in whole number
+    iMax = map(aRGVmax, 20000, RGVMAX, 0, RGVMAX_GRADE);
+    // set aRGVmin to Descent Grade Limit in whole number
+    iMin = map(aRGVmin, RGVMIN, 20000, RGVMIN_GRADE, 0);
+    // set GradeChangeFactor to Road Grade Change Factor
+    iPerc = GradeChangeFactor;
+    iDispl = OledDisplaySelection;
+    sprintf((char*)TXpacketBuffer, "!S%d;%d;%d;%d;", iMax, iMin, iPerc, iDispl);
+    // send these persistent data to the Settings page on the smartphone
+    server_NUS_Txd_Chr->notify(TXpacketBuffer, sizeof(TXpacketBuffer));
+    DEBUG_PRINTF("Server Sends NUS TXD Persistent settings to Phone: [%s]\n", (char*)TXpacketBuffer);
+}
+
+// Handler class for Server NUS Txd Characteristic actions limited to onSubscribe
+class server_NUS_Txd_Callback: public NimBLECharacteristicCallbacks {
+/*  We only define onSubscribe !!!
+    void onRead(NimBLECharacteristic* pCharacteristic);
+    void onWrite(NimBLECharacteristic* pCharacteristic);
+    void onNotify(NimBLECharacteristic* pCharacteristic);    
+    void onStatus(NimBLECharacteristic* pCharacteristic, Status status, int code);
+*/  
+  void onSubscribe(NimBLECharacteristic* pCharacteristic, ble_gap_conn_desc* desc, uint16_t subValue) {
+          String str = "Central Updated CCCD -->";
+        if(subValue == 0) {
+            str += " Notify/Indicate Disabled for Char:";
+        }else if(subValue == 1) {
+            str += " Notify Enabled for Char:";
+        } else if(subValue == 2) {
+            str += " Indicate Enabled for Char:";
+        } else if(subValue == 3) {
+            str += " Notify & Indicate Enabled for Char:";
+        }
+        DEBUG_PRINTF("%s", str.c_str());
+        str = std::string(pCharacteristic->getUUID()).c_str();
+        DEBUG_PRINTF(" [%s]\n", str.c_str());
+
+        if(subValue == 1) {
+          server_NUS_Txd_Persistent_Settings();
+        }
+    };
+};
 
 void server_setupNUS(void)
 {
@@ -1755,7 +2269,7 @@ void server_setupNUS(void)
     server_NUS_Rxd_Chr->setCallbacks(new server_NUS_Rxd_Chr_callback()); 
     server_NUS_Txd_Chr = server_NordicUart_Service->createCharacteristic(UUID_NUS_CHR_TXD, 
                                                                             NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY);
-    server_NUS_Txd_Chr->setCallbacks(&server_Multi_Chr_Callbacks); //NIMBLE
+    server_NUS_Txd_Chr->setCallbacks(new server_NUS_Txd_Callback()); //NIMBLE
     server_NordicUart_Service->start();
 }
 
@@ -1847,7 +2361,7 @@ if(IsEnable) { // Enable Client Char's
   if( pRemote_FTM_ControlPoint_Chr != nullptr) { // Check: Is it exposed?
             pRemote_FTM_ControlPoint_Chr->getDescriptor(BLEUUID((uint16_t)0x2902))->writeValue((uint8_t*)indicationOn, 2, true); 
           }
-  if ( pRemote_HR_Measurement_Chr != nullptr ) { // ERROR NO BOOL = TRUE !!!!!!!!!!
+  if ( pRemote_HR_Measurement_Chr != nullptr ) {
             pRemote_HR_Measurement_Chr->getDescriptor(BLEUUID((uint16_t)0x2902))->writeValue((uint8_t*)notificationOn, 2, true); 
           }
   if( pRemote_FTM_TrainingStatus_Chr != nullptr) { // Check: Is it exposed?
@@ -1870,7 +2384,7 @@ if(IsEnable) { // Enable Client Char's
   if( pRemote_FTM_ControlPoint_Chr != nullptr) { // Check: Is it exposed?
             pRemote_FTM_ControlPoint_Chr->getDescriptor(BLEUUID((uint16_t)0x2902))->writeValue((uint8_t*)indicationOff, 2, true); 
           }
-  if ( pRemote_HR_Measurement_Chr != nullptr ) { // ERROR BOOL false insteadof TRUE !!!!!!!!!!
+  if ( pRemote_HR_Measurement_Chr != nullptr ) { 
             pRemote_HR_Measurement_Chr->getDescriptor(BLEUUID((uint16_t)0x2902))->writeValue((uint8_t*)notificationOff, 2, true); 
           }
   if( pRemote_FTM_TrainingStatus_Chr != nullptr) { // Check: Is it exposed?
