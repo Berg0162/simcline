@@ -17,9 +17,12 @@
 # Changelog ESP32 FTMS_Server
 
 ## v0.1.0
-
 ### Added or Changed
 - Added first version
+
+## v0.1.2
+### Added or Changed
+- Changed device identification naming to a simpler scheme: SIM32
 
 ### Removed
 - Some older versions
