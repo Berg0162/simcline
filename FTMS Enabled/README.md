@@ -57,7 +57,7 @@ In week 7 of 2023 the ESP32 code reached a stable level and became publicly avai
 
 # How to make it work?<br>
 The requirements in this phase are simple: 
-+ running Zwift app or alike, 
++ running Zwift, Rouvy or myWhoosh app or alike, 
 + working Feather nRF52840/ESP32-V2 development board and 
 + a FTMS enabled Trainer.<br>
 
@@ -100,8 +100,8 @@ Please follow <b>ALWAYS</b> the different usage instructions at the first part o
  *  4) Trainer and Feather should successfully pair or disconnect...
  *  5) Keep the Serial Monitor visible on top of all windows 
  *  6) Move the trainer pedals and notice/feel changes in resistance...
- *     The Client sends Resistance Parameters to the Trainer that coincide 
- *     with the first 5 minutes of the Zwift Volcano Circuit!
+ *     The Client sends Resistance Parameters to the Trainer that mimic 
+ *     the riding of a road on rolling hills (max 6% grade)!
  *  7) Inspect the info presented by Serial Monitor.....
  *  
  */
@@ -120,8 +120,8 @@ Please follow <b>ALWAYS</b> the different usage instructions at the first part o
  *  2) Start the Serial Monitor to catch debugging info
  *  3) Start Zwift and wait for the Devices Pairing Screen
  *  4) Unpair all previously paired devices
- *  5) Search on Zwift pairing screens for the Feather nRF52/ESP32: "Sim nRF52", resp. "Sim ESP32"
- *  6) Pair all four "simulated" devices: Power, Cadence, Heart Rate and Controllable
+ *  5) Search on Zwift pairing screens for the Feather nRF52/ESP32: <SIM52>, resp. <SIM32>
+ *  6) Pair: Power, Cadence, Heart Rate and Controllable with <SIM52>, resp. <SIM32>
  *  7) Start a default Zwift ride or any ride you wish
  *     No need for you to do work on the trainer!
  *  8) Make Serial Monitor visible on top of the Zwift window 
@@ -156,17 +156,16 @@ The <b>FTMS_Bridge</b> code needs the "hardware" addresses to unmistakingly esta
  *  3) Start/Power On the indoor trainer  
  *  4) Feather nRF52/ESP32 and trainer (with <name>) will pair as reported in the output
  *  5) Start Zwift on your computer or tablet and wait....
- *  6) Search on the Zwift pairing screens for the Feather nRF52/ESP32 a.k.a. "Sim <name>"
- *  7) Pair: Power, Cadence and Controllable one after another with "Sim <name>"
+ *  6) Search on the Zwift pairing screens for the Feather nRF52/ESP32 a.k.a. <SIM52>, resp. <SIM32>
+ *  7) Pair: Power, Cadence and Controllable one after another with <SIM52> resp. <SIM32>
  *  8) Optionally one can pair as well devices for heartrate and/or steering (Sterzo)
  *  9) Start the default Zwift ride or any ride you wish
  * 10) Make Serial Monitor output window visible on top of the Zwift window 
  * 11) Hop on the bike: do the work and feel resistance change with the road
  * 12) Inspect the info presented by Serial Monitor.....
  *  
- *  Your trainer's device <name> is modified by the bridge to "Sim <name>", to allow for a clear distinction 
- *  between the bridge (simulating your trainer) and your original trainer, when advertising the trainer's services!
- *  You will notice this only when connecting to Zwift on the pairing screens!
+ *  This device is identified with the name <SIM52>, resp. <SIM32>. You will see this only when connecting to Zwift on the 
+ *  pairing screens! Notice: Zwift extends device names with additional numbers for identification!
  *  
  */
 ```
