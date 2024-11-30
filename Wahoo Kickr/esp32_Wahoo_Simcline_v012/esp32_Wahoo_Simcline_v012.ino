@@ -615,7 +615,7 @@ void setup() {
     
   // Start the Client-side!
   client_Start_Scanning();
-  while(pBLEScan->isScanning()) ; // Wait until scanning is finished
+  //while(pBLEScan->isScanning()) ; // Wait until scanning is finished --> is causing problems!!
   if(doClientConnectCall) {
     doClientConnectCall = false;
     bool dummy = client_Connect_Callback();
