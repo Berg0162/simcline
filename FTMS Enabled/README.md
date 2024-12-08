@@ -26,7 +26,7 @@ According to the smart trainer recommendations guide winter 2020-2021 of [DCRain
 |Saris |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
 |STAC |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
 |Tacx |ANT+ FE-C on all ‘Smart’ branded trainers (except Satori). FTMS on all non-NEO models.|
-|Wahoo |ANT+ FE-C on all smart trainers. Gives developers access to private Wahoo Bluetooth Smart control. Latest model: KICKR CORE Cog has Bluetooth Smart FTMS.|
+|Wahoo |ANT+ FE-C on all smart trainers. Gives developers access to private Wahoo Bluetooth Smart control. Latest model(s) have Bluetooth Smart FTMS, like KICKR CORE Cog.|
 |Zwift|ANT+ FE-C and Bluetooth Smart FTMS on Zwift Hub smart trainer.|
 | | cf: [DCRainmaker](https://www.dcrainmaker.com/2020/11/smart-cycle-trainer-recommendations-guide-winter.html)|
 
@@ -331,3 +331,17 @@ void xControlUpDownMovement(void *arg) {
   } // while
 } // end
 ```
+# Question: Why is my Trainer (Bluetooth Smart FTMS) variably successful in connecting with the Simcline 2.0 (with ESP32 board) and Zwift?
++ <b>Answer</b>: In most cases this behavior can be attributed to <b>NOT</b> following the critical sequence for starting and connecting of Trainer, Simcline and Zwift.<br>
+
+0) The Start or Initial situation of <b>ALL</b> parties involved is: Laptop/Zwift, Simcline and Trainer are Powered <b>OFF</b>!
+1) Trainer Power-ON --> Trainer needs some time (4 seconds?) to settle and start advertising!
+2) Power-ON or Reset Simcline (ESP32 board) --> Simcline needs some time to start, test motor functions and start scanning for Trainer!
+3) Wait for Simcline and Trainer to connect! 9 Out of 10 times this is immediately successful. If this is NOT the case then Reset Simcline first and wait again for a Simcline-Trainer connection! If this is NOT successful: go back to "Start" after <b>ALL</b> components have been Powered <b>OFF</b> first.
+4) Laptop/Zwift Power-ON --> ONLY when Simcline and Trainer have been connected successfully!
+5) Wait and wait for the Zwift pairing window to pop-up
+6) Click orange POWER SOURCE button and select in the list with devices: ESP32#### (Simcline) --> Close
+7) Click orange RESISTANCE button and select in the list with devices: ESP32#### (Simcline) --> Close
+8) Click orange CADENCE button and select in the list with devices: ESP32#### (Simcline) --> Close
+9) Click orange HEART RATE button and/or CONTROLS buttons and select in the list with devices: your choice --> Close
+10) Click orange OK! button, when all the selected devices are conforming your choices and are indicated as <b>CONNECTED</b>!
