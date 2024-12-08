@@ -26,7 +26,7 @@ According to the smart trainer recommendations guide winter 2020-2021 of [DCRain
 |Saris |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
 |STAC |ANT+ FE-C and Bluetooth Smart FTMS on all 2020 smart trainers.|
 |Tacx |ANT+ FE-C on all ‘Smart’ branded trainers (except Satori). FTMS on all non-NEO models.|
-|Wahoo |ANT+ FE-C on all smart trainers. Gives developers access to private Wahoo Bluetooth Smart control, no proper FTMS support yet.|
+|Wahoo |ANT+ FE-C on all smart trainers. Gives developers access to private Wahoo Bluetooth Smart control. Latest model: KICKR CORE Cog has Bluetooth Smart FTMS.|
 |Zwift|ANT+ FE-C and Bluetooth Smart FTMS on Zwift Hub smart trainer.|
 | | cf: [DCRainmaker](https://www.dcrainmaker.com/2020/11/smart-cycle-trainer-recommendations-guide-winter.html)|
 
