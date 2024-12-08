@@ -613,6 +613,20 @@ So when the Simcline seems not to follow the road inclination values on the trai
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_in_operation.jpg" width="1000" height="600" alt="Simcline at work"><br clear="left">
 <br>
 
+# Question: My Wahoo KICKR is variably successful in connecting with the Simcline 2.0 (with ESP32 board) and Zwift
++ <b>Answer</b>: In most cases this behavior can be attributed to not following the critical sequence for starting and connecting, Trainer, Simcline and Zwift.<br>
+
+0) The Start or Initial situation of <b>ALL</b> parties involved is: Laptop/Zwift, Simcline and Wahoo KICKR are Powered <b>OFF</b>!
+1) Power-ON the Wahoo KICKR --> KICKR needs some time (4 seconds?) to settle and start advertising!
+2) Power-ON or Reset Simcline (ESP32 board) --> Simcline needs some time to start, test motor functions and start scanning for Wahoo trainer!
+3) Wait for Simcline and Wahoo KICKR to connect! 9 Out of 10 times this is immediately successful. If this is <b>NOT</b> the case then Reset Simcline first and wait again for a Simcline-Wahoo connection! If this is <b>NOT</b> successful: go back to "Start" after <b>ALL</b> components have been Powered <b>OFF</b> first.
+4) Laptop/Zwift Power-ON --> <b>ONLY</b> when Simcline and Wahoo KICKR have been connected successfully!
+5) Wait and wait for the Zwift pairing window to pop-up
+6) Click orange POWER SOURCE button and select in the list with devices: ESP32#### (Simcline) --> Close
+7) Click orange RESISTANCE button and select in the list with devices: ESP32#### (Simcline) --> Close
+8) Click orange CADENCE button and select in the list with devices: ESP32#### (Simcline) --> Close (NB <b>NOT</b> all legacy Wahoo trainers support Cadence!!)
+9) Click orange HEART RATE button and/or CONTROLS buttons and select in the list with devices: your choice --> Close
+10) Click orange OK! button, when all the selected devices are conforming your choices and are indicated as <b>CONNECTED</b>!<br>
 
 # [Code support for smart TACX trainers](https://github.com/Berg0162/simcline/edit/master/Tacx%20Smart/)<br>
 
