@@ -36,7 +36,7 @@ In week 9 of 2023 the ESP32 code reached a stable level and became publicly avai
 
 # How to start?<br>
 + Install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) and all the libraries on a PC/Mac.
-+ If you are using an ESP32 board then also download the ESP32 NimBLE library, see [Arduino Installation NimBLE](https://github.com/h2zero/NimBLE-Arduino#arduino-installation)
++ If you are using an ESP32 board then also download the ESP32 NimBLE library (<b>Version 1.4.3</b>), see [Arduino Installation NimBLE](https://github.com/h2zero/NimBLE-Arduino#arduino-installation)
 + Download all the code from [Github](https://github.com/Berg0162/simcline) and install.
 <br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_circuitry_02.jpg" align="left" width="200" height="200" alt="Cardboard">
