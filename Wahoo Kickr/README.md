@@ -10,6 +10,14 @@ The SIMCLINE pairs directly to the Wahoo KICKR smart trainer and with your PC/La
 During operation an OLED display shows the road grade in digits and in graphics.<br>
 The SIMCLINE Companion App (for Android smartphones) can be paired, only when the training App is disconnected, for adjusting operational settings, like Ascent Grade Limit (between 0-20%), Descent Grade Limit (between 0-10%), Road Grade Change Factor (between 0-100%) and manual Up and Down control. Notice that the Companion App has a slightly different functionality depending of what brand of trainer (TACX or Wahoo) is connected, due to specific connectivity differences. <br clear="left"> 
 
+# Latest NimBLE-Arduino version<br>
+As of early January 2025 NimBLE-Arduino version 2.x is disruptive for all existing ESP32 code in this repository. It has a very large number of code breaking changes! Any existing ESP32 code that is developed with version NimBLE-Arduio 1.4.3 (or older) will no longer compile, without a major update to allocate NimBLE-Arduino version 2.x!<br>
++ Option #1<br>
+**Keep NimBLE-Arduio version 1.4.3 installed in your Arduino IDE when you want to use the existing ESP32 code in this repository!**
+**Notice: Version 1.4.3 works fine with all existing ESP32 code in this repository!**<br>
++ Option #2<br>
+**A new repository with redesigned ESP32 code has been published to accommodate for NimBLE-Arduino 2.x, checkout: [Simcline-V2](https://github.com/Berg0162/Simcline-V2)**<br>
+
 # Credits to Christian B. from Canada
 Christian was one of those that have a Wahoo KICKR trainer and built the SIMCLINE design for personal use. However, he could not apply the SIMCLINE code as it was! We have collaborated very closely during a teamwise journey to explore all possible scenarios to realize the SIMCLINE design and code to operate with a Wahoo KICKR trainer, in addition to a TACX trainer! Christian's expertise and effort was focussed on testing with Wahoo KICKR and figure out how (Zwift-KICKR) communication is implemented. He collected tons of valuable information that helped to find out how things work, pinpoint causes of failures and at the end to construct the present working solution. Without his valuable effort this project would never have taken place!<br>
 If you need to modify your Wahoo Kickr trainer, see Christian's effort: [Free Axle for Wahoo KICKR Gen2](https://www.instructables.com/Free-Axle-for-Wahoo-Kickr-Gen2-2018/)<br>
