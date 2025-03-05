@@ -10,6 +10,14 @@ The SIMCLINE pairs directly to the TACX smart trainer for a connection that noti
 During operation an OLED display shows the road grade in digits and in graphics or cycling data from the trainer (speed, power, cadence, elapsed time and distance).<br>
 The SIMCLINE Companion App (for Android smartphones) can be paired simultaneously for adjusting operational settings, like Ascent Grade Limit (between 0-20%) and Descent Grade Limit (between 0-10%), Road Grade Change Factor (between 0-100%) and the type of OLED display format.<br clear="left"> 
 
+# Latest NimBLE-Arduino version
+As of early January 2025 NimBLE-Arduino version 2.x is disruptive for all existing ESP32 code in this repository. It has a very large number of code breaking changes! Any existing ESP32 code that is developed with version NimBLE-Arduio 1.4.3 (or older) will no longer compile, without a major update to allocate NimBLE-Arduino version 2.x!<br>
++ Option #1<br>
+**Keep NimBLE-Arduio version 1.4.3 installed in your Arduino IDE when you want to use the existing ESP32 code in this repository!**
+**Notice: Version 1.4.3 works fine with all existing ESP32 code in this repository!**<br>
++ Option #2<br>
+**A new repository with redesigned ESP32 code has been published to accommodate for NimBLE-Arduino 2.x, checkout: [Simcline-V2](https://github.com/Berg0162/Simcline-V2)**<br>
+
 # Choose a Development board: nRF52840 or ESP32?<br>
 Until early 2023 the Simcline project (a.o.) solely worked with the <b>Feather nRF52840 Express</b> development board and the Bluefruit/Adafruit libraries. This is a very stable platform and gave reliable results during development and what's more during many indoor seasons of 5 hours per week operation! However, the MITM application and actuator control (a.k.a. Simcline) is at the capacity limits of the nRF52840 processor. 
 See for a reliable and <b>proven</b> solution: [Adafruit Feather nRF52840 Express](https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather) <br>
