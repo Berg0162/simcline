@@ -25,6 +25,7 @@ As of early January 2025 NimBLE-Arduino version 2.x is disruptive for all existi
 **Notice: Version 1.4.3 works fine with all existing ESP32 code in this repository!**<br>
 + Option #2<br>
 **A new repository with redesigned ESP32 code has been published to accommodate for NimBLE-Arduino 2.x, checkout: [Simcline-V2](https://github.com/Berg0162/Simcline-V2)**<br>
+
 Finally you have to select the SIMCLINE code that is appropriate for the trainer of your liking!<br>
 
 # [nRF52/ESP32 Code support for Smart TACX trainers](https://github.com/Berg0162/simcline/tree/master/Tacx%20Smart)<br>
