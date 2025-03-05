@@ -10,7 +10,7 @@ The SIMCLINE pairs directly to the FTMS enabled trainer and with your PC/Laptop/
 During operation an OLED display shows the road grade in digits and in graphics.<br>
 The SIMCLINE Companion App (for Android smartphones) can be paired, only when the training App is disconnected, for adjusting operational settings, like Ascent Grade Limit (between 0-20%), Descent Grade Limit (between 0-10%), Road Grade Change Factor (between 0-100%) and manual Up and Down control. Notice that the Companion App has a slightly different functionality depending of what brand of trainer (TACX, Wahoo or FTMS enabled) is connected, due to specific connectivity differences. <br clear="left">
 
-# Latest NimBLE-Arduino version
+# Latest NimBLE-Arduino version<br>
 As of early January 2025 NimBLE-Arduino version 2.x is disruptive for all existing ESP32 code in this repository. It has a very large number of code breaking changes! Any existing ESP32 code that is developed with version NimBLE-Arduio 1.4.3 (or older) will no longer compile, without a major update to allocate NimBLE-Arduino version 2.x!<br>
 + Option #1<br>
 **Keep NimBLE-Arduio version 1.4.3 installed in your Arduino IDE when you want to use the existing ESP32 code in this repository!**
