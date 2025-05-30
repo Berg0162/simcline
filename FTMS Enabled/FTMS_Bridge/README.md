@@ -1,4 +1,4 @@
-# Changelog nRF52 FTMS_Bridge
+# Changelog nRF52 FTMS_Bridge --> ESP-code is deprecated!
 
 ## v0.3.1
 ### Added or Changed
