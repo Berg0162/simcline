@@ -1,13 +1,13 @@
 
-# The ESP32-code is DEPRECATED and NO Longer Maintained!
+# The ESP32-code in the FTMS-Enabled folder of 'simcline' is Deprecated and NO Longer Maintained!
 
 # After ESP32 NimBLE-Arduino version 2.x<br>
-As of early January 2025 NimBLE-Arduino version 2.x was released and turned out to be **disruptive** for all then existing ESP32 code in this repository. It took quite some effort to make the **simcline** repository accomodate version 2.x. A new `Simcline-V2` ESP32 repository was created with **redesigned** and **improved** ESP32 code for **FTMS supporting trainers**.<br>
+As of early January 2025 NimBLE-Arduino version 2.x was released and turned out to be **disruptive** for all then existing ESP32-code in the repository. It took quite some effort to make the **simcline** repository sections with ESP-code accommodate version 2.x. As a consequence, a completely new `Simcline-V2` ESP32-repository was created with **redesigned** and **improved** ESP32-code for **FTMS supporting trainers**.<br>
 + **Option #1 for ESP32 boards**<br>
-Keep NimBLE-Arduio version 1.4.3 installed in your Arduino IDE when you want to use the **deprecated** ESP32 code in the **FTMS-Enabled** folder of the **simcline** repository!
-Notice: Version 1.4.3 stll works fine with the deprecated `FTMS-enabled` ESP32 code in this part of the repository! **However, it is NO LONGER maintained**<br>
+Keep NimBLE-Arduio version 1.4.3 installed in your Arduino IDE when you want to use the **deprecated** ESP32-code in the **FTMS-Enabled** folder of the **simcline** repository!
+Notice: Version 1.4.3 stll works fine with the deprecated `FTMS-enabled` ESP32-code in this part of the repository! **However, it is NO LONGER maintained**<br>
 + **Option #2 for ESP32 boards**<br>
-`Simcline-V2` ESP32 repository has been published to supersede the deprecated code, checkout: [Simcline-V2](https://github.com/Berg0162/Simcline-V2)<br>
+`Simcline-V2` ESP32-repository has been published to supersede the deprecated ESP32-code here, checkout: [Simcline-V2](https://github.com/Berg0162/Simcline-V2)<br>
 
 # <img src="https://github.com/Berg0162/simcline/blob/master/images/SC_logo.png" width="64" height="64" alt="SIMCLINE Icon"> &nbsp; SIMCLINE for FTMS enabled Trainers
 # Simulation of Changing Road Inclination for Indoor Cycling<br>
