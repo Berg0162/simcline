@@ -1,5 +1,5 @@
 
-# The ESP32-part is DEPRECATED and NO Longer Maintained!
+# The ESP32-code is DEPRECATED and NO Longer Maintained!
 
 # After ESP32 NimBLE-Arduino version 2.x<br>
 As of early January 2025 NimBLE-Arduino version 2.x was released and turned out to be **disruptive** for all then existing ESP32 code in this repository. It took quite some effort to make the **simcline** repository accomodate version 2.x. A new `Simcline-V2` ESP32 repository was created with **redesigned** and **improved** ESP32 code for **FTMS supporting trainers**.<br>
