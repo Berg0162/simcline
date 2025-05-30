@@ -12,8 +12,8 @@ The SIMCLINE Companion App (for Android smartphones) can be paired, only when th
 <br>
 There are <b>Instructables</b> available with all the nitty gritty of how to create, construct and install the various parts and components of the different SIMCLINE versions.<br>
 
-# [SIMCLINE version 1.0](https://www.instructables.com/id/SIMCLINE-Simulation-of-Changing-Road-Incline-for-I/)<br>
-# [SIMCLINE version 2.0](https://www.instructables.com/SIMCLINE-20-Easy-Simulation-of-Road-Incline/)<br>
+# [Mechanical SIMCLINE version 1.0](https://www.instructables.com/id/SIMCLINE-Simulation-of-Changing-Road-Incline-for-I/)<br>
+# [Mechanical SIMCLINE version 2.0](https://www.instructables.com/SIMCLINE-20-Easy-Simulation-of-Road-Incline/)<br>
 
 The applied electronic components in the 2 projects are somewhat different but NOT in an essential way, as documented hereafter.<br>
 <b>NOTICE that the SIMCLINE control code can be run with both (mechanically different) SIMCLINE versions!</b> However, 3 different code versions are specially designed for operating with a TACX <b>or</b> Wahoo Kickr <b>or</b> FTMS enabled trainers!</b> You will find in the arduino folder all the test programs and the common libraries. These will help you to test the electronic components separately and built together of both SIMCLINE versions.<br> 
