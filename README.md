@@ -28,7 +28,7 @@ Finally you have to select the SIMCLINE code that is appropriate for the trainer
 
 # [ESP32 support for Modern FTMS enabled trainers: Simcline-V2](https://github.com/Berg0162/Simcline-V2)<br>
 
-# SIMCLINE 1.0<br>
+# Mechanical SIMCLINE 1.0<br>
 See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" align="left" alt="Instructables"> [SIMCLINE 1.0 Instructables](https://www.instructables.com/id/SIMCLINE-Simulation-of-Changing-Road-Incline-for-I/)
 <br clear="left">
 
@@ -48,7 +48,7 @@ Small display with screen of: 25 mm x 19 mm. Shows cycling data and diagnostic i
 The sensor contains a very tiny laser source, and a matching sensor. The VL6180X can detect the "time of flight", or how long the laser light has taken to bounce back to the sensor. Since it uses a very narrow light source, it is perfect for determining distance of only the surface directly in front of it. The sensor registers quite accurately the (change in) position of the wheel axle during operation, by measuring the distance between the top of the inner frame and the reflection plate that is mounted on the carriage. The distance feedback of the sensor is crucial for determining how to set the position of the carriage and axle in accordance with the grade information that for example Zwift is using to set the resistance of the trainer. NOTICE: Install Right Angle Through Hole Male PCB Header Pins on the board.<br>
 In retrospect I do not regret the component choices made. All components are documented very well. There are lots of examples for use in an Arduino enviroment. They have turned out to be very reliable.<br clear="left">
 
-# SIMCLINE 2.0<br>
+# Mechanical SIMCLINE 2.0<br>
 See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" align="left" alt="Instructables"> [SIMCLINE 2.0 Instructables](https://www.instructables.com/SIMCLINE-20-Easy-Simulation-of-Road-Incline/)
 <br clear="left">
 
