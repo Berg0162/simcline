@@ -30,7 +30,7 @@
 - Inserted requestConnectionParameter after client connection and synch with poll_delay
 - Inserted #define REQUEST_NEW_CONNECTION_PARAMETERS and allows for selective setting of ConnectionInterval
   
-# Changelog ESP32 FTMS Simcline
+# Changelog ESP32 FTMS Simcline --> ESP-code is deprecated!
 
 ## v0.1.1
 
