@@ -1,5 +1,17 @@
+
+# The ESP32-code in the FTMS-Enabled folder of 'simcline' is Deprecated and NO Longer Maintained!
+
+# After ESP32 NimBLE-Arduino version 2.x<br>
+As of early January 2025 NimBLE-Arduino version 2.x was released and turned out to be **disruptive** for all then existing ESP32-code in the repository. It took quite some effort to make the **simcline** repository sections with ESP-code accommodate version 2.x. As a consequence, a completely new `Simcline-V2` ESP32-repository was created with **redesigned** and **improved** ESP32-code for **FTMS supporting trainers**.<br>
++ **Option #1 for ESP32 boards**<br>
+Keep NimBLE-Arduio version 1.4.3 installed in your Arduino IDE when you want to use the **deprecated** ESP32-code in the **FTMS-Enabled** folder of the **simcline** repository!
+Notice: Version 1.4.3 stll works fine with the deprecated `FTMS-enabled` ESP32-code in this part of the repository! **However, it is NO LONGER maintained**<br>
++ **Option #2 for ESP32 boards**<br>
+`Simcline-V2` ESP32-repository has been published to supersede the deprecated ESP32-code here, checkout: [Simcline-V2](https://github.com/Berg0162/Simcline-V2)<br>
+
 # <img src="https://github.com/Berg0162/simcline/blob/master/images/SC_logo.png" width="64" height="64" alt="SIMCLINE Icon"> &nbsp; SIMCLINE for FTMS enabled Trainers
 # Simulation of Changing Road Inclination for Indoor Cycling<br>
+
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_And_Wheel.jpg" width="300" height="300" ALIGN="left" alt="SIMCLINE">
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_2_0.jpg" width="300" height="300" ALIGN="left" alt="SIMCLINE 2">
 The SIMCLINE physically adjusts the bike position to mimic hilly roads, climbing and descending. This allows the rider to naturally change position on the bike, engage climbing muscles, and improve pedaling technique to become a more efficient and powerful climber.<br>
@@ -9,14 +21,6 @@ The physical reach is: 20% maximum incline and -10% maximum decline. However, th
 The SIMCLINE pairs directly to the FTMS enabled trainer and with your PC/Laptop/Tablet with (Zwift) training App for a connection that notifies the SIMCLINE to simulate autonomous the (change in) physical grade of the road during an indoor ride.<br>
 During operation an OLED display shows the road grade in digits and in graphics.<br>
 The SIMCLINE Companion App (for Android smartphones) can be paired, only when the training App is disconnected, for adjusting operational settings, like Ascent Grade Limit (between 0-20%), Descent Grade Limit (between 0-10%), Road Grade Change Factor (between 0-100%) and manual Up and Down control. Notice that the Companion App has a slightly different functionality depending of what brand of trainer (TACX, Wahoo or FTMS enabled) is connected, due to specific connectivity differences. <br clear="left">
-
-# Latest NimBLE-Arduino version<br>
-As of early January 2025 NimBLE-Arduino version 2.x is disruptive for all existing ESP32 code in this repository. It has a very large number of code breaking changes! Any existing ESP32 code that is developed with version NimBLE-Arduio 1.4.3 (or older) will no longer compile, without a major update to allocate NimBLE-Arduino version 2.x!<br>
-+ Option #1<br>
-**Keep NimBLE-Arduio version 1.4.3 installed in your Arduino IDE when you want to use the existing ESP32 code in this repository!**
-**Notice: Version 1.4.3 works fine with all existing ESP32 code in this repository!**<br>
-+ Option #2<br>
-**A new repository with redesigned ESP32 code has been published to accommodate for NimBLE-Arduino 2.x, checkout: [Simcline-V2](https://github.com/Berg0162/Simcline-V2)**<br>
 
 # FiTness Machine Service a Bluetooth Service Specification
 From 2015 to 2017 the Sports and Fitness Working Group (SIG) designed a Bluetooth Service specification. This service exposes training-related data in the sports and fitness environment, which allows a Server (e.g., a fitness machine) to send training-related data to a Client. In Februari 2017 the service specification reached a stable version: [Fitness Machine Service 1.0](https://www.bluetooth.com/specifications/specs/fitness-machine-service-1-0/) when it was adopted by the Bluetooth SIG Board of Directors. Have a look at the document to appreciate the effort of all the contributors and the companies they represented!<br>

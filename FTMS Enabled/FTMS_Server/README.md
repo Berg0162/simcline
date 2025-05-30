@@ -14,7 +14,7 @@
 - Added in DEBUG mode printout of connection parametes
 - Inserted selective use of requestConnectionParameter
 
-# Changelog ESP32 FTMS_Server
+# Changelog ESP32 FTMS_Server --> ESP-code is deprecated!
 
 ## v0.1.0
 ### Added or Changed
