@@ -12,7 +12,7 @@
 ### Removed
 - Some older versions
 
-# Changelog ESP32 FTMS_Client
+# Changelog ESP32 FTMS_Client --> --> ESP-code is deprecated!
 
 ## v0.1.0
 ### Added or Changed
