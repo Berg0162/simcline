@@ -20,11 +20,13 @@ The applied electronic components in the 2 projects are somewhat different but N
 
 Finally you have to select the SIMCLINE code that is appropriate for the trainer of your liking!<br>
 
-# [nRF52/ESP32 Code support for Smart TACX trainers](https://github.com/Berg0162/simcline/tree/master/Tacx%20Smart)<br>
+# [nRF52/ESP32 support for Legacy Smart TACX trainers](https://github.com/Berg0162/simcline/tree/master/Tacx%20Smart)<br>
 
-# [nRF52/ESP32 Code support for Wahoo KICKR trainers](https://github.com/Berg0162/simcline/tree/master/Wahoo%20Kickr/)<br>
+# [nRF52/ESP32 support for Legacy Wahoo KICKR trainers](https://github.com/Berg0162/simcline/tree/master/Wahoo%20Kickr/)<br>
 
-# [nRF52/ESP32 Code support for FTMS enabled trainers](https://github.com/Berg0162/simcline/tree/master/FTMS%20Enabled/)<br>
+# [nRF52 support for Modern FTMS enabled trainers](https://github.com/Berg0162/simcline/tree/master/FTMS%20Enabled/)<br>
+
+# [ESP32 support for Modern FTMS enabled trainers: Simcline-V2](https://github.com/Berg0162/Simcline-V2)<br>
 
 # SIMCLINE 1.0<br>
 See: <img src="https://www.instructables.com/assets/img/instructables-logo-v2.png" width="32" height="48" align="left" alt="Instructables"> [SIMCLINE 1.0 Instructables](https://www.instructables.com/id/SIMCLINE-Simulation-of-Changing-Road-Incline-for-I/)
