@@ -18,14 +18,6 @@ There are <b>Instructables</b> available with all the nitty gritty of how to cre
 The applied electronic components in the 2 projects are somewhat different but NOT in an essential way, as documented hereafter.<br>
 <b>NOTICE that the SIMCLINE control code can be run with both (mechanically different) SIMCLINE versions!</b> However, 3 different code versions are specially designed for operating with a TACX <b>or</b> Wahoo Kickr <b>or</b> FTMS enabled trainers!</b> You will find in the arduino folder all the test programs and the common libraries. These will help you to test the electronic components separately and built together of both SIMCLINE versions.<br> 
 
-# Latest NimBLE-Arduino version<br>
-As of early January 2025 NimBLE-Arduino version 2.x is disruptive for all existing ESP32 code in this repository. It has a very large number of code breaking changes! Any existing ESP32 code that is developed with version NimBLE-Arduio 1.4.3 (or older) will no longer compile, without a major update to allocate NimBLE-Arduino version 2.x!<br>
-+ Option #1<br>
-**Keep NimBLE-Arduio version 1.4.3 installed in your Arduino IDE when you want to use the existing ESP32 code in this repository!**
-**Notice: Version 1.4.3 works fine with all existing ESP32 code in this repository!**<br>
-+ Option #2<br>
-**A new repository with redesigned ESP32 code has been published to accommodate for NimBLE-Arduino 2.x, checkout: [Simcline-V2](https://github.com/Berg0162/Simcline-V2)**<br>
-
 Finally you have to select the SIMCLINE code that is appropriate for the trainer of your liking!<br>
 
 # [nRF52/ESP32 Code support for Smart TACX trainers](https://github.com/Berg0162/simcline/tree/master/Tacx%20Smart)<br>
