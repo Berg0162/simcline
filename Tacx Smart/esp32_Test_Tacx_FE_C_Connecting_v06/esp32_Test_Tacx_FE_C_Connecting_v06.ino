@@ -504,7 +504,7 @@ bool ClientConnectServer() {
       hasConnectPassed = false;
       for (int attempt = 0; attempt < 3 && !pClient_Tacx->isConnected(); ++attempt) { // Retry for 3 times
           Serial.printf("Attempt %d to connect...\n", attempt + 1);
-          if (pClient_Tacx->connect(trainerDevice, true, false, false)) {
+          if (pClient_Tacx->connect(trainerDevice, true, false, true)) {
               hasConnectPassed = true;
               Serial.println("✅ Connected!");
           break;
@@ -515,7 +515,7 @@ bool ClientConnectServer() {
       //hasConnectPassed = pClient_Tacx->connect(trainerDevice, true, false, false); // Delete attribute objects and Create service database
   } else if(pClient_Tacx == NimBLEDevice::getDisconnectedClient()) { // Allow for a streamlined reconnect
             // Reconnect to the disconnected TACX Trainer (Server/Peripheral)
-            hasConnectPassed = pClient_Tacx->connect(trainerDevice, false, false, false); // Just refresh the service database
+            hasConnectPassed = pClient_Tacx->connect(trainerDevice, false, false, true); // Just refresh the service database
     } 
 
   if(!hasConnectPassed) 
