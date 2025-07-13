@@ -199,8 +199,8 @@ void setup() {
 #endif
 
   DEBUG_PRINTLN("ESP32 Code to Test Tacx Trainer CONNECTION BEHAVIOR");
-  DEBUG_PRINTLN("------------------------ Version 6.0 ------------------------");
-  DEBUG_PRINTF("Device Name: %s with NimBLE Version 2.0\n", THISDEVICENAME);
+  DEBUG_PRINTLN("------------------------ Version 6.1 ------------------------");
+  DEBUG_PRINTF("Device Name: %s with NimBLE Version 2.x\n", THISDEVICENAME);
   delay(200); 
 #ifdef CONFIG_BT_NIMBLE_EXT_ADV
   DEBUG_PRINTLN("CONFIG_BT_NIMBLE_EXT_ADV enabled!");
@@ -504,7 +504,7 @@ bool ClientConnectServer() {
       hasConnectPassed = false;
       for (int attempt = 0; attempt < 3 && !pClient_Tacx->isConnected(); ++attempt) { // Retry for 3 times
           Serial.printf("Attempt %d to connect...\n", attempt + 1);
-          if (pClient_Tacx->connect(trainerDevice, true, false, true)) {
+          if (pClient_Tacx->connect(trainerDevice, true, false, false)) {
               hasConnectPassed = true;
               Serial.println("✅ Connected!");
           break;
@@ -515,7 +515,7 @@ bool ClientConnectServer() {
       //hasConnectPassed = pClient_Tacx->connect(trainerDevice, true, false, false); // Delete attribute objects and Create service database
   } else if(pClient_Tacx == NimBLEDevice::getDisconnectedClient()) { // Allow for a streamlined reconnect
             // Reconnect to the disconnected TACX Trainer (Server/Peripheral)
-            hasConnectPassed = pClient_Tacx->connect(trainerDevice, false, false, true); // Just refresh the service database
+            hasConnectPassed = pClient_Tacx->connect(trainerDevice, false, false, false); // Just refresh the service database
     } 
 
   if(!hasConnectPassed) 
