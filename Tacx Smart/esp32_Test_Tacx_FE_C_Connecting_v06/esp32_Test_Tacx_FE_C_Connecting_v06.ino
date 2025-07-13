@@ -216,10 +216,6 @@ void client_Connection_Callbacks::onConnect(NimBLEClient* pClient) {
     clientPeerName = trainerDevice->getName().c_str();
     memcpy(&clientPeerAddress, MyAddress.getBase()->val, 6); 
     uint8_t addressType = MyAddress.getBase()->type; 
-    if( pClient_Tacx->updateConnParams(ConnectionMinInterval, ConnectionMaxInterval, ConnectionLatency, ConnectionTimeout) ) {
-      DEBUG_PRINTLN("Successful Update Connection Params Request!");
-    }
-    delay(30); // Allow some time to settle....
 #ifdef DEBUG
     DEBUG_PRINT("Client Connection Parameters -> ");
     uint16_t max_payload = pClient_Tacx->getMTU();
@@ -495,12 +491,14 @@ bool ClientConnectServer() {
   if(pClient_Tacx == nullptr) { // First time -> create new pClient_Tacx and service database!
       pClient_Tacx = NimBLEDevice::createClient(); 
       pClient_Tacx->setClientCallbacks(new client_Connection_Callbacks());
-      //pClient_Tacx->setConnectionParams(ConnectionMinInterval, ConnectionMaxInterval, ConnectionLatency, ConnectionTimeout, ScanInterval, ScanWindow);
+      pClient_Tacx->setConnectionParams(ConnectionMinInterval, ConnectionMaxInterval, ConnectionLatency, ConnectionTimeout, ScanInterval, ScanWindow);
 #if CONFIG_BT_NIMBLE_EXT_ADV
       pClient_Tacx->setConnectPHY(BLE_GAP_LE_PHY_1M_MASK | BLE_GAP_LE_PHY_2M_MASK);
 #endif
+      /*
       DEBUG_PRINTLN("Delayed... 500ms");
       delay(500); // Give some time to settle
+      */
       DEBUG_PRINTLN("Found a connectable Tacx Trainer with FE-C Service: now connect!");
       // First Time Connect to the TACX Trainer (Server/Peripheral)
       hasConnectPassed = false;
