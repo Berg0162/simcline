@@ -325,6 +325,26 @@ bool client_GenericAccess_Connect(void) {
     return true;     
 }
 
+void decodePage51(const uint8_t* buffer, uint8_t PageValue) {
+       uint8_t lsb_gradeValue = buffer[9];
+       uint8_t msb_gradeValue = buffer[10];
+       long gradeValue = lsb_gradeValue + msb_gradeValue * 256;
+       float roadGrade = float((gradeValue - 20000)) / 100;
+//#ifdef DEBUG_FEC_PACKETS
+       DEBUG_PRINTF("Page: %02d (0x%02X) Track Resistance - gradeValue: %05d  ", PageValue, PageValue, gradeValue);
+       DEBUG_PRINTF("Grade percentage: [%05.1f]%%", roadGrade);
+       DEBUG_PRINTLN();
+//#endif
+/*
+        SetNewRawGradeValue(roadGrade);
+        SetNewActuatorPosition();
+        // Send position with the new settings
+        if (Smartphone.IsConnected) {  // Update Phone display data changed!
+          server_NUS_Txd_GRD();
+        }
+*/
+}
+
 void Tacx_FEC_Rxd_Notify_Callback(NimBLERemoteCharacteristic* pBLERemoteCharacteristic, uint8_t* pData, size_t length, \
                                                                                                                 bool isNotify) {
   // The FE-C Read charateristic of ANT+ packets
@@ -342,33 +362,40 @@ void Tacx_FEC_Rxd_Notify_Callback(NimBLERemoteCharacteristic* pBLERemoteCharacte
   }
   DEBUG_PRINT("] ");
   uint8_t PageValue = buffer[4]; // Get Page number from packet
-  switch(PageValue)
-  {
-    case 0x47 :
+  switch(PageValue) {
+  case 0x47:
+    {
     ////////////////////////////////////////////////////////////
     //////////////////// Handle PAGE 71 ////////////////////////
-    ////////////// Requested PAGE 51 for grade info ////////////
+    //////////// Requested PAGE 51 Track Resistance ////////////
     ////////////////////////////////////////////////////////////
-    if ( buffer[5] == 0x33 ) // check for requested page 51
-      {
-      uint8_t lsb_gradeValue = buffer[9];
-      uint8_t msb_gradeValue = buffer[10];
-      long RawgradeValue = lsb_gradeValue + msb_gradeValue*256;
-      float gradePercentValue = float((RawgradeValue - 20000))/100;
-      // in steps of 0.01% and with an offset of -200%
-      // gradeValue     gradePercentValue
-      //     0                 -200%
-      //  19000                 -10%
-      //  20000                   0%
-      //  22000                 +20%
-      //  40000                +200%
-      // -------------------------------------
-      DEBUG_PRINTF("Page: %02d (0x%02X) Requested Page 51 (0x33) Data Received - RawgradeValue: %05d  ", PageValue, PageValue, \
-                                                                                                                    RawgradeValue); 
-      DEBUG_PRINTF("Grade percentage: [%05.1f]%%", gradePercentValue);
-      DEBUG_PRINTLN();
-      }  
+    if (buffer[5] != 0x33) {  // check for requested page 51
+      DEBUG_PRINTF("Page: %02d (0x%02X) - Unrequested page [0x%02X]\n",  PageValue, PageValue, buffer[5]);
+      break;
+    }
+    PageValue = 0x33;
+    } // fallthrough to handle page 51
+  case 0x33:
+    {
+    ////////////////////////////////////////////////////////////
+    ///////////// Handle PAGE 51 Track Resistance //////////////
+    ////////////////////////////////////////////////////////////
+    uint8_t lsb_gradeValue = buffer[9];
+    uint8_t msb_gradeValue = buffer[10];
+    long gradeValue = lsb_gradeValue + msb_gradeValue * 256;
+    float roadGrade = float((gradeValue - 20000)) / 100;
+    // in steps of 0.01% and with an offset of -200%
+    // gradeValue     gradePercentValue
+    //     0                 -200%
+    //  19000                 -10%
+    //  20000                   0%
+    //  22000                 +20%
+    //  40000                +200%
+    DEBUG_PRINTF("Page: %02d (0x%02X) Track Resistance - gradeValue: %05d  ", PageValue, PageValue, gradeValue);
+    DEBUG_PRINTF("Grade percentage: [%05.1f]%%", roadGrade);
+    DEBUG_PRINTLN();
     break;
+    }
   case 0x19 :
     {
     /////////////////////////////////////////////////
@@ -384,8 +411,8 @@ void Tacx_FEC_Rxd_Notify_Callback(NimBLERemoteCharacteristic* pBLERemoteCharacte
     DEBUG_PRINTF(" - Cadence: [%03d]", InstantaneousCadence);
     DEBUG_PRINTF(" - Power in Watts: [%04d]", PowerValue);
     DEBUG_PRINTLN();
-    }
     break;
+    }
   case 0x10 :
     {
     //////////////////////////////////////////////
@@ -400,16 +427,16 @@ void Tacx_FEC_Rxd_Notify_Callback(NimBLERemoteCharacteristic* pBLERemoteCharacte
     DEBUG_PRINTF(" - Distance travelled: [%05d]m", DistanceTravelled); 
     DEBUG_PRINTF(" - Speed: [%02d]km/h", SpeedValue);
     DEBUG_PRINTLN();
-    }
     break;
+    }
   case 0x80 :
     {
     // Manufacturer Identification Page
+    break;
     }
   default :
     {
     DEBUG_PRINTF("Page: %02d (0x%02X) Undecoded\n", PageValue, PageValue); 
-    return;
     }
   } // Switch
   //////////////////////// DONE! /////////////////////////
