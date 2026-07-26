@@ -1,4 +1,8 @@
 # <img src="https://github.com/Berg0162/simcline/blob/master/images/SC_logo.png" width="64" height="64" alt="SIMCLINE Icon"> &nbsp; SIMCLINE for Smart TACX, Wahoo KICKR and FTMS enabled trainers
+
+# Simcline-V3 is now available!
+Discover the new version at [Berg0162/Simcline-V3.](https://github.com/Berg0162/Simcline-V3)
+
 # Simulation of Changing Road Inclination for Indoor Cycling<br>
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_And_Wheel.jpg" width="300" height="300" ALIGN="left" alt="SIMCLINE 1">
 <img src="https://github.com/Berg0162/simcline/blob/master/images/Simcline_2_0.jpg" width="300" height="300" ALIGN="left" alt="SIMCLINE 2">
